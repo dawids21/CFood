@@ -1,7 +1,7 @@
 add_executable(ingredient_test_suite_run ingredient_test.c)
 
 target_link_libraries(ingredient_test_suite_run
-        CFood_lib
+        lib_ingredient
         Unity
         )
 

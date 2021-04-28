@@ -1,3 +1,3 @@
-add_executable(CFood_main main.c)
+add_executable(main main.c)
 
-target_link_libraries(CFood_main CFood_lib)
+target_link_libraries(main lib_ingredient)
