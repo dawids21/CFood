@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 set(TARGET_GROUP production CACHE STRING "Group to build")
 
-add_subdirectory(lib)
+add_subdirectory(ingredient)
 
 if (TARGET_GROUP STREQUAL production)
     add_subdirectory(main)
