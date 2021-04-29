@@ -4,6 +4,17 @@
 
 #include "ingredient.h"
 
+typedef enum {
+    Solid,
+    Liquid,
+} IngredientType;
+
+typedef struct {
+    char *name;
+    int amount;
+    IngredientType type;
+} Ingredient;
+
 int to_test(int number) {
     return number * number;
 }
