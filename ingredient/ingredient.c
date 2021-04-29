@@ -2,6 +2,7 @@
 // Created by dawids21 on 4/28/21.
 //
 
+#include <stdlib.h>
 #include "ingredient.h"
 
 typedef enum {
@@ -18,3 +19,12 @@ typedef struct {
 struct IngredientService {
 
 };
+
+IngredientService newIngredientService() {
+    IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
+    return service;
+}
+
+void deleteIngredientService(IngredientService service) {
+    free(service);
+}

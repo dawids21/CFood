@@ -5,8 +5,10 @@
 #ifndef CFOOD_INGREDIENT_H
 #define CFOOD_INGREDIENT_H
 
-struct IngredientService;
-
 typedef struct IngredientService *IngredientService;
+
+IngredientService newIngredientService();
+
+void deleteIngredientService(IngredientService service);
 
 #endif //CFOOD_INGREDIENT_H
