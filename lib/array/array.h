@@ -13,4 +13,6 @@ typedef struct Array *Array;
 
 Array newArray(ArrayType type);
 
+void deleteArray(Array array);
+
 #endif //CFOOD_ARRAY_H

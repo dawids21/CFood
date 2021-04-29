@@ -35,3 +35,20 @@ Array newArray(ArrayType type) {
 
     return array;
 }
+
+void deleteArray(Array array) {
+    switch (array->type) {
+        case INT:
+            free(array->data.int_data);
+            break;
+        case INGREDIENT:
+            for (int i = 0; i < array->size; i++) {
+                free(array->data.ingredient_data[i]);
+            }
+            free(array->data.ingredient_data);
+            break;
+        default:
+            break;
+    }
+    free(array);
+}
