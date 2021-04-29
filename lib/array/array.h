@@ -11,4 +11,6 @@ typedef enum {
 } ArrayType;
 typedef struct Array *Array;
 
+Array newArray(ArrayType type);
+
 #endif //CFOOD_ARRAY_H
