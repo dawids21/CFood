@@ -28,3 +28,7 @@ IngredientService newIngredientService() {
 void deleteIngredientService(IngredientService service) {
     free(service);
 }
+
+size_t get_size_of_ingredient_type() {
+    return sizeof(struct Ingredient);
+}
