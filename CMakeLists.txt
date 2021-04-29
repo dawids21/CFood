@@ -5,6 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 set(PROFILE dev)
 
+add_subdirectory(lib/array)
 add_subdirectory(ingredient)
 add_subdirectory(main)
 
