@@ -15,3 +15,12 @@ target_link_libraries(acceptance_test_run
         )
 
 add_test(acceptance_test acceptance_test_run)
+
+add_executable(array_test_run array_test.c)
+
+target_link_libraries(array_test_run
+        lib_array
+        unity
+        )
+
+add_test(array_test array_test_run)
