@@ -15,6 +15,6 @@ typedef struct {
     IngredientType type;
 } Ingredient;
 
-int to_test(int number) {
-    return number * number;
-}
+struct IngredientService {
+
+};
