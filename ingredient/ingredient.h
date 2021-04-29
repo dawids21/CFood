@@ -5,6 +5,10 @@
 #ifndef CFOOD_INGREDIENT_H
 #define CFOOD_INGREDIENT_H
 
-int to_test(int number);
+typedef struct IngredientService *IngredientService;
+
+IngredientService newIngredientService();
+
+void deleteIngredientService(IngredientService service);
 
 #endif //CFOOD_INGREDIENT_H
