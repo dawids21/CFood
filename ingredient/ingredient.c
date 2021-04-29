@@ -10,11 +10,11 @@ typedef enum {
     Liquid,
 } IngredientType;
 
-typedef struct {
+struct Ingredient {
     char *name;
     int amount;
     IngredientType type;
-} Ingredient;
+};
 
 struct IngredientService {
 
