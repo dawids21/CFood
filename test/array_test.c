@@ -72,6 +72,18 @@ void after_deleting_item_should_not_be_in_data() {
     delete_array(array);
 }
 
+void returns_false_when_index_for_delete_is_too_big() {
+    Array array = new_array(INT);
+
+    append(array, (ArrayItem) 5);
+
+    bool result = delete_at_index(array, 1);
+
+    TEST_ASSERT_FALSE(result);
+
+    delete_array(array);
+}
+
 
 int main(void) {
     UNITY_BEGIN();
@@ -80,6 +92,7 @@ int main(void) {
     RUN_TEST(when_added_three_items_return_size_of_three);
     RUN_TEST(when_delete_at_index_the_size_is_reduced_by_one);
     RUN_TEST(after_deleting_item_should_not_be_in_data);
+    RUN_TEST(returns_false_when_index_for_delete_is_too_big);
 
     return UNITY_END();
 }

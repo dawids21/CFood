@@ -6,6 +6,7 @@
 #define CFOOD_ARRAY_H
 
 #include <ingredient.h>
+#include <stdbool.h>
 
 typedef enum {
     INGREDIENT,
@@ -29,6 +30,6 @@ ArrayItem *get_all_items(Array array);
 
 int get_size(Array array);
 
-void delete_at_index(Array array, int index);
+bool delete_at_index(Array array, int index);
 
 #endif //CFOOD_ARRAY_H
