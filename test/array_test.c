@@ -84,6 +84,21 @@ void returns_false_when_index_for_delete_is_too_big() {
     delete_array(array);
 }
 
+void deleting_array_should_return_actual_state() {
+    Array array = new_array(INT);
+
+    append(array, (ArrayItem) 5);
+    append(array, (ArrayItem) 8);
+
+    ArrayItem *items = delete_array(array);
+
+    TEST_ASSERT_EQUAL(5, items[0].int_item);
+    TEST_ASSERT_EQUAL(8, items[1].int_item);
+    TEST_ASSERT_NULL(array);
+
+    free(items);
+}
+
 
 int main(void) {
     UNITY_BEGIN();
@@ -93,6 +108,7 @@ int main(void) {
     RUN_TEST(when_delete_at_index_the_size_is_reduced_by_one);
     RUN_TEST(after_deleting_item_should_not_be_in_data);
     RUN_TEST(returns_false_when_index_for_delete_is_too_big);
+    RUN_TEST(deleting_array_should_return_actual_state);
 
     return UNITY_END();
 }
