@@ -29,7 +29,16 @@ void test_when_added_two_items_return_two_items() {
 
 
 void test_when_added_three_items_return_size_of_three() {
+    Array array = new_array(INT);
 
+    append(array, (ArrayItem) 5);
+    append(array, (ArrayItem) 8);
+    append(array, (ArrayItem) 9);
+    int size = get_size(array);
+
+    TEST_ASSERT_EQUAL(3, size);
+
+    delete_array(array);
 }
 
 int main(void) {
