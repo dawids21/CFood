@@ -40,7 +40,11 @@ void delete_array(Array array) {
 }
 
 void append(Array array, ArrayItem item) {
-
+    if (array->size == array->capacity) {
+        array->capacity *= 2;
+        array->data = realloc(array->data, array->capacity * sizeof(ArrayItem));
+    }
+    array->data[array->size++] = item;
 }
 
 ArrayItem *get_all_items(Array array) {

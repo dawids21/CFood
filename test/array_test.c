@@ -25,8 +25,6 @@ void test_when_added_two_items_return_two_items() {
 
     free(items);
     delete_array(array);
-
-    TEST_FAIL();
 }
 
 
