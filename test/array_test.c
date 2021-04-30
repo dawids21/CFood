@@ -4,6 +4,9 @@
 
 #include <unity.h>
 #include <array.h>
+#include <stdbool.h>
+
+static bool not_in_array(ArrayItem item, Array array, int size);
 
 void setUp() {
 
@@ -55,12 +58,40 @@ void when_delete_at_index_the_size_is_reduced_by_one() {
     delete_array(array);
 }
 
+void after_deleting_item_should_not_be_in_data() {
+    Array array = new_array(INT);
+
+    append(array, (ArrayItem) 5);
+    append(array, (ArrayItem) 8);
+    append(array, (ArrayItem) 9);
+
+    delete_at_index(array, 0);
+
+    TEST_ASSERT_TRUE(not_in_array((ArrayItem) 5, array, get_size(array)));
+
+    delete_array(array);
+}
+
+
 int main(void) {
     UNITY_BEGIN();
 
     RUN_TEST(when_added_two_items_return_two_items);
     RUN_TEST(when_added_three_items_return_size_of_three);
     RUN_TEST(when_delete_at_index_the_size_is_reduced_by_one);
+    RUN_TEST(after_deleting_item_should_not_be_in_data);
 
     return UNITY_END();
+}
+
+static bool not_in_array(ArrayItem item, Array array, int size) {
+    ArrayItem *arrayItem = get_all_items(array);
+
+    for (int i = 0; i < size; ++i) {
+        if (arrayItem[i].int_item == item.int_item) {
+            return false;
+        }
+    }
+
+    return true;
 }
