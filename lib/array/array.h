@@ -9,6 +9,12 @@ typedef enum {
     INGREDIENT,
     INT
 } ArrayType;
+
+typedef union {
+    int int_item;
+    Ingredient ingredient_item;
+} ArrayItem;
+
 typedef struct Array *Array;
 
 Array new_array(ArrayType type);
