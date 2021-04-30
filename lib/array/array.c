@@ -50,12 +50,14 @@ int get_size(Array array) {
     return array->size;
 }
 
-bool delete_at_index(Array array, int index) {
+bool delete_at_index(Array array, int index, ArrayItem *deleted) {
     if (index >= array->size) {
         return false;
     }
 
-    ArrayItem to_delete = array->data[index];
+    if (deleted != NULL) {
+        *deleted = array->data[index];
+    }
 
     for (int i = index; i < array->size - 1; ++i) {
         array->data[i] = array->data[i + 1];

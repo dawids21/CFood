@@ -30,6 +30,6 @@ ArrayItem *get_all_items(Array array);
 
 int get_size(Array array);
 
-bool delete_at_index(Array array, int index);
+bool delete_at_index(Array array, int index, ArrayItem *deleted);
 
 #endif //CFOOD_ARRAY_H

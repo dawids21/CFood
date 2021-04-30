@@ -51,7 +51,7 @@ void when_delete_at_index_the_size_is_reduced_by_one() {
     append(array, (ArrayItem) 8);
     append(array, (ArrayItem) 9);
 
-    delete_at_index(array, 2);
+    delete_at_index(array, 2, NULL);
 
     TEST_ASSERT_EQUAL(2, get_size(array));
 
@@ -65,7 +65,7 @@ void after_deleting_item_should_not_be_in_data() {
     append(array, (ArrayItem) 8);
     append(array, (ArrayItem) 9);
 
-    delete_at_index(array, 0);
+    delete_at_index(array, 0, NULL);
 
     TEST_ASSERT_TRUE(not_in_array((ArrayItem) 5, array, get_size(array)));
 
@@ -77,7 +77,7 @@ void returns_false_when_index_for_delete_is_too_big() {
 
     append(array, (ArrayItem) 5);
 
-    bool result = delete_at_index(array, 1);
+    bool result = delete_at_index(array, 1, NULL);
 
     TEST_ASSERT_FALSE(result);
 
