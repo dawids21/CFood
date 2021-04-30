@@ -105,9 +105,11 @@ void delete_return_deleted_item() {
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
 
-    ArrayItem item = delete_at_index(array, 0);
+    ArrayItem deleted;
+    bool success = delete_at_index(array, 0, &deleted);
 
-    TEST_ASSERT_EQUAL(5, item.int_item);
+    TEST_ASSERT_TRUE(success);
+    TEST_ASSERT_EQUAL(5, deleted.int_item);
 
     delete_array(&array);
 }
