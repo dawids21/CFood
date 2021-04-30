@@ -13,7 +13,7 @@ void tearDown() {
 
 }
 
-void test_when_added_two_items_return_two_items() {
+void when_added_two_items_return_two_items() {
     Array array = new_array(INT);
 
     append(array, (ArrayItem) 5);
@@ -28,7 +28,7 @@ void test_when_added_two_items_return_two_items() {
 }
 
 
-void test_when_added_three_items_return_size_of_three() {
+void when_added_three_items_return_size_of_three() {
     Array array = new_array(INT);
 
     append(array, (ArrayItem) 5);
@@ -41,11 +41,26 @@ void test_when_added_three_items_return_size_of_three() {
     delete_array(array);
 }
 
+void when_delete_at_index_the_size_is_reduced_by_one() {
+    Array array = new_array(INT);
+
+    append(array, (ArrayItem) 5);
+    append(array, (ArrayItem) 8);
+    append(array, (ArrayItem) 9);
+
+    delete_at_index(array, 2);
+
+    TEST_ASSERT_EQUAL(3, get_size(array));
+
+    delete_array(array);
+}
+
 int main(void) {
     UNITY_BEGIN();
 
-    RUN_TEST(test_when_added_two_items_return_two_items);
-    RUN_TEST(test_when_added_three_items_return_size_of_three);
+    RUN_TEST(when_added_two_items_return_two_items);
+    RUN_TEST(when_added_three_items_return_size_of_three);
+    RUN_TEST(when_delete_at_index_the_size_is_reduced_by_one);
 
     return UNITY_END();
 }
