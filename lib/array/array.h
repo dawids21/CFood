@@ -5,6 +5,8 @@
 #ifndef CFOOD_ARRAY_H
 #define CFOOD_ARRAY_H
 
+#include <ingredient.h>
+
 typedef enum {
     INGREDIENT,
     INT
@@ -21,6 +23,6 @@ Array new_array(ArrayType type);
 
 void delete_array(Array array);
 
-void deleteArray(Array array);
+void append(Array array, ArrayItem item);
 
 #endif //CFOOD_ARRAY_H
