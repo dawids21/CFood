@@ -10,8 +10,6 @@
 typedef struct Ingredient *Ingredient;
 typedef struct IngredientService *IngredientService;
 
-size_t get_size_of_ingredient_type();
-
 IngredientService new_ingredient_service();
 
 void delete_ingredient_service(IngredientService service);
