@@ -54,3 +54,7 @@ ArrayItem *get_all_items(Array array) {
     }
     return result;
 }
+
+int get_size(Array array) {
+    return array->size;
+}

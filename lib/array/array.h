@@ -27,4 +27,6 @@ void append(Array array, ArrayItem item);
 
 ArrayItem *get_all_items(Array array);
 
+int get_size(Array array);
+
 #endif //CFOOD_ARRAY_H
