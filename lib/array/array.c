@@ -54,6 +54,13 @@ bool delete_at_index(Array array, int index) {
     if (index >= array->size) {
         return false;
     }
+
+    ArrayItem to_delete = array->data[index];
+
+    for (int i = index; i < array->size - 1; ++i) {
+        array->data[i] = array->data[i + 1];
+    }
+
     array->size--;
     return true;
 }
