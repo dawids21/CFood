@@ -22,7 +22,7 @@ typedef struct Array *Array;
 
 Array new_array(ArrayType type);
 
-void delete_array(Array array);
+ArrayItem *delete_array(Array *array);
 
 void append(Array array, ArrayItem item);
 

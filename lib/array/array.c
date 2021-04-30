@@ -23,20 +23,11 @@ Array new_array(ArrayType type) {
     return array;
 }
 
-void delete_array(Array array) {
-    switch (array->type) {
-        case INT:
-            break;
-        case INGREDIENT:
-            for (int i = 0; i < array->size; i++) {
-                free(array->data[i].ingredient_item);
-            }
-            break;
-        default:
-            break;
-    }
-    free(array->data);
-    free(array);
+ArrayItem *delete_array(Array *array) {
+    ArrayItem *current_items = get_all_items(*array);
+    free(*array);
+    *array = NULL;
+    return current_items;
 }
 
 void append(Array array, ArrayItem item) {
