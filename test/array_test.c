@@ -23,6 +23,7 @@ void test_when_added_two_items_return_two_items() {
     TEST_ASSERT_EQUAL(5, items[0].int_item);
     TEST_ASSERT_EQUAL(8, items[1].int_item);
 
+    free(items);
     delete_array(array);
 
     TEST_FAIL();

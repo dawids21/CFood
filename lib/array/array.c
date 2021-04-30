@@ -44,5 +44,9 @@ void append(Array array, ArrayItem item) {
 }
 
 ArrayItem *get_all_items(Array array) {
-    return NULL;
+    ArrayItem *result = malloc(sizeof(ArrayItem) * array->size);
+    for (int i = 0; i < array->size; i++) {
+        result[i] = array->data[i];
+    }
+    return result;
 }
