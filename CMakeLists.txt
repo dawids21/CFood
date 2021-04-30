@@ -3,7 +3,7 @@ project(CFood C)
 
 set(CMAKE_C_STANDARD 99)
 
-option(DEV "" TRUE)
+option(DEV "Use dev profile" TRUE)
 
 add_subdirectory(lib/array)
 add_subdirectory(ingredient)
