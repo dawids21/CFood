@@ -50,7 +50,7 @@ void when_delete_at_index_the_size_is_reduced_by_one() {
 
     delete_at_index(array, 2);
 
-    TEST_ASSERT_EQUAL(3, get_size(array));
+    TEST_ASSERT_EQUAL(2, get_size(array));
 
     delete_array(array);
 }

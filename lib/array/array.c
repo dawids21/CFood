@@ -60,5 +60,5 @@ int get_size(Array array) {
 }
 
 void delete_at_index(Array array, int index) {
-
+    array->size--;
 }
