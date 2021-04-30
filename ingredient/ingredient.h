@@ -12,8 +12,8 @@ typedef struct IngredientService *IngredientService;
 
 size_t get_size_of_ingredient_type();
 
-IngredientService newIngredientService();
+IngredientService new_ingredient_service();
 
-void deleteIngredientService(IngredientService service);
+void delete_ingredient_service(IngredientService service);
 
 #endif //CFOOD_INGREDIENT_H

@@ -20,12 +20,12 @@ struct IngredientService {
 
 };
 
-IngredientService newIngredientService() {
+IngredientService new_ingredient_service() {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
     return service;
 }
 
-void deleteIngredientService(IngredientService service) {
+void delete_ingredient_service(IngredientService service) {
     free(service);
 }
 

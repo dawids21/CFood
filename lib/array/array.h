@@ -11,7 +11,9 @@ typedef enum {
 } ArrayType;
 typedef struct Array *Array;
 
-Array newArray(ArrayType type);
+Array new_array(ArrayType type);
+
+void delete_array(Array array);
 
 void deleteArray(Array array);
 

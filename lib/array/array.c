@@ -16,7 +16,7 @@ struct Array {
     int capacity;
 };
 
-Array newArray(ArrayType type) {
+Array new_array(ArrayType type) {
     Array array = malloc(sizeof(struct Array));
     array->type = type;
     array->size = 0;
@@ -36,7 +36,7 @@ Array newArray(ArrayType type) {
     return array;
 }
 
-void deleteArray(Array array) {
+void delete_array(Array array) {
     switch (array->type) {
         case INT:
             free(array->data.int_data);
