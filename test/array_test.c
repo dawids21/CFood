@@ -99,6 +99,19 @@ void deleting_array_should_return_current_state() {
     free(items);
 }
 
+void delete_return_deleted_item() {
+    Array array = new_array(INT);
+
+    append(array, (ArrayItem) 5);
+    append(array, (ArrayItem) 8);
+
+    ArrayItem item = delete_at_index(array, 0);
+
+    TEST_ASSERT_EQUAL(5, item.int_item);
+
+    delete_array(&array);
+}
+
 
 int main(void) {
     UNITY_BEGIN();
@@ -109,6 +122,7 @@ int main(void) {
     RUN_TEST(after_deleting_item_should_not_be_in_data);
     RUN_TEST(returns_false_when_index_for_delete_is_too_big);
     RUN_TEST(deleting_array_should_return_current_state);
+    RUN_TEST(delete_return_deleted_item);
 
     return UNITY_END();
 }
