@@ -60,6 +60,9 @@ int get_size(Array array) {
 }
 
 bool delete_at_index(Array array, int index) {
+    if (index >= array->size) {
+        return false;
+    }
     array->size--;
     return true;
 }
