@@ -58,3 +58,7 @@ ArrayItem *get_all_items(Array array) {
 int get_size(Array array) {
     return array->size;
 }
+
+void delete_at_index(Array array, int index) {
+
+}
