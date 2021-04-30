@@ -3,15 +3,16 @@ project(CFood C)
 
 set(CMAKE_C_STANDARD 99)
 
-set(PROFILE dev)
+option(DEV "" TRUE)
 
 add_subdirectory(lib/array)
 add_subdirectory(ingredient)
 add_subdirectory(main)
 
 
-if (${PROFILE} STREQUAL dev)
+if (DEV)
     include(CTest)
     add_subdirectory(external)
     add_subdirectory(test)
-endif ()
+endif (DEV)
+unset(DEV CACHE)
