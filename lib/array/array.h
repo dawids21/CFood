@@ -25,4 +25,6 @@ void delete_array(Array array);
 
 void append(Array array, ArrayItem item);
 
+ArrayItem *get_all_items(Array array);
+
 #endif //CFOOD_ARRAY_H

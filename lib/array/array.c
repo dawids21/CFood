@@ -38,3 +38,11 @@ void delete_array(Array array) {
     free(array->data);
     free(array);
 }
+
+void append(Array array, ArrayItem item) {
+
+}
+
+ArrayItem *get_all_items(Array array) {
+    return NULL;
+}
