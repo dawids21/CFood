@@ -67,6 +67,7 @@ bool delete_at_index(Array array, int index, ArrayItem *deleted) {
     return true;
 }
 
-ArrayItem get(Array array, int index) {
-    return array->data[index];
+bool get(Array array, int index, ArrayItem *result) {
+    *result = array->data[index];
+    return true;
 }

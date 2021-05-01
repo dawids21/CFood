@@ -120,11 +120,18 @@ void return_item_at_given_index() {
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
 
-    ArrayItem item = get(array, 1);
+    ArrayItem item;
 
+    bool success = get(array, 1, &item);
+
+    TEST_ASSERT_TRUE(success);
     TEST_ASSERT_EQUAL(8, item.int_item);
 
     delete_array(&array);
+}
+
+void return_empty_union_when_index_too_big() {
+
 }
 
 
