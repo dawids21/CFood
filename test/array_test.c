@@ -138,6 +138,7 @@ int main(void) {
     RUN_TEST(returns_false_when_index_for_delete_is_too_big);
     RUN_TEST(deleting_array_should_return_current_state);
     RUN_TEST(delete_return_deleted_item);
+    RUN_TEST(return_item_at_given_index);
 
     return UNITY_END();
 }
