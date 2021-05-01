@@ -130,8 +130,30 @@ void return_item_at_given_index() {
     delete_array(&array);
 }
 
-void return_empty_union_when_index_too_big() {
+void return_false_when_index_too_big() {
+    Array array = new_array(INT);
 
+    append(array, (ArrayItem) 5);
+
+    ArrayItem item;
+
+    bool success = get(array, 1, &item);
+
+    TEST_ASSERT_FALSE(success);
+
+    delete_array(&array);
+}
+
+void return_false_when_index_negative() {
+    Array array = new_array(INT);
+
+    ArrayItem item;
+
+    bool success = get(array, -1, &item);
+
+    TEST_ASSERT_FALSE(success);
+
+    delete_array(&array);
 }
 
 
@@ -146,6 +168,8 @@ int main(void) {
     RUN_TEST(deleting_array_should_return_current_state);
     RUN_TEST(delete_return_deleted_item);
     RUN_TEST(return_item_at_given_index);
+    RUN_TEST(return_false_when_index_too_big);
+    RUN_TEST(return_false_when_index_negative);
 
     return UNITY_END();
 }
