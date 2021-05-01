@@ -114,6 +114,19 @@ void delete_return_deleted_item() {
     delete_array(&array);
 }
 
+void return_item_at_given_index() {
+    Array array = new_array(INT);
+
+    append(array, (ArrayItem) 5);
+    append(array, (ArrayItem) 8);
+
+    ArrayItem item = get(array, 1);
+
+    TEST_ASSERT_EQUAL(8, item.int_item);
+
+    delete_array(&array);
+}
+
 
 int main(void) {
     UNITY_BEGIN();
