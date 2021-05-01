@@ -68,6 +68,9 @@ bool delete_at_index(Array array, int index, ArrayItem *deleted) {
 }
 
 bool get(Array array, int index, ArrayItem *result) {
+    if (index < 0 || index >= array->size) {
+        return false;
+    }
     *result = array->data[index];
     return true;
 }
