@@ -8,11 +8,6 @@
 #include <ingredient.h>
 #include <stdbool.h>
 
-typedef enum {
-    INGREDIENT,
-    INT
-} ArrayType;
-
 typedef union {
     int int_item;
     Ingredient ingredient_item;
@@ -20,7 +15,7 @@ typedef union {
 
 typedef struct Array *Array;
 
-Array new_array(ArrayType type);
+Array new_array();
 
 ArrayItem *delete_array(Array *array);
 

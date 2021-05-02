@@ -17,7 +17,7 @@ void tearDown() {
 }
 
 void when_added_two_items_return_two_items() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
@@ -32,7 +32,7 @@ void when_added_two_items_return_two_items() {
 
 
 void when_added_three_items_return_size_of_three() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
@@ -45,7 +45,7 @@ void when_added_three_items_return_size_of_three() {
 }
 
 void when_delete_at_index_the_size_is_reduced_by_one() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
@@ -59,7 +59,7 @@ void when_delete_at_index_the_size_is_reduced_by_one() {
 }
 
 void after_deleting_item_should_not_be_in_data() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
@@ -73,7 +73,7 @@ void after_deleting_item_should_not_be_in_data() {
 }
 
 void returns_false_when_index_for_delete_is_too_big() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
 
@@ -85,7 +85,7 @@ void returns_false_when_index_for_delete_is_too_big() {
 }
 
 void deleting_array_should_return_current_state() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
@@ -100,7 +100,7 @@ void deleting_array_should_return_current_state() {
 }
 
 void delete_return_deleted_item() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
@@ -115,7 +115,7 @@ void delete_return_deleted_item() {
 }
 
 void return_item_at_given_index() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
     append(array, (ArrayItem) 8);
@@ -131,7 +131,7 @@ void return_item_at_given_index() {
 }
 
 void return_false_when_index_too_big() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     append(array, (ArrayItem) 5);
 
@@ -145,7 +145,7 @@ void return_false_when_index_too_big() {
 }
 
 void return_false_when_index_negative() {
-    Array array = new_array(INT);
+    Array array = new_array();
 
     ArrayItem item;
 

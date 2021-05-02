@@ -6,15 +6,13 @@
 #include "array.h"
 
 struct Array {
-    ArrayType type;
     ArrayItem *data;
     int size;
     int capacity;
 };
 
-Array new_array(ArrayType type) {
+Array new_array() {
     Array array = malloc(sizeof(struct Array));
-    array->type = type;
     array->size = 0;
     array->capacity = 10;
 
