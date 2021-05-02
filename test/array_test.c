@@ -156,6 +156,24 @@ void return_false_when_index_negative() {
     delete_array(&array);
 }
 
+void array_should_scale_automatically() {
+    Array array = new_array();
+
+    for (int i = 0; i < 20; ++i) {
+        append(array, (ArrayItem) i);
+    }
+
+    for (int i = 0; i < 20; ++i) {
+        ArrayItem item;
+        bool success = get(array, i, &item);
+
+        TEST_ASSERT_TRUE(success);
+        TEST_ASSERT_EQUAL(i, item.int_item);
+    }
+
+    delete_array(&array);
+}
+
 
 int main(void) {
     UNITY_BEGIN();
@@ -170,6 +188,7 @@ int main(void) {
     RUN_TEST(return_item_at_given_index);
     RUN_TEST(return_false_when_index_too_big);
     RUN_TEST(return_false_when_index_negative);
+    RUN_TEST(array_should_scale_automatically);
 
     return UNITY_END();
 }
