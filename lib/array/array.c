@@ -23,6 +23,7 @@ Array new_array() {
 
 ArrayItem *delete_array(Array *array) {
     ArrayItem *current_items = get_all_items(*array);
+    free((*array)->data);
     free(*array);
     *array = NULL;
     return current_items;
