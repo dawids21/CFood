@@ -22,6 +22,7 @@ struct IngredientService {
 
 IngredientService new_ingredient_service() {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
+    service->ingredients = new_array();
     return service;
 }
 
