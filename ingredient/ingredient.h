@@ -8,10 +8,5 @@
 #include <stdlib.h>
 
 typedef struct Ingredient *Ingredient;
-typedef struct IngredientService *IngredientService;
-
-IngredientService new_ingredient_service();
-
-void delete_ingredient_service(IngredientService service);
 
 #endif //CFOOD_INGREDIENT_H

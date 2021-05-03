@@ -1,6 +1,6 @@
-set(SOURCE_FILES ingredient.c)
+set(SOURCE_FILES ingredient.c ingredient_service.c)
 
-set(HEADER_FILE ingredient.h)
+set(HEADER_FILE ingredient.h ingredient_service.h)
 
 add_library(lib_ingredient STATIC ${SOURCE_FILES} ${HEADER_FILES})
 
