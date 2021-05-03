@@ -78,7 +78,21 @@ bool remove_ingredient(IngredientService service, int id) {
 }
 
 bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type) {
-    return true;
+
+    if (service == NULL) {
+        return false;
+    }
+
+    int index = find_index_by_id(service, id);
+
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem ingredients[get_num_of_ingredients(service)];
+    get_all_items(service->ingredients, ingredients);
+    bool success = modify(ingredients[index].ingredient_item, new_name, new_amount, new_type);
+    return success;
 }
 
 static int find_index_by_id(IngredientService service, int id) {
