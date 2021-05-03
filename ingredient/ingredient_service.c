@@ -53,6 +53,7 @@ void get_all_ingredients(IngredientService service, IngredientReadModel *result)
     get_all_items(service->ingredients, ingredients);
     for (int i = 0; i < num_of_ingredients; ++i) {
         Ingredient current = ingredients[i].ingredient_item;
+        get_id(current, &(result[i].id));
         get_name(current, result[i].name, MAX_INGREDIENT_NAME_LEN);
         get_amount(current, &(result[i].amount));
         get_type(current, &(result[i].type));

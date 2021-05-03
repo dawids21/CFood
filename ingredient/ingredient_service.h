@@ -13,6 +13,7 @@
 typedef struct IngredientService *IngredientService;
 
 typedef struct {
+    int id;
     char name[MAX_INGREDIENT_NAME_LEN];
     int amount;
     IngredientType type;
