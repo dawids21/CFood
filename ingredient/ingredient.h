@@ -6,12 +6,21 @@
 #define CFOOD_INGREDIENT_H
 
 #include <stdlib.h>
+#include <stdbool.h>
+
+typedef enum {
+    SOLID,
+    LIQUID,
+} IngredientType;
 
 typedef struct Ingredient *Ingredient;
-typedef struct IngredientService *IngredientService;
 
-IngredientService new_ingredient_service();
+Ingredient create_new_ingredient(int id, char *name, int amount, IngredientType type);
 
-void delete_ingredient_service(IngredientService service);
+void delete_ingredient(Ingredient *ingredient);
+
+bool get_name(Ingredient ingredient, char *result, int result_len);
+
+bool get_amount(Ingredient ingredient, int *result);
 
 #endif //CFOOD_INGREDIENT_H

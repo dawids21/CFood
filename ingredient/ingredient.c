@@ -2,28 +2,46 @@
 // Created by dawids21 on 4/28/21.
 //
 
+#include <string.h>
 #include "ingredient.h"
 
-typedef enum {
-    Solid,
-    Liquid,
-} IngredientType;
-
 struct Ingredient {
+    int id;
     char *name;
     int amount;
     IngredientType type;
 };
 
-struct IngredientService {
+Ingredient create_new_ingredient(int id, char *name, int amount, IngredientType type) {
+    Ingredient ingredient = malloc(sizeof(struct Ingredient));
 
-};
+    ingredient->id = id;
+    ingredient->name = malloc((strlen(name) + 1) * sizeof(char));
+    strcpy(ingredient->name, name);
+    ingredient->amount = amount;
+    ingredient->type = type;
 
-IngredientService new_ingredient_service() {
-    IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
-    return service;
+    return ingredient;
 }
 
-void delete_ingredient_service(IngredientService service) {
-    free(service);
+void delete_ingredient(Ingredient *ingredient) {
+    free((*ingredient)->name);
+    free(*ingredient);
+    *ingredient = NULL;
+}
+
+bool get_name(Ingredient ingredient, char *result, int result_len) {
+    if (ingredient == NULL) {
+        return false;
+    }
+    strncpy(result, ingredient->name, result_len);
+    return true;
+}
+
+bool get_amount(Ingredient ingredient, int *result) {
+    if (ingredient == NULL) {
+        return false;
+    }
+    *result = ingredient->amount;
+    return true;
 }
