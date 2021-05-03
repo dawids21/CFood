@@ -17,6 +17,9 @@ void tearDown() {
 
 void should_add_item_to_array() {
 
+    bool success = add_solid_ingredient(service, "Bread", 5);
+
+    TEST_ASSERT_TRUE(success);
 }
 
 int main(void) {

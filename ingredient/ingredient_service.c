@@ -18,3 +18,7 @@ IngredientService new_ingredient_service() {
 void delete_ingredient_service(IngredientService service) {
     free(service);
 }
+
+bool add_solid_ingredient(IngredientService service, char *name, int amount) {
+    return true;
+}
