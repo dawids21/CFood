@@ -4,8 +4,11 @@
 
 #include <stdio.h>
 #include "ingredient_service_controller.h"
+#include "input.h"
 
 static void list_ingredients(IngredientService service);
+
+static void add_new_ingredient(IngredientService service);
 
 void ingredient_service_display_main_menu() {
     printf("***** CFood *****\n");
@@ -25,6 +28,7 @@ void ingredient_service_handle_option(char option, IngredientService service) {
             list_ingredients(service);
             break;
         case '2':
+            add_new_ingredient(service);
             break;
         case '3':
             break;
@@ -49,5 +53,28 @@ static void list_ingredients(IngredientService service) {
         } else {
             printf("%d | %s | %d ml\n", current.id, current.name, current.amount);
         }
+    }
+}
+
+static void add_new_ingredient(IngredientService service) {
+
+    char name[100];
+    printf("Name: ");
+    input_string(name, 100);
+
+    int amount;
+    printf("Amount: ");
+    input_integer(&amount);
+
+    char type_letter;
+    printf("Type ([S]OLID/[L]IQUID): ");
+    input_char(&type_letter);
+    IngredientType type = type_letter == 'L' || type_letter == 'l' ? LIQUID : SOLID;
+
+    bool success = add_ingredient(service, name, amount, type);
+    if (success) {
+        printf("Ingredient added");
+    } else {
+        printf("Problem with adding ingredient");
     }
 }
