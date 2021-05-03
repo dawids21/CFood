@@ -16,6 +16,15 @@ IngredientService new_ingredient_service() {
 }
 
 void delete_ingredient_service(IngredientService service) {
+    int num_of_ingredients = get_num_of_ingredients(service);
+    ArrayItem deleted[num_of_ingredients];
+    delete_array(&(service->ingredients), deleted);
+
+    for (int i = 0; i < num_of_ingredients; ++i) {
+        Ingredient to_delete = deleted[i].ingredient_item;
+        delete_ingredient(&to_delete);
+    }
+
     free(service);
 }
 
