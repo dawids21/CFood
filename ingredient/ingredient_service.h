@@ -28,4 +28,6 @@ bool add_ingredient(IngredientService service, char *name, int amount, Ingredien
 
 void get_all_ingredients(IngredientService service, IngredientReadModel *result);
 
+bool remove_ingredient(IngredientService service, int id);
+
 #endif //CFOOD_INGREDIENT_SERVICE_H

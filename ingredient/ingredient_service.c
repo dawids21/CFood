@@ -58,3 +58,7 @@ void get_all_ingredients(IngredientService service, IngredientReadModel *result)
         get_type(current, &(result[i].type));
     }
 }
+
+bool remove_ingredient(IngredientService service, int id) {
+    return true;
+}
