@@ -41,3 +41,7 @@ bool add_ingredient(IngredientService service, char *name, int amount, Ingredien
     append(service->ingredients, to_add);
     return true;
 }
+
+void get_all_ingredients(IngredientService service, IngredientReadModel *result) {
+
+}
