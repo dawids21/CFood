@@ -75,5 +75,15 @@ bool get(Array array, int index, ArrayItem *result) {
 }
 
 void insert_at(Array array, int index, ArrayItem arrayItem) {
+    if (array->size == array->capacity) {
+        array->capacity *= 2;
+        array->data = realloc(array->data, array->capacity * sizeof(ArrayItem));
+    }
 
+    for (int i = array->size - 1; i >= index; i--) {
+        array->data[i + 1] = array->data[i];
+    }
+
+    array->data[index] = arrayItem;
+    array->size++;
 }
