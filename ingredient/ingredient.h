@@ -5,10 +5,13 @@
 #ifndef CFOOD_INGREDIENT_H
 #define CFOOD_INGREDIENT_H
 
+#include <stdlib.h>
+
+typedef struct Ingredient *Ingredient;
 typedef struct IngredientService *IngredientService;
 
-IngredientService newIngredientService();
+IngredientService new_ingredient_service();
 
-void deleteIngredientService(IngredientService service);
+void delete_ingredient_service(IngredientService service);
 
 #endif //CFOOD_INGREDIENT_H
