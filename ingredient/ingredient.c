@@ -16,7 +16,7 @@ Ingredient create_new_ingredient(int id, char *name, int amount, IngredientType 
     Ingredient ingredient = malloc(sizeof(struct Ingredient));
 
     ingredient->id = id;
-    ingredient->name = malloc(strlen(name) * sizeof(char));
+    ingredient->name = malloc((strlen(name) + 1) * sizeof(char));
     strcpy(ingredient->name, name);
     ingredient->amount = amount;
     ingredient->type = type;
