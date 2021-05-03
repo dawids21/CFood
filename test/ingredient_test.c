@@ -31,11 +31,19 @@ void should_add_item_to_array() {
     TEST_ASSERT_EQUAL(1, get_num_of_ingredients(service));
 }
 
+void return_false_when_name_not_given() {
+    bool success = add_ingredient(service, "", 5, SOLID);
+
+    TEST_ASSERT_FALSE(success);
+    TEST_ASSERT_EQUAL(0, get_num_of_ingredients(service));
+}
+
 int main(void) {
     UNITY_BEGIN();
 
     RUN_TEST(return_num_of_ingredients);
     RUN_TEST(should_add_item_to_array);
+    RUN_TEST(return_false_when_name_not_given);
 
     return UNITY_END();
 }
