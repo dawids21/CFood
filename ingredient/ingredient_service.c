@@ -43,5 +43,13 @@ bool add_ingredient(IngredientService service, char *name, int amount, Ingredien
 }
 
 void get_all_ingredients(IngredientService service, IngredientReadModel *result) {
-
+    int num_of_ingredients = get_num_of_ingredients(service);
+    ArrayItem ingredients[num_of_ingredients];
+    get_all_items(service->ingredients, ingredients);
+    for (int i = 0; i < num_of_ingredients; ++i) {
+        Ingredient current = ingredients[i].ingredient_item;
+        get_name(current, result[i].name, MAX_INGREDIENT_NAME_LEN);
+        get_amount(current, &(result[i].amount));
+        get_type(current, &(result[i].type));
+    }
 }
