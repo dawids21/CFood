@@ -2,6 +2,7 @@
 // Created by dawids21 on 4/28/21.
 //
 
+#include <array.h>
 #include "ingredient.h"
 
 typedef enum {
@@ -16,7 +17,7 @@ struct Ingredient {
 };
 
 struct IngredientService {
-
+    Array ingredients;
 };
 
 IngredientService new_ingredient_service() {
