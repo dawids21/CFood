@@ -5,11 +5,6 @@
 #include <string.h>
 #include "ingredient.h"
 
-typedef enum {
-    Solid,
-    Liquid,
-} IngredientType;
-
 struct Ingredient {
     int id;
     char *name;

@@ -4,6 +4,7 @@
 
 #include <unity.h>
 #include <ingredient_service.h>
+#include <ingredient.h>
 
 static IngredientService service;
 
@@ -16,17 +17,18 @@ void tearDown() {
 }
 
 void return_num_of_ingredients() {
-    add_solid_ingredient(service, "Bread", 5);
-    add_solid_ingredient(service, "Egg", 3);
+    add_ingredient(service, "Bread", 5, SOLID);
+    add_ingredient(service, "Water", 750, LIQUID);
 
     TEST_ASSERT_EQUAL(2, get_num_of_ingredients(service));
 }
 
 void should_add_item_to_array() {
 
-    bool success = add_solid_ingredient(service, "Bread", 5);
+    bool success = add_ingredient(service, "Bread", 5, SOLID);
 
     TEST_ASSERT_TRUE(success);
+    TEST_ASSERT_EQUAL(1, get_num_of_ingredients(service));
 }
 
 int main(void) {

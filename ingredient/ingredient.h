@@ -8,6 +8,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+typedef enum {
+    SOLID,
+    LIQUID,
+} IngredientType;
+
 typedef struct Ingredient *Ingredient;
 
 bool get_name(Ingredient ingredient, char *result, int result_len);

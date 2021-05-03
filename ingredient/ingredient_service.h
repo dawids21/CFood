@@ -15,6 +15,6 @@ void delete_ingredient_service(IngredientService service);
 
 int get_num_of_ingredients(IngredientService service);
 
-bool add_solid_ingredient(IngredientService service, char *name, int amount);
+bool add_ingredient(IngredientService service, char *name, int amount, IngredientType type);
 
 #endif //CFOOD_INGREDIENT_SERVICE_H

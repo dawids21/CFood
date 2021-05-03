@@ -23,6 +23,6 @@ int get_num_of_ingredients(IngredientService service) {
     return get_size(service->ingredients);
 }
 
-bool add_solid_ingredient(IngredientService service, char *name, int amount) {
+bool add_ingredient(IngredientService service, char *name, int amount, IngredientType type) {
     return true;
 }
