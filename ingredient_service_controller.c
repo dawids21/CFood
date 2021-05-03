@@ -42,6 +42,10 @@ void ingredient_service_handle_option(char option, IngredientService service) {
 
 static void list_ingredients(IngredientService service) {
     int num_of_ingredients = get_num_of_ingredients(service);
+    if (num_of_ingredients == 0) {
+        printf("No ingredients\n");
+        return;
+    }
     IngredientReadModel to_list[num_of_ingredients];
     get_all_ingredients(service, to_list);
     printf("ID | Name | Amount\n");
