@@ -15,6 +15,10 @@ typedef enum {
 
 typedef struct Ingredient *Ingredient;
 
+Ingredient create_new_ingredient(int id, char *name, int amount, IngredientType type);
+
+void delete_ingredient(Ingredient *ingredient);
+
 bool get_name(Ingredient ingredient, char *result, int result_len);
 
 bool get_amount(Ingredient ingredient, int *result);

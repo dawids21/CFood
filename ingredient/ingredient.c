@@ -12,6 +12,24 @@ struct Ingredient {
     IngredientType type;
 };
 
+Ingredient create_new_ingredient(int id, char *name, int amount, IngredientType type) {
+    Ingredient ingredient = malloc(sizeof(struct Ingredient));
+
+    ingredient->id = id;
+    ingredient->name = malloc(strlen(name) * sizeof(char));
+    strcpy(ingredient->name, name);
+    ingredient->amount = amount;
+    ingredient->type = type;
+
+    return ingredient;
+}
+
+void delete_ingredient(Ingredient *ingredient) {
+    free((*ingredient)->name);
+    free(*ingredient);
+    *ingredient = NULL;
+}
+
 bool get_name(Ingredient ingredient, char *result, int result_len) {
     if (ingredient == NULL) {
         return false;
