@@ -45,3 +45,11 @@ bool get_amount(Ingredient ingredient, int *result) {
     *result = ingredient->amount;
     return true;
 }
+
+bool get_type(Ingredient ingredient, IngredientType *result) {
+    if (ingredient == NULL) {
+        return false;
+    }
+    *result = ingredient->type;
+    return true;
+}

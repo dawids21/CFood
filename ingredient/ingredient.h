@@ -23,4 +23,6 @@ bool get_name(Ingredient ingredient, char *result, int result_len);
 
 bool get_amount(Ingredient ingredient, int *result);
 
+bool get_type(Ingredient ingredient, IngredientType *result);
+
 #endif //CFOOD_INGREDIENT_H
