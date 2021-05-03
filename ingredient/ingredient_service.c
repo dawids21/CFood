@@ -43,6 +43,11 @@ bool add_ingredient(IngredientService service, char *name, int amount, Ingredien
 }
 
 void get_all_ingredients(IngredientService service, IngredientReadModel *result) {
+
+    if (service == NULL || result == NULL) {
+        return;
+    }
+
     int num_of_ingredients = get_num_of_ingredients(service);
     ArrayItem ingredients[num_of_ingredients];
     get_all_items(service->ingredients, ingredients);
