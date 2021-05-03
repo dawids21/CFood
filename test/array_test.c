@@ -173,6 +173,24 @@ void array_should_scale_automatically() {
     delete_array(&array, NULL);
 }
 
+void insert_item_at_given_index() {
+    Array array = new_array();
+
+    append(array, (ArrayItem) 5);
+    append(array, (ArrayItem) 7);
+
+    insert_at(array, 1, (ArrayItem) 6);
+
+    ArrayItem actual[get_size(array)];
+    get_all_items(array, actual);
+
+    TEST_ASSERT_EQUAL(5, actual[0].int_item);
+    TEST_ASSERT_EQUAL(6, actual[1].int_item);
+    TEST_ASSERT_EQUAL(7, actual[2].int_item);
+
+    delete_array(&array, NULL);
+}
+
 
 int main(void) {
     UNITY_BEGIN();
@@ -188,6 +206,7 @@ int main(void) {
     RUN_TEST(return_false_when_index_too_big);
     RUN_TEST(return_false_when_index_negative);
     RUN_TEST(array_should_scale_automatically);
+    RUN_TEST(insert_item_at_given_index);
 
     return UNITY_END();
 }
