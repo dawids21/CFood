@@ -11,6 +11,7 @@ typedef enum {
 } IngredientType;
 
 struct Ingredient {
+    int id;
     char *name;
     int amount;
     IngredientType type;
