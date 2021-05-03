@@ -226,6 +226,18 @@ void insert_should_append_when_index_too_big() {
     delete_array(&array, NULL);
 }
 
+void get_returns_false_when_result_is_null() {
+    Array array = new_array();
+
+    append(array, (ArrayItem) 5);
+
+    bool success = get(array, 0, NULL);
+
+    TEST_ASSERT_FALSE(success);
+
+    delete_array(&array, NULL);
+}
+
 int main(void) {
     UNITY_BEGIN();
 
@@ -243,6 +255,7 @@ int main(void) {
     RUN_TEST(insert_item_at_given_index);
     RUN_TEST(not_insert_when_index_is_negative);
     RUN_TEST(insert_should_append_when_index_too_big);
+    RUN_TEST(get_returns_false_when_result_is_null);
 
     return UNITY_END();
 }
