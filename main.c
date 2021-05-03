@@ -22,7 +22,7 @@ int main() {
         } else if (option == '2') {
             break;
         } else {
-            printf("Unknown option");
+            printf("Unknown option\n");
         }
     }
 
@@ -40,11 +40,30 @@ static void input_char(char *dest) {
 }
 
 static void manage_ingredients_handler(IngredientService ingredient_service) {
-    printf("***** CFood *****\n");
-    printf("-----------------\n");
-    printf("1. List all ingredients\n");
-    printf("2. Add new ingredient\n");
-    printf("3. Modify existing ingredient\n");
-    printf("4. Delete existing ingredient\n");
-    printf("Choose option: ");
+    while (true) {
+        printf("***** CFood *****\n");
+        printf("-----------------\n");
+        printf("1. List all ingredients\n");
+        printf("2. Add new ingredient\n");
+        printf("3. Modify existing ingredient\n");
+        printf("4. Delete existing ingredient\n");
+        printf("5. Return\n");
+        printf("Choose option: ");
+        char option;
+        input_char(&option);
+        if (option == '1') {
+
+        } else if (option == '2') {
+
+        } else if (option == '3') {
+
+        } else if (option == '4') {
+
+        } else if (option == '5') {
+            break;
+        } else {
+            printf("Unknown option\n");
+        }
+    }
+
 }
