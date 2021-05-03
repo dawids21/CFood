@@ -2,8 +2,7 @@
 #include <stdbool.h>
 #include <ingredient_service.h>
 #include "ingredient_service_controller.h"
-
-static void input_char(char *dest);
+#include "input.h"
 
 static void manage_ingredients_handler(IngredientService ingredient_service);
 
@@ -31,15 +30,6 @@ int main() {
     return 0;
 }
 
-static void input_char(char *dest) {
-    char input[3];
-    do {
-        fgets(input, 3, stdin);
-    } while (input[0] == '\n');
-
-    *dest = input[0];
-}
-
 static void manage_ingredients_handler(IngredientService ingredient_service) {
     while (true) {
         ingredient_service_display_main_menu();
@@ -53,5 +43,4 @@ static void manage_ingredients_handler(IngredientService ingredient_service) {
             printf("Unknown option\n");
         }
     }
-
 }
