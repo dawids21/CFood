@@ -13,6 +13,7 @@
 typedef struct IngredientService *IngredientService;
 
 typedef struct {
+    int id;
     char name[MAX_INGREDIENT_NAME_LEN];
     int amount;
     IngredientType type;
@@ -27,5 +28,9 @@ int get_num_of_ingredients(IngredientService service);
 bool add_ingredient(IngredientService service, char *name, int amount, IngredientType type);
 
 void get_all_ingredients(IngredientService service, IngredientReadModel *result);
+
+bool remove_ingredient(IngredientService service, int id);
+
+bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type);
 
 #endif //CFOOD_INGREDIENT_SERVICE_H
