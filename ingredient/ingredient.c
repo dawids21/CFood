@@ -30,6 +30,14 @@ void delete_ingredient(Ingredient *ingredient) {
     *ingredient = NULL;
 }
 
+bool get_id(Ingredient ingredient, int *result) {
+    if (ingredient == NULL) {
+        return false;
+    }
+    *result = ingredient->id;
+    return true;
+}
+
 bool get_name(Ingredient ingredient, char *result, int result_len) {
     if (ingredient == NULL) {
         return false;

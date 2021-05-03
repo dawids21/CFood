@@ -19,6 +19,8 @@ Ingredient create_new_ingredient(int id, char *name, int amount, IngredientType 
 
 void delete_ingredient(Ingredient *ingredient);
 
+bool get_id(Ingredient ingredient, int *result);
+
 bool get_name(Ingredient ingredient, char *result, int result_len);
 
 bool get_amount(Ingredient ingredient, int *result);
