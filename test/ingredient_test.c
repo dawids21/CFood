@@ -75,6 +75,19 @@ void remove_ingredient_deletes_ingredient_at_given_index() {
     TEST_ASSERT_EQUAL(2, get_num_of_ingredients(service));
 }
 
+void remove_ingredient_returns_false_when_id_not_exists() {
+    add_ingredient(service, "Bread", 5, SOLID);
+    add_ingredient(service, "Cheese", 2, SOLID);
+
+    IngredientReadModel ingredients[get_num_of_ingredients(service)];
+    get_all_ingredients(service, ingredients);
+    bool success = remove_ingredient(service, 6);
+    get_all_ingredients(service, ingredients);
+
+    TEST_ASSERT_FALSE(success);
+    TEST_ASSERT_EQUAL(2, get_num_of_ingredients(service));
+}
+
 int main(void) {
     UNITY_BEGIN();
 
@@ -84,6 +97,7 @@ int main(void) {
     RUN_TEST(return_false_when_amount_is_negative);
     RUN_TEST(return_list_of_all_ingredients);
     RUN_TEST(remove_ingredient_deletes_ingredient_at_given_index);
+    RUN_TEST(remove_ingredient_returns_false_when_id_not_exists);
 
     return UNITY_END();
 }
