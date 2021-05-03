@@ -17,11 +17,11 @@ typedef struct Array *Array;
 
 Array new_array();
 
-ArrayItem *delete_array(Array *array);
+void delete_array(Array *array, ArrayItem *current_items);
 
 void append(Array array, ArrayItem item);
 
-ArrayItem *get_all_items(Array array);
+void get_all_items(Array array, ArrayItem *result);
 
 int get_size(Array array);
 

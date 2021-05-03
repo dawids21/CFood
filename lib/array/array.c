@@ -21,12 +21,13 @@ Array new_array() {
     return array;
 }
 
-ArrayItem *delete_array(Array *array) {
-    ArrayItem *current_items = get_all_items(*array);
+void delete_array(Array *array, ArrayItem *current_items) {
+    if (current_items != NULL) {
+        get_all_items(*array, current_items);
+    }
     free((*array)->data);
     free(*array);
     *array = NULL;
-    return current_items;
 }
 
 void append(Array array, ArrayItem item) {
@@ -37,12 +38,10 @@ void append(Array array, ArrayItem item) {
     array->data[array->size++] = item;
 }
 
-ArrayItem *get_all_items(Array array) {
-    ArrayItem *result = malloc(sizeof(ArrayItem) * array->size);
+void get_all_items(Array array, ArrayItem *result) {
     for (int i = 0; i < array->size; i++) {
         result[i] = array->data[i];
     }
-    return result;
 }
 
 int get_size(Array array) {
