@@ -15,6 +15,13 @@ void tearDown() {
     delete_ingredient_service(service);
 }
 
+void return_num_of_ingredients() {
+    add_solid_ingredient(service, "Bread", 5);
+    add_solid_ingredient(service, "Egg", 3);
+
+    TEST_ASSERT_EQUAL(2, get_num_of_ingredients(service));
+}
+
 void should_add_item_to_array() {
 
     bool success = add_solid_ingredient(service, "Bread", 5);
@@ -25,6 +32,7 @@ void should_add_item_to_array() {
 int main(void) {
     UNITY_BEGIN();
 
+    RUN_TEST(return_num_of_ingredients);
     RUN_TEST(should_add_item_to_array);
 
     return UNITY_END();
