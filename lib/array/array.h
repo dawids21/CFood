@@ -29,4 +29,6 @@ bool delete_at_index(Array array, int index, ArrayItem *deleted);
 
 bool get(Array array, int index, ArrayItem *result);
 
+void insert_at(Array array, int index, ArrayItem arrayItem);
+
 #endif //CFOOD_ARRAY_H

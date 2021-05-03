@@ -73,3 +73,7 @@ bool get(Array array, int index, ArrayItem *result) {
     *result = array->data[index];
     return true;
 }
+
+void insert_at(Array array, int index, ArrayItem arrayItem) {
+
+}
