@@ -10,6 +10,8 @@ struct IngredientService {
     Array ingredients;
 };
 
+static int find_index_by_id(IngredientService service, int id);
+
 IngredientService new_ingredient_service() {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
     service->ingredients = new_array();
@@ -61,5 +63,32 @@ void get_all_ingredients(IngredientService service, IngredientReadModel *result)
 }
 
 bool remove_ingredient(IngredientService service, int id) {
+    if (service == NULL) {
+        return false;
+    }
+    int index = find_index_by_id(service, id);
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem deleted;
+    delete_at_index(service->ingredients, index, &deleted);
+    delete_ingredient(&deleted.ingredient_item);
     return true;
+}
+
+static int find_index_by_id(IngredientService service, int id) {
+    int num_of_items = get_num_of_ingredients(service);
+    ArrayItem ingredients[num_of_items];
+    get_all_items(service->ingredients, ingredients);
+
+    for (int i = 0; i < num_of_items; ++i) {
+        int current_id;
+        get_id(ingredients[i].ingredient_item, &current_id);
+        if (current_id == id) {
+            return i;
+        }
+    }
+
+    return -1;
 }
