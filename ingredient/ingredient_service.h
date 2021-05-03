@@ -6,6 +6,7 @@
 #define CFOOD_INGREDIENT_SERVICE_H
 
 #include <stdbool.h>
+#include <ingredient.h>
 
 typedef struct IngredientService *IngredientService;
 
