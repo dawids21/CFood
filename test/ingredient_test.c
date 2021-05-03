@@ -5,12 +5,14 @@
 #include <ingredient.h>
 #include <unity.h>
 
-void setUp() {
+static IngredientService service;
 
+void setUp() {
+    service = new_ingredient_service();
 }
 
 void tearDown() {
-
+    delete_ingredient_service(service);
 }
 
 int main(void) {
