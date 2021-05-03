@@ -27,4 +27,6 @@ bool get_amount(Ingredient ingredient, int *result);
 
 bool get_type(Ingredient ingredient, IngredientType *result);
 
+bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientType new_type);
+
 #endif //CFOOD_INGREDIENT_H
