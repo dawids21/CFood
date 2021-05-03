@@ -15,3 +15,7 @@ void ingredient_service_display_main_menu() {
     printf("5. Return\n");
     printf("Choose option: ");
 }
+
+void ingredient_service_handle_option(char option, IngredientService service) {
+
+}

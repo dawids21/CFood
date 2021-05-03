@@ -45,14 +45,8 @@ static void manage_ingredients_handler(IngredientService ingredient_service) {
         ingredient_service_display_main_menu();
         char option;
         input_char(&option);
-        if (option == '1') {
-
-        } else if (option == '2') {
-
-        } else if (option == '3') {
-
-        } else if (option == '4') {
-
+        if (option >= '1' && option <= '4') {
+            ingredient_service_handle_option(option, ingredient_service);
         } else if (option == '5') {
             break;
         } else {
