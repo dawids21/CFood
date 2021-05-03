@@ -88,6 +88,21 @@ void remove_ingredient_returns_false_when_id_not_exists() {
     TEST_ASSERT_EQUAL(2, get_num_of_ingredients(service));
 }
 
+void modify_ingredient_change_the_name_amount_and_type() {
+    add_ingredient(service, "Bread", 5, SOLID);
+    int id = 0;
+
+    bool success = modify_ingredient(service, id, "Cheese", 2, SOLID);
+    IngredientReadModel ingredients[get_num_of_ingredients(service)];
+    get_all_ingredients(service, ingredients);
+
+    TEST_ASSERT_TRUE(success);
+    TEST_ASSERT_EQUAL(id, ingredients[0].id);
+    TEST_ASSERT_EQUAL_STRING("Cheese", ingredients[0].name);
+    TEST_ASSERT_EQUAL(2, ingredients[0].amount);
+    TEST_ASSERT_EQUAL(SOLID, ingredients[0].type);
+}
+
 int main(void) {
     UNITY_BEGIN();
 
@@ -98,6 +113,7 @@ int main(void) {
     RUN_TEST(return_list_of_all_ingredients);
     RUN_TEST(remove_ingredient_deletes_ingredient_at_given_index);
     RUN_TEST(remove_ingredient_returns_false_when_id_not_exists);
+    RUN_TEST(modify_ingredient_change_the_name_amount_and_type);
 
     return UNITY_END();
 }
