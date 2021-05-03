@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <ingredient_service.h>
+#include "ingredient_service_controller.h"
 
 static void input_char(char *dest);
 
@@ -41,14 +42,7 @@ static void input_char(char *dest) {
 
 static void manage_ingredients_handler(IngredientService ingredient_service) {
     while (true) {
-        printf("***** CFood *****\n");
-        printf("-----------------\n");
-        printf("1. List all ingredients\n");
-        printf("2. Add new ingredient\n");
-        printf("3. Modify existing ingredient\n");
-        printf("4. Delete existing ingredient\n");
-        printf("5. Return\n");
-        printf("Choose option: ");
+        ingredient_service_display_main_menu();
         char option;
         input_char(&option);
         if (option == '1') {
