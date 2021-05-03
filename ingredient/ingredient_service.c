@@ -77,6 +77,10 @@ bool remove_ingredient(IngredientService service, int id) {
     return true;
 }
 
+bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type) {
+    return true;
+}
+
 static int find_index_by_id(IngredientService service, int id) {
     int num_of_items = get_num_of_ingredients(service);
     ArrayItem ingredients[num_of_items];

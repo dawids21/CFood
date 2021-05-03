@@ -31,4 +31,6 @@ void get_all_ingredients(IngredientService service, IngredientReadModel *result)
 
 bool remove_ingredient(IngredientService service, int id);
 
+bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type);
+
 #endif //CFOOD_INGREDIENT_SERVICE_H
