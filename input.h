@@ -7,4 +7,6 @@
 
 void input_char(char *dest);
 
+void input_string(char *dest, int limit);
+
 #endif //CFOOD_INPUT_H
