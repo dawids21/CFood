@@ -12,6 +12,8 @@ static void add_new_ingredient(IngredientService service);
 
 static void modify_existing_ingredient(IngredientService service);
 
+static void delete_existing_ingredient(IngredientService service);
+
 void ingredient_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
@@ -36,6 +38,7 @@ void ingredient_service_handle_option(char option, IngredientService service) {
             modify_existing_ingredient(service);
             break;
         case '4':
+            delete_existing_ingredient(service);
             break;
         default:
             break;
@@ -110,5 +113,19 @@ static void modify_existing_ingredient(IngredientService service) {
         printf("Ingredient modified\n");
     } else {
         printf("Problem with modifying ingredient\n");
+    }
+}
+
+static void delete_existing_ingredient(IngredientService service) {
+    list_ingredients(service);
+    printf("Choose ID to delete: ");
+    int id;
+    input_integer(&id);
+
+    bool success = remove_ingredient(service, id);
+    if (success) {
+        printf("Ingredient deleted\n");
+    } else {
+        printf("Problem with deleting ingredient\n");
     }
 }
