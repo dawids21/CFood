@@ -10,6 +10,8 @@ static void list_ingredients(IngredientService service);
 
 static void add_new_ingredient(IngredientService service);
 
+static void modify_existing_ingredient(IngredientService service);
+
 void ingredient_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
@@ -31,13 +33,14 @@ void ingredient_service_handle_option(char option, IngredientService service) {
             add_new_ingredient(service);
             break;
         case '3':
+            modify_existing_ingredient(service);
             break;
         case '4':
             break;
         default:
             break;
     }
-
+    printf("\n");
 }
 
 static void list_ingredients(IngredientService service) {
@@ -77,8 +80,35 @@ static void add_new_ingredient(IngredientService service) {
 
     bool success = add_ingredient(service, name, amount, type);
     if (success) {
-        printf("Ingredient added");
+        printf("Ingredient added\n");
     } else {
-        printf("Problem with adding ingredient");
+        printf("Problem with adding ingredient\n");
+    }
+}
+
+static void modify_existing_ingredient(IngredientService service) {
+    list_ingredients(service);
+    printf("Choose ID to modify: ");
+    int id;
+    input_integer(&id);
+
+    char new_name[100];
+    printf("New name: ");
+    input_string(new_name, 100);
+
+    int new_amount;
+    printf("New amount: ");
+    input_integer(&new_amount);
+
+    char new_type_letter;
+    printf("New type ([S]OLID/[L]IQUID): ");
+    input_char(&new_type_letter);
+    IngredientType type = new_type_letter == 'L' || new_type_letter == 'l' ? LIQUID : SOLID;
+
+    bool success = modify_ingredient(service, id, new_name, new_amount, type);
+    if (success) {
+        printf("Ingredient modified\n");
+    } else {
+        printf("Problem with modifying ingredient\n");
     }
 }
