@@ -14,6 +14,8 @@ struct IngredientService {
 
 static int find_index_by_id(IngredientService service, int id);
 
+static bool is_ingredient_with_name(IngredientService service, char *name);
+
 IngredientService new_ingredient_service(char *filename) {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
     service->ingredients = new_array();
@@ -40,9 +42,10 @@ int get_num_of_ingredients(IngredientService service) {
 }
 
 bool add_ingredient(IngredientService service, char *name, int amount, IngredientType type) {
-    if (strlen(name) == 0 || amount < 0) {
+    if (strlen(name) == 0 || amount < 0 || is_ingredient_with_name(service, name)) {
         return false;
     }
+
     ArrayItem to_add = {.ingredient_item = create_new_ingredient(get_num_of_ingredients(service), name, amount, type)};
     append(service->ingredients, to_add);
     return true;
@@ -99,22 +102,6 @@ bool modify_ingredient(IngredientService service, int id, char *new_name, int ne
     return success;
 }
 
-static int find_index_by_id(IngredientService service, int id) {
-    int num_of_items = get_num_of_ingredients(service);
-    ArrayItem ingredients[num_of_items];
-    get_all_items(service->ingredients, ingredients);
-
-    for (int i = 0; i < num_of_items; ++i) {
-        int current_id;
-        get_id(ingredients[i].ingredient_item, &current_id);
-        if (current_id == id) {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
 void save_ingredient_service(IngredientService service) {
     if (strlen(service->filename) == 0) {
         return;
@@ -147,4 +134,35 @@ IngredientService restore_ingredient_service(char *filename) {
 
     fclose(f);
     return service;
+}
+
+static int find_index_by_id(IngredientService service, int id) {
+    int num_of_items = get_num_of_ingredients(service);
+    ArrayItem ingredients[num_of_items];
+    get_all_items(service->ingredients, ingredients);
+
+    for (int i = 0; i < num_of_items; ++i) {
+        int current_id;
+        get_id(ingredients[i].ingredient_item, &current_id);
+        if (current_id == id) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+static bool is_ingredient_with_name(IngredientService service, char *name) {
+    int size = get_size(service->ingredients);
+    size_t name_len = strlen(name) + 1;
+    ArrayItem ingredients[size];
+    get_all_items(service->ingredients, ingredients);
+    for (int i = 0; i < size; ++i) {
+        char ingredient_name[name_len];
+        get_name(ingredients[i].ingredient_item, ingredient_name, (int) name_len);
+        if (strcmp(ingredient_name, name) == 0) {
+            return true;
+        }
+    }
+    return false;
 }
