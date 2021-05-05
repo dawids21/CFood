@@ -8,13 +8,16 @@
 
 struct IngredientService {
     Array ingredients;
+    char *filename;
 };
 
 static int find_index_by_id(IngredientService service, int id);
 
-IngredientService new_ingredient_service() {
+IngredientService new_ingredient_service(char *filename) {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
     service->ingredients = new_array();
+    service->filename = malloc(sizeof(char) * (strlen(filename) + 1));
+    strcpy(service->filename, filename);
     return service;
 }
 
@@ -27,7 +30,7 @@ void delete_ingredient_service(IngredientService service) {
         Ingredient to_delete = deleted[i].ingredient_item;
         delete_ingredient(&to_delete);
     }
-
+    free(service->filename);
     free(service);
 }
 

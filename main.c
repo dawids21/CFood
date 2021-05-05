@@ -7,7 +7,7 @@
 static void manage_ingredients_handler(IngredientService ingredient_service);
 
 int main() {
-    IngredientService ingredient_service = new_ingredient_service();
+    IngredientService ingredient_service = new_ingredient_service("./ingredient_service.bin");
 
     while (true) {
         printf("***** CFood *****\n");

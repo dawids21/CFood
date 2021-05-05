@@ -19,7 +19,7 @@ typedef struct {
     IngredientType type;
 } IngredientReadModel;
 
-IngredientService new_ingredient_service();
+IngredientService new_ingredient_service(char *filename);
 
 void delete_ingredient_service(IngredientService service);
 

@@ -9,7 +9,7 @@
 static IngredientService service;
 
 void setUp() {
-    service = new_ingredient_service();
+    service = new_ingredient_service("");
 }
 
 void tearDown() {

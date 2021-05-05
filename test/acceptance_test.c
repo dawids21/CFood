@@ -8,7 +8,7 @@
 static IngredientService ingredient_service;
 
 void setUp() {
-    ingredient_service = new_ingredient_service();
+    ingredient_service = new_ingredient_service("");
 }
 
 void tearDown() {
