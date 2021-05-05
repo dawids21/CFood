@@ -1,13 +1,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <ingredient_service.h>
+#include <unistd.h>
 #include "ingredient_service_controller.h"
 #include "input.h"
 
 static void manage_ingredients_handler(IngredientService ingredient_service);
 
+#define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
+
 int main() {
-    IngredientService ingredient_service = new_ingredient_service("./ingredient_service.bin");
+    IngredientService ingredient_service;
+    if (access(INGREDIENT_SERVICE_FILENAME, F_OK) == 0) {
+        ingredient_service = restore_ingredient_service(INGREDIENT_SERVICE_FILENAME);
+    } else {
+        ingredient_service = new_ingredient_service(INGREDIENT_SERVICE_FILENAME);
+    }
 
     while (true) {
         printf("***** CFood *****\n");
@@ -26,6 +34,7 @@ int main() {
         }
     }
 
+    save_ingredient_service(ingredient_service);
     delete_ingredient_service(ingredient_service);
     return 0;
 }
