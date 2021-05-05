@@ -4,17 +4,21 @@
 
 #include <array.h>
 #include <string.h>
+#include <stdio.h>
 #include "ingredient_service.h"
 
 struct IngredientService {
     Array ingredients;
+    char *filename;
 };
 
 static int find_index_by_id(IngredientService service, int id);
 
-IngredientService new_ingredient_service() {
+IngredientService new_ingredient_service(char *filename) {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
     service->ingredients = new_array();
+    service->filename = malloc(sizeof(char) * (strlen(filename) + 1));
+    strcpy(service->filename, filename);
     return service;
 }
 
@@ -27,7 +31,7 @@ void delete_ingredient_service(IngredientService service) {
         Ingredient to_delete = deleted[i].ingredient_item;
         delete_ingredient(&to_delete);
     }
-
+    free(service->filename);
     free(service);
 }
 
@@ -109,4 +113,38 @@ static int find_index_by_id(IngredientService service, int id) {
     }
 
     return -1;
+}
+
+void save_ingredient_service(IngredientService service) {
+    if (strlen(service->filename) == 0) {
+        return;
+    }
+
+    FILE *f = fopen(service->filename, "wb");
+
+    const int size = get_size(service->ingredients);
+    fwrite(&size, sizeof(int), 1, f);
+    ArrayItem items[size];
+    get_all_items(service->ingredients, items);
+
+    for (int i = 0; i < size; i++) {
+        save_ingredient(items[i].ingredient_item, f);
+    }
+    fclose(f);
+}
+
+IngredientService restore_ingredient_service(char *filename) {
+    IngredientService service = new_ingredient_service(filename);
+    FILE *f = fopen(service->filename, "rb");
+    int size;
+    fread(&size, sizeof(int), 1, f);
+
+    for (int i = 0; i < size; ++i) {
+        Ingredient ingredient = restore_ingredient(f);
+        ArrayItem item = {.ingredient_item = ingredient};
+        append(service->ingredients, item);
+    }
+
+    fclose(f);
+    return service;
 }

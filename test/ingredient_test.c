@@ -9,7 +9,7 @@
 static IngredientService service;
 
 void setUp() {
-    service = new_ingredient_service();
+    service = new_ingredient_service("");
 }
 
 void tearDown() {
@@ -112,6 +112,29 @@ void modify_ingredient_return_false_when_id_not_exists() {
     TEST_ASSERT_FALSE(success);
 }
 
+void save_ingredient_service_should_save_data_in_a_file() {
+    IngredientService test_service = new_ingredient_service("./test.bin");
+    add_ingredient(test_service, "Bread", 5, SOLID);
+
+    save_ingredient_service(test_service);
+
+    delete_ingredient_service(test_service);
+    test_service = restore_ingredient_service("./test.bin");
+
+    int num_of_ingredients = get_num_of_ingredients(test_service);
+    TEST_ASSERT_EQUAL(1, num_of_ingredients);
+
+    IngredientReadModel result[num_of_ingredients];
+    get_all_ingredients(test_service, result);
+
+    delete_ingredient_service(test_service);
+
+    TEST_ASSERT_EQUAL(0, result[0].id);
+    TEST_ASSERT_EQUAL_STRING("Bread", result[0].name);
+    TEST_ASSERT_EQUAL(5, result[0].amount);
+    TEST_ASSERT_EQUAL(SOLID, result[0].type);
+}
+
 int main(void) {
     UNITY_BEGIN();
 
@@ -124,6 +147,7 @@ int main(void) {
     RUN_TEST(remove_ingredient_returns_false_when_id_not_exists);
     RUN_TEST(modify_ingredient_change_the_name_amount_and_type);
     RUN_TEST(modify_ingredient_return_false_when_id_not_exists);
+    RUN_TEST(save_ingredient_service_should_save_data_in_a_file);
 
     return UNITY_END();
 }

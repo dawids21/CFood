@@ -19,7 +19,7 @@ typedef struct {
     IngredientType type;
 } IngredientReadModel;
 
-IngredientService new_ingredient_service();
+IngredientService new_ingredient_service(char *filename);
 
 void delete_ingredient_service(IngredientService service);
 
@@ -32,5 +32,9 @@ void get_all_ingredients(IngredientService service, IngredientReadModel *result)
 bool remove_ingredient(IngredientService service, int id);
 
 bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type);
+
+void save_ingredient_service(IngredientService service);
+
+IngredientService restore_ingredient_service(char *filename);
 
 #endif //CFOOD_INGREDIENT_SERVICE_H
