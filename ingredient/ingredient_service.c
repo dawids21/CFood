@@ -4,6 +4,7 @@
 
 #include <array.h>
 #include <string.h>
+#include <stdio.h>
 #include "ingredient_service.h"
 
 struct IngredientService {
@@ -115,9 +116,35 @@ static int find_index_by_id(IngredientService service, int id) {
 }
 
 void save_ingredient_service(IngredientService service) {
+    if (strlen(service->filename) == 0) {
+        return;
+    }
 
+    FILE *f = fopen(service->filename, "wb");
+
+    const int size = get_size(service->ingredients);
+    fwrite(&size, sizeof(int), 1, f);
+    ArrayItem items[size];
+    get_all_items(service->ingredients, items);
+
+    for (int i = 0; i < size; i++) {
+        save_ingredient(items[i].ingredient_item, f);
+    }
+    fclose(f);
 }
 
 IngredientService restore_ingredient_service(char *filename) {
-    return NULL;
+    IngredientService service = new_ingredient_service(filename);
+    FILE *f = fopen(service->filename, "rb");
+    int size;
+    fread(&size, sizeof(int), 1, f);
+
+    for (int i = 0; i < size; ++i) {
+        Ingredient ingredient = restore_ingredient(f);
+        ArrayItem item = {.ingredient_item = ingredient};
+        append(service->ingredients, item);
+    }
+
+    fclose(f);
+    return service;
 }
