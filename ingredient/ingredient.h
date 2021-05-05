@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 typedef enum {
     SOLID,
@@ -28,5 +29,9 @@ bool get_amount(Ingredient ingredient, int *result);
 bool get_type(Ingredient ingredient, IngredientType *result);
 
 bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientType new_type);
+
+void save_ingredient(Ingredient ingredient, FILE *f);
+
+Ingredient restore_ingredient(FILE *f);
 
 #endif //CFOOD_INGREDIENT_H

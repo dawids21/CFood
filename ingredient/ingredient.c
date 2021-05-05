@@ -73,3 +73,30 @@ bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientTyp
     strcpy(ingredient->name, new_name);
     return true;
 }
+
+void save_ingredient(Ingredient ingredient, FILE *f) {
+    fwrite(&ingredient->id, sizeof(int), 1, f);
+    size_t name_len = strlen(ingredient->name) + 1;
+    fwrite(&name_len, sizeof(size_t), 1, f);
+    fwrite(ingredient->name, sizeof(char), name_len, f);
+    fwrite(&ingredient->amount, sizeof(int), 1, f);
+    fwrite(&ingredient->type, sizeof(IngredientType), 1, f);
+}
+
+Ingredient restore_ingredient(FILE *f) {
+    int id;
+    fread(&id, sizeof(int), 1, f);
+
+    size_t name_len;
+    fread(&name_len, sizeof(size_t), 1, f);
+    char name[name_len];
+    fread(name, sizeof(char), name_len, f);
+
+    int amount;
+    fread(&amount, sizeof(int), 1, f);
+
+    int type;
+    fread(&type, sizeof(IngredientType), 1, f);
+
+    return create_new_ingredient(id, name, amount, type);
+}
