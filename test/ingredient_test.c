@@ -114,7 +114,7 @@ void modify_ingredient_return_false_when_id_not_exists() {
 
 void save_ingredient_service_should_save_data_in_a_file() {
     IngredientService test_service = new_ingredient_service("./test.bin");
-    add_ingredient(service, "Bread", 5, SOLID);
+    add_ingredient(test_service, "Bread", 5, SOLID);
 
     save_ingredient_service(test_service);
 
@@ -124,15 +124,15 @@ void save_ingredient_service_should_save_data_in_a_file() {
     int num_of_ingredients = get_num_of_ingredients(test_service);
     TEST_ASSERT_EQUAL(1, num_of_ingredients);
 
-    IngredientReadModel result[get_num_of_ingredients(test_service)];
+    IngredientReadModel result[num_of_ingredients];
     get_all_ingredients(test_service, result);
 
     delete_ingredient_service(test_service);
 
-//    TEST_ASSERT_EQUAL(0, result[0].id);
-//    TEST_ASSERT_EQUAL_STRING("Bread", result[0].name);
-//    TEST_ASSERT_EQUAL(5, result[0].amount);
-//    TEST_ASSERT_EQUAL(SOLID, result[0].type);
+    TEST_ASSERT_EQUAL(0, result[0].id);
+    TEST_ASSERT_EQUAL_STRING("Bread", result[0].name);
+    TEST_ASSERT_EQUAL(5, result[0].amount);
+    TEST_ASSERT_EQUAL(SOLID, result[0].type);
 }
 
 int main(void) {
