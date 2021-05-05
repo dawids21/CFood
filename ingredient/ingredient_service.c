@@ -42,9 +42,10 @@ int get_num_of_ingredients(IngredientService service) {
 }
 
 bool add_ingredient(IngredientService service, char *name, int amount, IngredientType type) {
-    if (strlen(name) == 0 || amount < 0) {
+    if (strlen(name) == 0 || amount < 0 || is_ingredient_with_name(service, name)) {
         return false;
     }
+
     ArrayItem to_add = {.ingredient_item = create_new_ingredient(get_num_of_ingredients(service), name, amount, type)};
     append(service->ingredients, to_add);
     return true;
