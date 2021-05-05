@@ -135,7 +135,7 @@ void save_ingredient_service_should_save_data_in_a_file() {
     TEST_ASSERT_EQUAL(SOLID, result[0].type);
 }
 
-void add_ingredient_fail_if_ingredient_with_the_same_name_and_type_already_exists() {
+void add_ingredient_fail_if_ingredient_with_the_same_name_already_exists() {
     add_ingredient(service, "Bread", 5, SOLID);
     bool success = add_ingredient(service, "Bread", 2, SOLID);
 
@@ -157,7 +157,7 @@ int main(void) {
     RUN_TEST(modify_ingredient_change_the_name_amount_and_type);
     RUN_TEST(modify_ingredient_return_false_when_id_not_exists);
     RUN_TEST(save_ingredient_service_should_save_data_in_a_file);
-    RUN_TEST(add_ingredient_fail_if_ingredient_with_the_same_name_and_type_already_exists);
+    RUN_TEST(add_ingredient_fail_if_ingredient_with_the_same_name_already_exists);
 
     return UNITY_END();
 }
