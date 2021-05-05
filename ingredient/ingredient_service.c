@@ -113,3 +113,11 @@ static int find_index_by_id(IngredientService service, int id) {
 
     return -1;
 }
+
+void save_ingredient_service(IngredientService service) {
+
+}
+
+IngredientService restore_ingredient_service(char *filename) {
+    return NULL;
+}
