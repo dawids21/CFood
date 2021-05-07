@@ -7,6 +7,7 @@ option(DEV "Use dev profile" false)
 
 add_subdirectory(lib/array)
 add_subdirectory(ingredient)
+add_subdirectory(recipe)
 
 if (DEV)
     include(CTest)
