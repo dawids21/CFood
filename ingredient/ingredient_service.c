@@ -113,7 +113,7 @@ void save_ingredient_service(IngredientService service) {
 
     const int size = get_size(service->ingredients);
     fwrite(&size, sizeof(int), 1, f);
-    fwrite(&service->ingredients, sizeof(int), 1, f);
+    fwrite(&service->id_ingredients, sizeof(int), 1, f);
     ArrayItem items[size];
     get_all_items(service->ingredients, items);
 
@@ -128,7 +128,7 @@ IngredientService restore_ingredient_service(char *filename) {
     FILE *f = fopen(service->filename, "rb");
     int size;
     fread(&size, sizeof(int), 1, f);
-    fread(&service->ingredients, sizeof(int), 1, f);
+    fread(&service->id_ingredients, sizeof(int), 1, f);
 
     for (int i = 0; i < size; ++i) {
         Ingredient ingredient = restore_ingredient(f);
