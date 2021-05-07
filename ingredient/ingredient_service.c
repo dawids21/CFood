@@ -8,6 +8,7 @@
 #include "ingredient_service.h"
 
 struct IngredientService {
+    int id_ingredients;
     Array ingredients;
     char *filename;
 };
@@ -18,6 +19,7 @@ static bool is_ingredient_with_name(IngredientService service, char *name);
 
 IngredientService new_ingredient_service(char *filename) {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
+    service->id_ingredients = 0;
     service->ingredients = new_array();
     service->filename = malloc(sizeof(char) * (strlen(filename) + 1));
     strcpy(service->filename, filename);
