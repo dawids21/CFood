@@ -95,3 +95,54 @@ void print_steps(Recipe recipe) {
         printf("%d. %s\n", i + 1, recipe->steps[i]);
     }
 }
+
+void save_recipe(Recipe recipe, FILE *f) {
+    fwrite(&recipe->id, sizeof(int), 1, f);
+
+    size_t name_len = strlen(recipe->name) + 1;
+    fwrite(&name_len, sizeof(size_t), 1, f);
+    fwrite(recipe->name, sizeof(char), name_len, f);
+
+    fwrite(&recipe->num_of_steps, sizeof(int), 1, f);
+
+    for (int i = 0; i < recipe->num_of_steps; ++i) {
+        size_t step_len = strlen(recipe->steps[i]) + 1;
+        fwrite(&step_len, sizeof(size_t), 1, f);
+        fwrite(recipe->steps[i], sizeof(char), step_len, f);
+    }
+
+    fwrite(&recipe->num_of_ingredients, sizeof(int), 1, f);
+    fwrite(&recipe->ingredients, sizeof(int), recipe->num_of_ingredients, f);
+}
+
+Recipe restore_recipe(FILE *f) {
+    int id;
+    fread(&id, sizeof(int), 1, f);
+
+    size_t name_len;
+    fread(&name_len, sizeof(size_t), 1, f);
+    char name[name_len];
+    fread(name, sizeof(char), name_len, f);
+
+    int num_of_steps;
+    fread(&num_of_steps, sizeof(int), 1, f);
+
+    char *steps[num_of_steps];
+    for (int i = 0; i < num_of_steps; ++i) {
+        size_t step_len;
+        fread(&step_len, sizeof(size_t), 1, f);
+        steps[i] = malloc(sizeof(char) * step_len);
+        fread(steps[i], sizeof(char), step_len, f);
+    }
+
+    int num_of_ingredients;
+    fread(&num_of_ingredients, sizeof(int), 1, f);
+    int ingredients[num_of_ingredients];
+    fread(ingredients, sizeof(int), num_of_ingredients, f);
+
+    Recipe recipe = create_new_recipe(id, name, steps, num_of_steps, ingredients, num_of_ingredients);
+    for (int i = 0; i < num_of_steps; ++i) {
+        free(steps[i]);
+    }
+    return recipe;
+}
