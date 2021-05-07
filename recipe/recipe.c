@@ -53,3 +53,45 @@ void delete_recipe(Recipe *recipe) {
     free(*recipe);
     *recipe = NULL;
 }
+
+bool get_id(Recipe recipe, int *result) {
+    if (recipe == NULL || result == false) {
+        return false;
+    }
+    *result = recipe->id;
+    return true;
+}
+
+bool get_name(Recipe recipe, char *result, int result_len) {
+    if (recipe == NULL || result == false) {
+        return false;
+    }
+    strncpy(result, recipe->name, result_len);
+    return true;
+}
+
+bool get_ingredients(Recipe recipe, int *result, int result_len) {
+    if (recipe == NULL || result == NULL) {
+        return false;
+    }
+
+    size_t bytes_to_copy =
+            (result_len < recipe->num_of_ingredients ? result_len : recipe->num_of_ingredients) * sizeof(int);
+
+    memcpy(result, recipe->ingredients, bytes_to_copy);
+    return true;
+}
+
+bool get_num_of_ingredients(Recipe recipe, int *result) {
+    if (recipe == NULL || result == false) {
+        return false;
+    }
+    *result = recipe->num_of_ingredients;
+    return true;
+}
+
+void print_steps(Recipe recipe) {
+    for (int i = 0; i < recipe->num_of_steps; ++i) {
+        printf("%d. %s\n", i + 1, recipe->steps[i]);
+    }
+}

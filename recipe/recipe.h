@@ -19,16 +19,14 @@ bool get_id(Recipe recipe, int *result);
 
 bool get_name(Recipe recipe, char *result, int result_len);
 
-bool get_steps(Recipe recipe, char *result, int result_len);
-
-bool get_num_of_steps(Recipe recipe, int *result);
-
-bool get_ingredients(Recipe recipe, int *result);
+bool get_ingredients(Recipe recipe, int *result, int result_len);
 
 bool get_num_of_ingredients(Recipe recipe, int *result);
 
 bool modify(Recipe recipe, char *new_name, char new_steps, int new_num_of_steps, int new_ingredients[],
             int new_num_of_ingredients);
+
+void print_steps(Recipe recipe);
 
 void save_recipe(Recipe recipe, FILE *f);
 
