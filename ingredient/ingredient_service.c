@@ -128,6 +128,7 @@ IngredientService restore_ingredient_service(char *filename) {
     FILE *f = fopen(service->filename, "rb");
     int size;
     fread(&size, sizeof(int), 1, f);
+    fread(&service->ingredients, sizeof(int), 1, f);
 
     for (int i = 0; i < size; ++i) {
         Ingredient ingredient = restore_ingredient(f);
