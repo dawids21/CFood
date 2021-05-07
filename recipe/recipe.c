@@ -41,3 +41,15 @@ create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingre
 
     return recipe;
 }
+
+void delete_recipe(Recipe *recipe) {
+    free((*recipe)->ingredients);
+
+    for (int i = 0; i < (*recipe)->num_of_steps; ++i) {
+        free((*recipe)->steps[i]);
+    }
+    free((*recipe)->steps);
+    free((*recipe)->name);
+    free(*recipe);
+    *recipe = NULL;
+}
