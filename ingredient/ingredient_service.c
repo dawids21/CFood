@@ -8,6 +8,7 @@
 #include "ingredient_service.h"
 
 struct IngredientService {
+    int id_ingredients;
     Array ingredients;
     char *filename;
 };
@@ -18,6 +19,7 @@ static bool is_ingredient_with_name(IngredientService service, char *name);
 
 IngredientService new_ingredient_service(char *filename) {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
+    service->id_ingredients = 0;
     service->ingredients = new_array();
     service->filename = malloc(sizeof(char) * (strlen(filename) + 1));
     strcpy(service->filename, filename);
@@ -46,7 +48,7 @@ bool add_ingredient(IngredientService service, char *name, int amount, Ingredien
         return false;
     }
 
-    ArrayItem to_add = {.ingredient_item = create_new_ingredient(get_num_of_ingredients(service), name, amount, type)};
+    ArrayItem to_add = {.ingredient_item = create_new_ingredient(service->id_ingredients++, name, amount, type)};
     append(service->ingredients, to_add);
     return true;
 }
@@ -111,6 +113,7 @@ void save_ingredient_service(IngredientService service) {
 
     const int size = get_size(service->ingredients);
     fwrite(&size, sizeof(int), 1, f);
+    fwrite(&service->id_ingredients, sizeof(int), 1, f);
     ArrayItem items[size];
     get_all_items(service->ingredients, items);
 
@@ -125,6 +128,7 @@ IngredientService restore_ingredient_service(char *filename) {
     FILE *f = fopen(service->filename, "rb");
     int size;
     fread(&size, sizeof(int), 1, f);
+    fread(&service->id_ingredients, sizeof(int), 1, f);
 
     for (int i = 0; i < size; ++i) {
         Ingredient ingredient = restore_ingredient(f);
