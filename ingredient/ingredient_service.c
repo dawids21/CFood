@@ -48,7 +48,7 @@ bool add_ingredient(IngredientService service, char *name, int amount, Ingredien
         return false;
     }
 
-    ArrayItem to_add = {.ingredient_item = create_new_ingredient(get_num_of_ingredients(service), name, amount, type)};
+    ArrayItem to_add = {.ingredient_item = create_new_ingredient(service->id_ingredients++, name, amount, type)};
     append(service->ingredients, to_add);
     return true;
 }
