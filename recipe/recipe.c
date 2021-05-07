@@ -7,7 +7,7 @@
 struct Recipe {
     int id;
     char *name;
-    char *steps;
+    char **steps;
     int num_of_steps;
     int *ingredients;
     int num_of_ingredients;

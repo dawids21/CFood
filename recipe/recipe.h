@@ -10,7 +10,8 @@
 
 typedef struct Recipe *Recipe;
 
-Recipe create_new_recipe(int id, char *name, char steps[], int num_of_steps, int ingredients[], int num_of_ingredients);
+Recipe
+create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingredients[], int num_of_ingredients);
 
 void delete_recipe(Recipe *recipe);
 
