@@ -113,6 +113,7 @@ void save_ingredient_service(IngredientService service) {
 
     const int size = get_size(service->ingredients);
     fwrite(&size, sizeof(int), 1, f);
+    fwrite(&service->ingredients, sizeof(int), 1, f);
     ArrayItem items[size];
     get_all_items(service->ingredients, items);
 
