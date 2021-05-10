@@ -33,8 +33,9 @@ create_new_recipe(int id, char *name, char *steps[], int num_of_steps, RecipeIng
 
     recipe->num_of_steps = num_of_steps;
 
-    recipe->ingredients = malloc(num_of_ingredients * sizeof(struct RecipeIngredient));
+    recipe->ingredients = malloc(num_of_ingredients * sizeof(RecipeIngredient));
     for (int i = 0; i < num_of_ingredients; ++i) {
+        recipe->ingredients[i] = malloc(sizeof(struct RecipeIngredient));
         memcpy(recipe->ingredients[i], ingredients[i], sizeof(struct RecipeIngredient));
     }
 
@@ -44,6 +45,9 @@ create_new_recipe(int id, char *name, char *steps[], int num_of_steps, RecipeIng
 }
 
 void delete_recipe(Recipe *recipe) {
+    for (int i = 0; i < (*recipe)->num_of_ingredients; ++i) {
+        free((*recipe)->ingredients[i]);
+    }
     free((*recipe)->ingredients);
 
     for (int i = 0; i < (*recipe)->num_of_steps; ++i) {
