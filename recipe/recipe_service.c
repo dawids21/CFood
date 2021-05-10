@@ -83,7 +83,7 @@ bool remove_recipe(RecipeService service, int id) {
 
     ArrayItem deleted;
     delete_at_index(service->recipes, index, &deleted);
-    delete_ingredient(&deleted.ingredient_item);
+    delete_recipe(&deleted.recipe_item);
     return true;
 }
 
@@ -102,8 +102,10 @@ bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id) 
         RecipeIngredient ingredients[num_of_ingredients];
         recipe_get_ingredients(recipe, ingredients, num_of_ingredients);
         for (int j = 0; j < num_of_ingredients; ++j) {
-            if (ingredients[i]->id == ingredient_id) {
-                delete_recipe(&recipe);
+            if (ingredients[j]->id == ingredient_id) {
+                int id;
+                recipe_get_id(recipe, &id);
+                remove_recipe(service, id);
                 break;
             }
         }
