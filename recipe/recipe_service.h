@@ -7,4 +7,10 @@
 
 typedef struct RecipeService *RecipeService;
 
+RecipeService new_recipe_service(char *filename, IngredientService ingredientService);
+
+void delete_recipe_service(RecipeService service);
+
+int get_num_of_recipes(RecipeService service);
+
 #endif //CFOOD_RECIPE_SERVICE_H
