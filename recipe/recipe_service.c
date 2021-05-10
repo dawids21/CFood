@@ -65,9 +65,5 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result) {
         Recipe current = recipes[i].recipe_item;
         recipe_get_id(current, &(result[i].id));
         recipe_get_name(current, result[i].name, MAX_RECIPE_NAME_LEN);
-        recipe_get_steps(current, result[i].steps, MAX_NUM_OF_STEPS, MAX_LEN_OF_STEP);
-        recipe_get_num_of_steps(current, &(result[i].num_of_steps));
-        recipe_get_ingredients(current, result[i].ingredients, MAX_NUM_OF_INGREDIENTS);
-        recipe_get_num_of_ingredients(current, &(result[i].num_of_ingredients));
     }
 }

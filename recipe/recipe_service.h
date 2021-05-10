@@ -5,20 +5,16 @@
 #ifndef CFOOD_RECIPE_SERVICE_H
 #define CFOOD_RECIPE_SERVICE_H
 
+#include <stdbool.h>
+
 typedef struct RecipeService *RecipeService;
 
 #define MAX_RECIPE_NAME_LEN 100
-#define MAX_NUM_OF_STEPS 20
-#define MAX_LEN_OF_STEP 100
-#define MAX_NUM_OF_INGREDIENTS 20
 
 typedef struct {
     int id;
     char name[MAX_RECIPE_NAME_LEN];
-    char steps[MAX_NUM_OF_STEPS][MAX_LEN_OF_STEP];
-    int num_of_steps;
-    int ingredients[MAX_NUM_OF_INGREDIENTS];
-    int num_of_ingredients;
+    bool is_possible;
 } RecipeReadModel;
 
 RecipeService new_recipe_service(char *filename, IngredientService ingredientService);
