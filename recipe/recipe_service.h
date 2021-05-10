@@ -30,4 +30,6 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result);
 
 bool remove_recipe(RecipeService service, int id);
 
+bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id);
+
 #endif //CFOOD_RECIPE_SERVICE_H

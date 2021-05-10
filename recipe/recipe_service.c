@@ -88,6 +88,30 @@ bool remove_recipe(RecipeService service, int id) {
     return true;
 }
 
+bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id) {
+    if (service == NULL) {
+        return false;
+    }
+    int num_of_recipes = get_num_of_recipes(service);
+    ArrayItem recipes[num_of_recipes];
+    get_all_items(service->recipes, recipes);
+
+    for (int i = 0; i < num_of_recipes; ++i) {
+        Recipe recipe = recipes[i].recipe_item;
+        int num_of_ingredients;
+        recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
+        RecipeIngredient ingredients[num_of_ingredients];
+        recipe_get_ingredients(recipe, ingredients, num_of_ingredients);
+        for (int j = 0; j < num_of_ingredients; ++j) {
+            if (ingredients[i]->id == ingredient_id) {
+                delete_recipe(&recipe);
+                break;
+            }
+        }
+    }
+    return true;
+}
+
 static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe) {
     int num_of_ingredients;
     recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
