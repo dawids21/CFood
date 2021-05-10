@@ -54,7 +54,7 @@ void delete_recipe(Recipe *recipe) {
     *recipe = NULL;
 }
 
-bool get_id(Recipe recipe, int *result) {
+bool recipe_get_id(Recipe recipe, int *result) {
     if (recipe == NULL || result == false) {
         return false;
     }
@@ -62,7 +62,7 @@ bool get_id(Recipe recipe, int *result) {
     return true;
 }
 
-bool get_name(Recipe recipe, char *result, int result_len) {
+bool recipe_get_name(Recipe recipe, char *result, int result_len) {
     if (recipe == NULL || result == false) {
         return false;
     }
@@ -70,7 +70,7 @@ bool get_name(Recipe recipe, char *result, int result_len) {
     return true;
 }
 
-bool get_ingredients(Recipe recipe, int *result, int result_len) {
+bool recipe_get_ingredients(Recipe recipe, int *result, int result_len) {
     if (recipe == NULL || result == NULL) {
         return false;
     }
@@ -82,7 +82,7 @@ bool get_ingredients(Recipe recipe, int *result, int result_len) {
     return true;
 }
 
-bool get_num_of_ingredients(Recipe recipe, int *result) {
+bool recipe_get_num_of_ingredients(Recipe recipe, int *result) {
     if (recipe == NULL || result == false) {
         return false;
     }
@@ -90,7 +90,7 @@ bool get_num_of_ingredients(Recipe recipe, int *result) {
     return true;
 }
 
-void print_steps(Recipe recipe) {
+void recipe_print_steps(Recipe recipe) {
     for (int i = 0; i < recipe->num_of_steps; ++i) {
         printf("%d. %s\n", i + 1, recipe->steps[i]);
     }
