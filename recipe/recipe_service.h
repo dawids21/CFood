@@ -6,6 +6,7 @@
 #define CFOOD_RECIPE_SERVICE_H
 
 #include <stdbool.h>
+#include <recipe.h>
 
 typedef struct RecipeService *RecipeService;
 
@@ -23,7 +24,7 @@ void delete_recipe_service(RecipeService service);
 
 int get_num_of_recipes(RecipeService service);
 
-bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, int ingredients[],
+bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, RecipeIngredient ingredients[],
                 int num_of_ingredients);
 
 void get_all_recipes(RecipeService service, RecipeReadModel *result);

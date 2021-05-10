@@ -45,7 +45,7 @@ int get_num_of_recipes(RecipeService service) {
     return get_size(service->recipes);
 }
 
-bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, int ingredients[],
+bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, RecipeIngredient ingredients[],
                 int num_of_ingredients) {
     if (strlen(name) == 0 || num_of_steps <= 0 || num_of_ingredients <= 0) {
         return false;
