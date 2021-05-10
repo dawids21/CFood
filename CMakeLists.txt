@@ -16,6 +16,6 @@ if (DEV)
 endif (DEV)
 unset(DEV CACHE)
 
-add_executable(cfood main.c ingredient_service_controller.c ingredient_service_controller.h input.c input.h)
+add_executable(cfood main.c ingredient_service_controller.c recipe_service_controller.c input.c ingredient_service_controller.h recipe_service_controller.h input.h)
 
 target_link_libraries(cfood lib_ingredient lib_recipe)
