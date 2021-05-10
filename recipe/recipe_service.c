@@ -52,3 +52,22 @@ bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_ste
     append(service->recipes, to_add);
     return true;
 }
+
+void get_all_recipes(RecipeService service, RecipeReadModel *result) {
+    if (service == NULL || result == NULL) {
+        return;
+    }
+
+    int num_of_recipes = get_num_of_recipes(service);
+    ArrayItem recipes[num_of_recipes];
+    get_all_items(service->recipes, recipes);
+    for (int i = 0; i < num_of_recipes; ++i) {
+        Recipe current = recipes[i].recipe_item;
+        recipe_get_id(current, &(result[i].id));
+        recipe_get_name(current, result[i].name, MAX_RECIPE_NAME_LEN);
+        recipe_get_steps(current, result[i].steps, MAX_NUM_OF_STEPS, MAX_LEN_OF_STEP);
+        recipe_get_num_of_steps(current, &(result[i].num_of_steps));
+        recipe_get_ingredients(current, result[i].ingredients, MAX_NUM_OF_INGREDIENTS);
+        recipe_get_num_of_ingredients(current, &(result[i].num_of_ingredients));
+    }
+}

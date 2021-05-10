@@ -30,4 +30,6 @@ int get_num_of_recipes(RecipeService service);
 bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, int ingredients[],
                 int num_of_ingredients);
 
+void get_all_recipes(RecipeService service, RecipeReadModel *result);
+
 #endif //CFOOD_RECIPE_SERVICE_H
