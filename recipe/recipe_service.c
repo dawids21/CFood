@@ -139,9 +139,9 @@ void print_detailed_info_about_recipe(RecipeService service, int id) {
     for (int i = 0; i < num_of_ingredients; ++i) {
         IngredientReadModel ingredient = ingredients[i];
         if (ingredient.type == SOLID) {
-            printf("%d %s\n", ingredient.amount, ingredient.name);
+            printf("%d %s\n", recipe_ingredients[i]->amount, ingredient.name);
         } else {
-            printf("%d ml %s\n", ingredient.amount, ingredient.name);
+            printf("%d ml %s\n", recipe_ingredients[i]->amount, ingredient.name);
         }
     }
     recipe_print_steps(recipe);
