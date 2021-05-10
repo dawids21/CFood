@@ -16,6 +16,8 @@ struct RecipeService {
 
 static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe);
 
+static int find_index_by_id(RecipeService service, int id);
+
 RecipeService new_recipe_service(char *filename, IngredientService ingredientService) {
     RecipeService service = (RecipeService) malloc(sizeof(struct RecipeService));
     service->id_recipes = 0;
@@ -71,7 +73,38 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result) {
     }
 }
 
+bool remove_recipe(RecipeService service, int id) {
+    if (service == NULL) {
+        return false;
+    }
+    int index = find_index_by_id(service, id);
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem deleted;
+    delete_at_index(service->recipes, index, &deleted);
+    delete_ingredient(&deleted.ingredient_item);
+    return true;
+}
+
 static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe) {
     //TODO
     return true;
+}
+
+static int find_index_by_id(RecipeService service, int id) {
+    int num_of_items = get_num_of_recipes(service);
+    ArrayItem recipes[num_of_items];
+    get_all_items(service->recipes, recipes);
+
+    for (int i = 0; i < num_of_items; ++i) {
+        int current_id;
+        recipe_get_id(recipes[i].recipe_item, &current_id);
+        if (current_id == id) {
+            return i;
+        }
+    }
+
+    return -1;
 }

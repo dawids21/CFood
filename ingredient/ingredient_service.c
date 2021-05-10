@@ -72,6 +72,7 @@ void get_all_ingredients(IngredientService service, IngredientReadModel *result)
 }
 
 bool remove_ingredient(IngredientService service, int id) {
+    //TODO remove associated recipes
     if (service == NULL) {
         return false;
     }

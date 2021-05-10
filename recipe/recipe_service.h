@@ -28,4 +28,6 @@ bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_ste
 
 void get_all_recipes(RecipeService service, RecipeReadModel *result);
 
+bool remove_recipe(RecipeService service, int id);
+
 #endif //CFOOD_RECIPE_SERVICE_H
