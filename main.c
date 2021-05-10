@@ -2,12 +2,14 @@
 #include <stdbool.h>
 #include <ingredient_service.h>
 #include <unistd.h>
+#include <recipe_service.h>
 #include "ingredient_service_controller.h"
 #include "input.h"
 
 static void manage_ingredients_handler(IngredientService ingredient_service);
 
 #define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
+#define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
 
 int main() {
     IngredientService ingredient_service;
@@ -15,6 +17,13 @@ int main() {
         ingredient_service = restore_ingredient_service(INGREDIENT_SERVICE_FILENAME);
     } else {
         ingredient_service = new_ingredient_service(INGREDIENT_SERVICE_FILENAME);
+    }
+
+    RecipeService recipe_service;
+    if (access(RECIPE_SERVICE_FILENAME, F_OK) == 0) {
+        recipe_service = restore_recipe_service(RECIPE_SERVICE_FILENAME, ingredient_service);
+    } else {
+        recipe_service = new_recipe_service(RECIPE_SERVICE_FILENAME, ingredient_service);
     }
 
     while (true) {
@@ -33,6 +42,9 @@ int main() {
             printf("Unknown option\n");
         }
     }
+
+    save_recipe_service(recipe_service);
+    delete_recipe_service(recipe_service);
 
     save_ingredient_service(ingredient_service);
     delete_ingredient_service(ingredient_service);
