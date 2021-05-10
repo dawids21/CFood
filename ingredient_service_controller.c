@@ -3,6 +3,8 @@
 //
 
 #include <stdio.h>
+#include <recipe_service.h>
+#include <ctype.h>
 #include "ingredient_service_controller.h"
 #include "input.h"
 
@@ -12,7 +14,7 @@ static void add_new_ingredient(IngredientService service);
 
 static void modify_existing_ingredient(IngredientService service);
 
-static void delete_existing_ingredient(IngredientService service);
+static void delete_existing_ingredient(IngredientService service, RecipeService recipe_service);
 
 void ingredient_service_display_main_menu() {
     printf("***** CFood *****\n");
@@ -25,7 +27,7 @@ void ingredient_service_display_main_menu() {
     printf("Choose option: ");
 }
 
-void ingredient_service_handle_option(char option, IngredientService service) {
+void ingredient_service_handle_option(char option, IngredientService service, RecipeService recipe_service) {
 
     switch (option) {
         case '1':
@@ -38,7 +40,7 @@ void ingredient_service_handle_option(char option, IngredientService service) {
             modify_existing_ingredient(service);
             break;
         case '4':
-            delete_existing_ingredient(service);
+            delete_existing_ingredient(service, recipe_service);
             break;
         default:
             break;
@@ -116,13 +118,27 @@ static void modify_existing_ingredient(IngredientService service) {
     }
 }
 
-static void delete_existing_ingredient(IngredientService service) {
+static void delete_existing_ingredient(IngredientService service, RecipeService recipe_service) {
     list_ingredients(service);
     printf("Choose ID to delete: ");
     int id;
     input_integer(&id);
+    printf("Recipes associated with this ingredient will also be removed!\n");
+    printf("Proceed? (y/n): ");
+    char option;
+    input_char(&option);
+    if (tolower(option) != 'y') {
+        return;
+    }
 
-    bool success = remove_ingredient(service, id);
+    bool success = remove_recipe_with_ingredient_id(recipe_service, id);
+    if (success) {
+        printf("Recipe with this ingredient deleted\n");
+    } else {
+        printf("Problem with deleting recipes with this ingredient\n");
+    }
+
+    success = remove_ingredient(service, id);
     if (success) {
         printf("Ingredient deleted\n");
     } else {

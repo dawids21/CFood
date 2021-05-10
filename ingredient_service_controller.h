@@ -9,6 +9,6 @@
 
 void ingredient_service_display_main_menu();
 
-void ingredient_service_handle_option(char option, IngredientService service);
+void ingredient_service_handle_option(char option, IngredientService service, RecipeService recipe_service);
 
 #endif //CFOOD_INGREDIENT_SERVICE_CONTROLLER_H

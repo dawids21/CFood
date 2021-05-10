@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include <recipe.h>
+#include <ingredient_service.h>
 
 typedef struct RecipeService *RecipeService;
 
@@ -32,6 +33,8 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result);
 bool remove_recipe(RecipeService service, int id);
 
 bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id);
+
+void print_detailed_info_about_recipe(RecipeService service, int id);
 
 void save_recipe_service(RecipeService service);
 
