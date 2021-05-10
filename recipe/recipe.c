@@ -12,11 +12,13 @@ struct Recipe {
     char **steps;
     int num_of_steps;
     int *ingredients;
+    int *ingredient_amounts;
     int num_of_ingredients;
 };
 
 Recipe
-create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingredients[], int num_of_ingredients) {
+create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingredients[], int ingredient_amounts[],
+                  int num_of_ingredients) {
     Recipe recipe = malloc(sizeof(struct Recipe));
 
     recipe->id = id;
@@ -33,8 +35,10 @@ create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingre
     recipe->num_of_steps = num_of_steps;
 
     recipe->ingredients = malloc(num_of_ingredients * sizeof(int));
+    recipe->ingredient_amounts = malloc(num_of_ingredients * sizeof(int));
     for (int i = 0; i < num_of_ingredients; ++i) {
         recipe->ingredients[i] = ingredients[i];
+        recipe->ingredient_amounts[i] = ingredient_amounts[i];
     }
 
     recipe->num_of_ingredients = num_of_ingredients;
@@ -82,6 +86,18 @@ bool recipe_get_ingredients(Recipe recipe, int *result, int result_len) {
     return true;
 }
 
+bool recipe_get_ingredients_amounts(Recipe recipe, int *result, int result_len) {
+    if (recipe == NULL || result == NULL) {
+        return false;
+    }
+
+    size_t bytes_to_copy =
+            (result_len < recipe->num_of_ingredients ? result_len : recipe->num_of_ingredients) * sizeof(int);
+
+    memcpy(result, recipe->ingredient_amounts, bytes_to_copy);
+    return true;
+}
+
 bool recipe_get_num_of_ingredients(Recipe recipe, int *result) {
     if (recipe == NULL || result == false) {
         return false;
@@ -113,6 +129,7 @@ void save_recipe(Recipe recipe, FILE *f) {
 
     fwrite(&recipe->num_of_ingredients, sizeof(int), 1, f);
     fwrite(&recipe->ingredients, sizeof(int), recipe->num_of_ingredients, f);
+    fwrite(&recipe->ingredient_amounts, sizeof(int), recipe->num_of_ingredients, f);
 }
 
 Recipe restore_recipe(FILE *f) {
@@ -139,8 +156,11 @@ Recipe restore_recipe(FILE *f) {
     fread(&num_of_ingredients, sizeof(int), 1, f);
     int ingredients[num_of_ingredients];
     fread(ingredients, sizeof(int), num_of_ingredients, f);
+    int ingredient_amounts[num_of_ingredients];
+    fread(ingredient_amounts, sizeof(int), num_of_ingredients, f);
 
-    Recipe recipe = create_new_recipe(id, name, steps, num_of_steps, ingredients, num_of_ingredients);
+    Recipe recipe = create_new_recipe(id, name, steps, num_of_steps, ingredients, ingredient_amounts,
+                                      num_of_ingredients);
     for (int i = 0; i < num_of_steps; ++i) {
         free(steps[i]);
     }
