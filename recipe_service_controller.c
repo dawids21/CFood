@@ -64,7 +64,11 @@ static void list_recipes(RecipeService service) {
 }
 
 static void print_info_about_recipe(RecipeService service) {
-
+    list_recipes(service);
+    printf("Choose ID: ");
+    int id;
+    input_integer(&id);
+    print_detailed_info_about_recipe(service, id);
 }
 
 static void add_new_recipe(RecipeService service, IngredientService ingredient_service) {
