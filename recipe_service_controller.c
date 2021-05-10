@@ -10,6 +10,8 @@
 
 static void list_recipes(RecipeService service);
 
+static void print_info_about_recipe(RecipeService service);
+
 static void add_new_recipe(RecipeService service, IngredientService ingredient_service);
 
 static void delete_existing_recipe(RecipeService service);
@@ -18,9 +20,10 @@ void recipe_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
     printf("1. List all recipes\n");
-    printf("2. Add new recipe\n");
-    printf("3. Delete existing recipe\n");
-    printf("4. Return\n");
+    printf("2. Detailed information about recipe\n");
+    printf("3. Add new recipe\n");
+    printf("4. Delete existing recipe\n");
+    printf("5. Return\n");
     printf("Choose option: ");
 }
 
@@ -30,9 +33,12 @@ void recipe_service_handle_option(char option, RecipeService service, Ingredient
             list_recipes(service);
             break;
         case '2':
-            add_new_recipe(service, ingredient_service);
+            print_info_about_recipe(service);
             break;
         case '3':
+            add_new_recipe(service, ingredient_service);
+            break;
+        case '4':
             delete_existing_recipe(service);
             break;
         default:
@@ -55,6 +61,10 @@ static void list_recipes(RecipeService service) {
         RecipeReadModel current = recipes[i];
         printf("%d | %s | %s\n", current.id, current.name, current.is_possible ? "YES" : "NO");
     }
+}
+
+static void print_info_about_recipe(RecipeService service) {
+
 }
 
 static void add_new_recipe(RecipeService service, IngredientService ingredient_service) {

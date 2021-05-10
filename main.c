@@ -77,9 +77,9 @@ static void manage_recipe_handler(RecipeService recipe_service, IngredientServic
         recipe_service_display_main_menu();
         char option;
         input_char(&option);
-        if (option >= '1' && option <= '3') {
+        if (option >= '1' && option <= '4') {
             recipe_service_handle_option(option, recipe_service, ingredient_service);
-        } else if (option == '4') {
+        } else if (option == '5') {
             break;
         } else {
             printf("Unknown option\n");
