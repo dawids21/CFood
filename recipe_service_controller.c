@@ -87,7 +87,7 @@ static void add_new_recipe(RecipeService service, IngredientService ingredient_s
         input_string(steps[i], 200);
     }
 
-    ingredient_service_handle_option('1', ingredient_service);
+    ingredient_service_handle_option('1', ingredient_service, service);
     int num_of_ingredients;
     printf("Num of ingredients: ");
     input_integer(&num_of_ingredients);

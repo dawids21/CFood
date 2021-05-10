@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <recipe_service.h>
+#include <ctype.h>
 #include "ingredient_service_controller.h"
 #include "input.h"
 
@@ -118,13 +119,26 @@ static void modify_existing_ingredient(IngredientService service) {
 }
 
 static void delete_existing_ingredient(IngredientService service, RecipeService recipe_service) {
-    //TODO delete associated recipe
     list_ingredients(service);
     printf("Choose ID to delete: ");
     int id;
     input_integer(&id);
+    printf("Recipes associated with this ingredient will also be removed!\n");
+    printf("Proceed? (y/n): ");
+    char option;
+    input_char(&option);
+    if (tolower(option) != 'y') {
+        return;
+    }
 
-    bool success = remove_ingredient(service, id);
+    bool success = remove_recipe_with_ingredient_id(recipe_service, id);
+    if (success) {
+        printf("Recipe with this ingredient deleted\n");
+    } else {
+        printf("Problem with deleting recipes with this ingredient\n");
+    }
+
+    success = remove_ingredient(service, id);
     if (success) {
         printf("Ingredient deleted\n");
     } else {
