@@ -119,7 +119,7 @@ void save_recipe(Recipe recipe, FILE *f) {
 
     fwrite(&recipe->num_of_ingredients, sizeof(int), 1, f);
     for (int i = 0; i < recipe->num_of_ingredients; ++i) {
-        fwrite(recipe->ingredients[i], sizeof(struct RecipeIngredient), recipe->num_of_ingredients, f);
+        fwrite(recipe->ingredients[i], sizeof(struct RecipeIngredient), 1, f);
     }
 }
 
