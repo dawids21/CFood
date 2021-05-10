@@ -4,6 +4,12 @@
 
 #include "recipe_service_controller.h"
 
+static void list_recipes(RecipeService service);
+
+static void add_new_recipe(RecipeService service);
+
+static void delete_existing_recipe(RecipeService service);
+
 void recipe_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
@@ -15,5 +21,30 @@ void recipe_service_display_main_menu() {
 }
 
 void recipe_service_handle_option(char option, RecipeService service) {
+    switch (option) {
+        case '1':
+            list_recipes(service);
+            break;
+        case '2':
+            add_new_recipe(service);
+            break;
+        case '3':
+            delete_existing_recipe(service);
+            break;
+        default:
+            break;
+    }
+    printf("\n");
+}
+
+static void list_recipes(RecipeService service) {
+
+}
+
+static void add_new_recipe(RecipeService service) {
+
+}
+
+static void delete_existing_recipe(RecipeService service) {
 
 }
