@@ -8,6 +8,8 @@
 
 static void manage_ingredients_handler(IngredientService ingredient_service);
 
+static void manage_recipe_handler(RecipeService recipe_service);
+
 #define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
 #define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
 
@@ -30,13 +32,16 @@ int main() {
         printf("***** CFood *****\n");
         printf("-----------------\n");
         printf("1. Manage ingredients\n");
-        printf("2. Exit program\n");
+        printf("2. Manage recipes\n");
+        printf("3. Exit program\n");
         printf("Choose option: ");
         char option;
         input_char(&option);
         if (option == '1') {
             manage_ingredients_handler(ingredient_service);
         } else if (option == '2') {
+            manage_recipe_handler(recipe_service);
+        } else if (option == '3') {
             break;
         } else {
             printf("Unknown option\n");
@@ -63,5 +68,21 @@ static void manage_ingredients_handler(IngredientService ingredient_service) {
         } else {
             printf("Unknown option\n");
         }
+    }
+}
+
+static void manage_recipe_handler(RecipeService recipe_service) {
+    while (true) {
+        break;
+//        ingredient_service_display_main_menu();
+//        char option;
+//        input_char(&option);
+//        if (option >= '1' && option <= '4') {
+//            ingredient_service_handle_option(option, ingredient_service);
+//        } else if (option == '5') {
+//            break;
+//        } else {
+//            printf("Unknown option\n");
+//        }
     }
 }
