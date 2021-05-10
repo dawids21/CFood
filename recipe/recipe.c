@@ -11,12 +11,13 @@ struct Recipe {
     char *name;
     char **steps;
     int num_of_steps;
-    int *ingredients;
+    RecipeIngredient *ingredients;
     int num_of_ingredients;
 };
 
 Recipe
-create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingredients[], int num_of_ingredients) {
+create_new_recipe(int id, char *name, char *steps[], int num_of_steps, RecipeIngredient ingredients[],
+                  int num_of_ingredients) {
     Recipe recipe = malloc(sizeof(struct Recipe));
 
     recipe->id = id;
@@ -32,9 +33,10 @@ create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingre
 
     recipe->num_of_steps = num_of_steps;
 
-    recipe->ingredients = malloc(num_of_ingredients * sizeof(int));
+    recipe->ingredients = malloc(num_of_ingredients * sizeof(RecipeIngredient));
     for (int i = 0; i < num_of_ingredients; ++i) {
-        recipe->ingredients[i] = ingredients[i];
+        recipe->ingredients[i] = malloc(sizeof(struct RecipeIngredient));
+        memcpy(recipe->ingredients[i], ingredients[i], sizeof(struct RecipeIngredient));
     }
 
     recipe->num_of_ingredients = num_of_ingredients;
@@ -43,6 +45,9 @@ create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingre
 }
 
 void delete_recipe(Recipe *recipe) {
+    for (int i = 0; i < (*recipe)->num_of_ingredients; ++i) {
+        free((*recipe)->ingredients[i]);
+    }
     free((*recipe)->ingredients);
 
     for (int i = 0; i < (*recipe)->num_of_steps; ++i) {
@@ -54,7 +59,7 @@ void delete_recipe(Recipe *recipe) {
     *recipe = NULL;
 }
 
-bool get_id(Recipe recipe, int *result) {
+bool recipe_get_id(Recipe recipe, int *result) {
     if (recipe == NULL || result == false) {
         return false;
     }
@@ -62,7 +67,7 @@ bool get_id(Recipe recipe, int *result) {
     return true;
 }
 
-bool get_name(Recipe recipe, char *result, int result_len) {
+bool recipe_get_name(Recipe recipe, char *result, int result_len) {
     if (recipe == NULL || result == false) {
         return false;
     }
@@ -70,19 +75,20 @@ bool get_name(Recipe recipe, char *result, int result_len) {
     return true;
 }
 
-bool get_ingredients(Recipe recipe, int *result, int result_len) {
+bool recipe_get_ingredients(Recipe recipe, RecipeIngredient *result, int result_len) {
     if (recipe == NULL || result == NULL) {
         return false;
     }
 
     size_t bytes_to_copy =
-            (result_len < recipe->num_of_ingredients ? result_len : recipe->num_of_ingredients) * sizeof(int);
+            (result_len < recipe->num_of_ingredients ? result_len : recipe->num_of_ingredients) *
+            sizeof(struct RecipeIngredient);
 
     memcpy(result, recipe->ingredients, bytes_to_copy);
     return true;
 }
 
-bool get_num_of_ingredients(Recipe recipe, int *result) {
+bool recipe_get_num_of_ingredients(Recipe recipe, int *result) {
     if (recipe == NULL || result == false) {
         return false;
     }
@@ -90,7 +96,7 @@ bool get_num_of_ingredients(Recipe recipe, int *result) {
     return true;
 }
 
-void print_steps(Recipe recipe) {
+void recipe_print_steps(Recipe recipe) {
     for (int i = 0; i < recipe->num_of_steps; ++i) {
         printf("%d. %s\n", i + 1, recipe->steps[i]);
     }
@@ -112,7 +118,9 @@ void save_recipe(Recipe recipe, FILE *f) {
     }
 
     fwrite(&recipe->num_of_ingredients, sizeof(int), 1, f);
-    fwrite(&recipe->ingredients, sizeof(int), recipe->num_of_ingredients, f);
+    for (int i = 0; i < recipe->num_of_ingredients; ++i) {
+        fwrite(recipe->ingredients[i], sizeof(struct RecipeIngredient), recipe->num_of_ingredients, f);
+    }
 }
 
 Recipe restore_recipe(FILE *f) {
@@ -137,12 +145,19 @@ Recipe restore_recipe(FILE *f) {
 
     int num_of_ingredients;
     fread(&num_of_ingredients, sizeof(int), 1, f);
-    int ingredients[num_of_ingredients];
-    fread(ingredients, sizeof(int), num_of_ingredients, f);
+    RecipeIngredient ingredients[num_of_ingredients];
+    for (int i = 0; i < num_of_ingredients; ++i) {
+        ingredients[i] = malloc(sizeof(struct RecipeIngredient));
+        fread(ingredients[i], sizeof(struct RecipeIngredient), 1, f);
+    }
 
     Recipe recipe = create_new_recipe(id, name, steps, num_of_steps, ingredients, num_of_ingredients);
     for (int i = 0; i < num_of_steps; ++i) {
         free(steps[i]);
+    }
+
+    for (int i = 0; i < num_of_ingredients; ++i) {
+        free(ingredients[i]);
     }
     return recipe;
 }

@@ -17,6 +17,8 @@ static int find_index_by_id(IngredientService service, int id);
 
 static bool is_ingredient_with_name(IngredientService service, char *name);
 
+static void convert_ingredient_to_read_model(Ingredient ingredient, IngredientReadModel *result);
+
 IngredientService new_ingredient_service(char *filename) {
     IngredientService service = (IngredientService) malloc(sizeof(struct IngredientService));
     service->id_ingredients = 0;
@@ -64,11 +66,22 @@ void get_all_ingredients(IngredientService service, IngredientReadModel *result)
     get_all_items(service->ingredients, ingredients);
     for (int i = 0; i < num_of_ingredients; ++i) {
         Ingredient current = ingredients[i].ingredient_item;
-        get_id(current, &(result[i].id));
-        get_name(current, result[i].name, MAX_INGREDIENT_NAME_LEN);
-        get_amount(current, &(result[i].amount));
-        get_type(current, &(result[i].type));
+        convert_ingredient_to_read_model(current, &result[i]);
     }
+}
+
+bool get_ingredient_by_id(IngredientService service, int id, IngredientReadModel *result) {
+    if (service == NULL || result == NULL) {
+        return false;
+    }
+    int index = find_index_by_id(service, id);
+    if (index == -1) {
+        return false;
+    }
+    ArrayItem item;
+    get(service->ingredients, index, &item);
+    convert_ingredient_to_read_model(item.ingredient_item, result);
+    return true;
 }
 
 bool remove_ingredient(IngredientService service, int id) {
@@ -169,4 +182,11 @@ static bool is_ingredient_with_name(IngredientService service, char *name) {
         }
     }
     return false;
+}
+
+static void convert_ingredient_to_read_model(Ingredient ingredient, IngredientReadModel *result) {
+    get_id(ingredient, &(result->id));
+    get_name(ingredient, result->name, MAX_INGREDIENT_NAME_LEN);
+    get_amount(ingredient, &(result->amount));
+    get_type(ingredient, &(result->type));
 }

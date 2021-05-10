@@ -11,6 +11,7 @@ add_executable(acceptance_test_run acceptance_test.c)
 
 target_link_libraries(acceptance_test_run
         lib_ingredient
+        lib_recipe
         unity
         )
 
