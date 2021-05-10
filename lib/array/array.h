@@ -7,10 +7,12 @@
 
 #include <ingredient.h>
 #include <stdbool.h>
+#include <recipe.h>
 
 typedef union {
     int int_item;
     Ingredient ingredient_item;
+    Recipe recipe_item;
 } ArrayItem;
 
 typedef struct Array *Array;
