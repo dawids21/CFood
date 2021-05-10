@@ -5,6 +5,7 @@
 #include <recipe_service.h>
 #include "ingredient_service_controller.h"
 #include "input.h"
+#include "recipe_service_controller.h"
 
 static void manage_ingredients_handler(IngredientService ingredient_service);
 
