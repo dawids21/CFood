@@ -9,7 +9,7 @@
 
 static void manage_ingredients_handler(IngredientService ingredient_service);
 
-static void manage_recipe_handler(RecipeService recipe_service);
+static void manage_recipe_handler(RecipeService recipe_service, IngredientService ingredient_service);
 
 #define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
 #define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
@@ -41,7 +41,7 @@ int main() {
         if (option == '1') {
             manage_ingredients_handler(ingredient_service);
         } else if (option == '2') {
-            manage_recipe_handler(recipe_service);
+            manage_recipe_handler(recipe_service, ingredient_service);
         } else if (option == '3') {
             break;
         } else {
@@ -72,13 +72,13 @@ static void manage_ingredients_handler(IngredientService ingredient_service) {
     }
 }
 
-static void manage_recipe_handler(RecipeService recipe_service) {
+static void manage_recipe_handler(RecipeService recipe_service, IngredientService ingredient_service) {
     while (true) {
         recipe_service_display_main_menu();
         char option;
         input_char(&option);
         if (option >= '1' && option <= '3') {
-            recipe_service_handle_option(option, recipe_service);
+            recipe_service_handle_option(option, recipe_service, ingredient_service);
         } else if (option == '4') {
             break;
         } else {

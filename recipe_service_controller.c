@@ -3,10 +3,14 @@
 //
 
 #include "recipe_service_controller.h"
+#include "input.h"
+#include "ingredient_service_controller.h"
+#include <stdlib.h>
+#include <ingredient_service.h>
 
 static void list_recipes(RecipeService service);
 
-static void add_new_recipe(RecipeService service);
+static void add_new_recipe(RecipeService service, IngredientService ingredient_service);
 
 static void delete_existing_recipe(RecipeService service);
 
@@ -20,13 +24,13 @@ void recipe_service_display_main_menu() {
     printf("Choose option: ");
 }
 
-void recipe_service_handle_option(char option, RecipeService service) {
+void recipe_service_handle_option(char option, RecipeService service, IngredientService ingredient_service) {
     switch (option) {
         case '1':
             list_recipes(service);
             break;
         case '2':
-            add_new_recipe(service);
+            add_new_recipe(service, ingredient_service);
             break;
         case '3':
             delete_existing_recipe(service);
