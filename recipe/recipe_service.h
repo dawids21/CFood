@@ -32,4 +32,8 @@ bool remove_recipe(RecipeService service, int id);
 
 bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id);
 
+void save_recipe_service(RecipeService service);
+
+RecipeService restore_recipe_service(char *filename, IngredientService ingredient_service);
+
 #endif //CFOOD_RECIPE_SERVICE_H

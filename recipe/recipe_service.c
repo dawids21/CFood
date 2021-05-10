@@ -112,6 +112,42 @@ bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id) 
     return true;
 }
 
+void save_recipe_service(RecipeService service) {
+    if (strlen(service->filename) == 0) {
+        return;
+    }
+
+    FILE *f = fopen(service->filename, "wb");
+
+    const int size = get_size(service->recipes);
+    fwrite(&size, sizeof(int), 1, f);
+    fwrite(&service->id_recipes, sizeof(int), 1, f);
+    ArrayItem items[size];
+    get_all_items(service->recipes, items);
+
+    for (int i = 0; i < size; i++) {
+        save_recipe(items[i].recipe_item, f);
+    }
+    fclose(f);
+}
+
+RecipeService restore_recipe_service(char *filename, IngredientService ingredient_service) {
+    RecipeService service = new_recipe_service(filename, ingredient_service);
+    FILE *f = fopen(service->filename, "rb");
+    int size;
+    fread(&size, sizeof(int), 1, f);
+    fread(&service->id_recipes, sizeof(int), 1, f);
+
+    for (int i = 0; i < size; ++i) {
+        Recipe recipe = restore_recipe(f);
+        ArrayItem item = {.recipe_item = recipe};
+        append(service->recipes, item);
+    }
+
+    fclose(f);
+    return service;
+}
+
 static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe) {
     int num_of_ingredients;
     recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
