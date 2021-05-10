@@ -10,8 +10,13 @@
 
 typedef struct Recipe *Recipe;
 
+typedef struct RecipeIngredient {
+    int id;
+    int amount;
+} *RecipeIngredient;
+
 Recipe
-create_new_recipe(int id, char *name, char *steps[], int num_of_steps, int ingredients[], int ingredient_amounts[],
+create_new_recipe(int id, char *name, char *steps[], int num_of_steps, RecipeIngredient *ingredients,
                   int num_of_ingredients);
 
 void delete_recipe(Recipe *recipe);
@@ -20,9 +25,7 @@ bool recipe_get_id(Recipe recipe, int *result);
 
 bool recipe_get_name(Recipe recipe, char *result, int result_len);
 
-bool recipe_get_ingredients(Recipe recipe, int *result, int result_len);
-
-bool recipe_get_ingredients_amounts(Recipe recipe, int *result, int result_len);
+bool recipe_get_ingredients(Recipe recipe, RecipeIngredient *result, int result_len);
 
 bool recipe_get_num_of_ingredients(Recipe recipe, int *result);
 
