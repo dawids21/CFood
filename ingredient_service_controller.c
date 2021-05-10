@@ -117,6 +117,7 @@ static void modify_existing_ingredient(IngredientService service) {
 }
 
 static void delete_existing_ingredient(IngredientService service) {
+    //TODO delete associated recipe
     list_ingredients(service);
     printf("Choose ID to delete: ");
     int id;
