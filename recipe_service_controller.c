@@ -106,5 +106,15 @@ static void add_new_recipe(RecipeService service, IngredientService ingredient_s
 }
 
 static void delete_existing_recipe(RecipeService service) {
+    list_recipes(service);
+    printf("Choose ID to delete: ");
+    int id;
+    input_integer(&id);
 
+    bool success = remove_recipe(service, id);
+    if (success) {
+        printf("Recipe deleted\n");
+    } else {
+        printf("Problem with deleting recipe\n");
+    }
 }
