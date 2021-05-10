@@ -89,7 +89,19 @@ bool remove_recipe(RecipeService service, int id) {
 }
 
 static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe) {
-    //TODO
+    int num_of_ingredients;
+    recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
+    RecipeIngredient ingredients[num_of_ingredients];
+    recipe_get_ingredients(recipe, ingredients, num_of_ingredients);
+
+    for (int i = 0; i < num_of_ingredients; ++i) {
+        RecipeIngredient recipe_ingredient = ingredients[i];
+        IngredientReadModel ingredient;
+        get_ingredient_by_id(service->ingredientService, recipe_ingredient->id, &ingredient);
+        if (ingredient.amount < recipe_ingredient->amount) {
+            return false;
+        }
+    }
     return true;
 }
 
