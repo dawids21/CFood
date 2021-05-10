@@ -14,6 +14,8 @@ struct RecipeService {
     IngredientService ingredientService;
 };
 
+static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe);
+
 RecipeService new_recipe_service(char *filename, IngredientService ingredientService) {
     RecipeService service = (RecipeService) malloc(sizeof(struct RecipeService));
     service->id_recipes = 0;
@@ -65,5 +67,11 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result) {
         Recipe current = recipes[i].recipe_item;
         recipe_get_id(current, &(result[i].id));
         recipe_get_name(current, result[i].name, MAX_RECIPE_NAME_LEN);
+        result[i].is_possible = check_if_recipe_is_possible(service, current);
     }
+}
+
+static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe) {
+    //TODO
+    return true;
 }
