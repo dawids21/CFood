@@ -3,7 +3,6 @@
 //
 
 #include <array.h>
-#include <ingredient_service.h>
 #include <string.h>
 #include "recipe_service.h"
 

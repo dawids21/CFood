@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include <recipe.h>
+#include <ingredient_service.h>
 
 typedef struct RecipeService *RecipeService;
 
