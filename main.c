@@ -7,7 +7,7 @@
 #include "input.h"
 #include "recipe_service_controller.h"
 
-static void manage_ingredients_handler(IngredientService ingredient_service);
+static void manage_ingredients_handler(IngredientService ingredient_service, RecipeService recipe_service);
 
 static void manage_recipe_handler(RecipeService recipe_service, IngredientService ingredient_service);
 
@@ -39,7 +39,7 @@ int main() {
         char option;
         input_char(&option);
         if (option == '1') {
-            manage_ingredients_handler(ingredient_service);
+            manage_ingredients_handler(ingredient_service, recipe_service);
         } else if (option == '2') {
             manage_recipe_handler(recipe_service, ingredient_service);
         } else if (option == '3') {
@@ -57,13 +57,13 @@ int main() {
     return 0;
 }
 
-static void manage_ingredients_handler(IngredientService ingredient_service) {
+static void manage_ingredients_handler(IngredientService ingredient_service, RecipeService recipe_service) {
     while (true) {
         ingredient_service_display_main_menu();
         char option;
         input_char(&option);
         if (option >= '1' && option <= '4') {
-            ingredient_service_handle_option(option, ingredient_service);
+            ingredient_service_handle_option(option, ingredient_service, recipe_service);
         } else if (option == '5') {
             break;
         } else {

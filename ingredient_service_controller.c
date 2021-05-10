@@ -3,6 +3,7 @@
 //
 
 #include <stdio.h>
+#include <recipe_service.h>
 #include "ingredient_service_controller.h"
 #include "input.h"
 
@@ -12,7 +13,7 @@ static void add_new_ingredient(IngredientService service);
 
 static void modify_existing_ingredient(IngredientService service);
 
-static void delete_existing_ingredient(IngredientService service);
+static void delete_existing_ingredient(IngredientService service, RecipeService recipe_service);
 
 void ingredient_service_display_main_menu() {
     printf("***** CFood *****\n");
@@ -25,7 +26,7 @@ void ingredient_service_display_main_menu() {
     printf("Choose option: ");
 }
 
-void ingredient_service_handle_option(char option, IngredientService service) {
+void ingredient_service_handle_option(char option, IngredientService service, RecipeService recipe_service) {
 
     switch (option) {
         case '1':
@@ -38,7 +39,7 @@ void ingredient_service_handle_option(char option, IngredientService service) {
             modify_existing_ingredient(service);
             break;
         case '4':
-            delete_existing_ingredient(service);
+            delete_existing_ingredient(service, recipe_service);
             break;
         default:
             break;
@@ -116,7 +117,7 @@ static void modify_existing_ingredient(IngredientService service) {
     }
 }
 
-static void delete_existing_ingredient(IngredientService service) {
+static void delete_existing_ingredient(IngredientService service, RecipeService recipe_service) {
     //TODO delete associated recipe
     list_ingredients(service);
     printf("Choose ID to delete: ");
