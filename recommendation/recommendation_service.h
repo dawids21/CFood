@@ -16,4 +16,6 @@ void delete_recommendation_service(RecipeService service);
 
 void get_available_recipes(RecommendationService service, int *result, int result_len);
 
+int get_number_of_available_recipes(RecommendationService service);
+
 #endif //CFOOD_RECOMMENDATION_SERVICE_H

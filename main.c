@@ -3,13 +3,17 @@
 #include <ingredient_service.h>
 #include <unistd.h>
 #include <recipe_service.h>
+#include <recommendation_service.h>
 #include "ingredient_service_controller.h"
 #include "input.h"
 #include "recipe_service_controller.h"
+#include "recommendation_service_controller.h"
 
 static void manage_ingredients_handler(IngredientService ingredient_service, RecipeService recipe_service);
 
 static void manage_recipe_handler(RecipeService recipe_service, IngredientService ingredient_service);
+
+static void recommendation_handler(RecommendationService recommendation_service, RecipeService recipe_service);
 
 #define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
 #define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
@@ -29,20 +33,25 @@ int main() {
         recipe_service = new_recipe_service(RECIPE_SERVICE_FILENAME, ingredient_service);
     }
 
+    RecommendationService recommendation_service = new_recommendation_service(recipe_service, ingredient_service);
+
     while (true) {
         printf("***** CFood *****\n");
         printf("-----------------\n");
-        printf("1. Manage ingredients\n");
-        printf("2. Manage recipes\n");
-        printf("3. Exit program\n");
+        printf("1. Recommendations\n");
+        printf("2. Manage ingredients\n");
+        printf("3. Manage recipes\n");
+        printf("4. Exit program\n");
         printf("Choose option: ");
         char option;
         input_char(&option);
         if (option == '1') {
-            manage_ingredients_handler(ingredient_service, recipe_service);
+            recommendation_handler(recommendation_service, recipe_service);
         } else if (option == '2') {
-            manage_recipe_handler(recipe_service, ingredient_service);
+            manage_ingredients_handler(ingredient_service, recipe_service);
         } else if (option == '3') {
+            manage_recipe_handler(recipe_service, ingredient_service);
+        } else if (option == '4') {
             break;
         } else {
             printf("Unknown option\n");
@@ -80,6 +89,21 @@ static void manage_recipe_handler(RecipeService recipe_service, IngredientServic
         if (option >= '1' && option <= '4') {
             recipe_service_handle_option(option, recipe_service, ingredient_service);
         } else if (option == '5') {
+            break;
+        } else {
+            printf("Unknown option\n");
+        }
+    }
+}
+
+static void recommendation_handler(RecommendationService recommendation_service, RecipeService recipe_service) {
+    while (true) {
+        recommendation_service_display_main_menu();
+        char option;
+        input_char(&option);
+        if (option >= '1' && option <= '2') {
+            recommendation_service_handle_option(option, recommendation_service, recipe_service);
+        } else if (option == '3') {
             break;
         } else {
             printf("Unknown option\n");
