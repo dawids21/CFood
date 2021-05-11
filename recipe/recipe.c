@@ -113,6 +113,14 @@ bool recipe_get_num_of_uses(Recipe recipe, int *result) {
     return true;
 }
 
+void recipe_increase_num_of_uses(Recipe recipe) {
+    recipe->num_of_uses++;
+}
+
+void recipe_reset_num_of_uses(Recipe recipe) {
+    recipe->num_of_uses = 0;
+}
+
 void save_recipe(Recipe recipe, FILE *f) {
     fwrite(&recipe->id, sizeof(int), 1, f);
 

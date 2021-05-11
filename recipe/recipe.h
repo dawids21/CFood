@@ -33,6 +33,10 @@ void recipe_print_steps(Recipe recipe);
 
 bool recipe_get_num_of_uses(Recipe recipe, int *result);
 
+void recipe_increase_num_of_uses(Recipe recipe);
+
+void recipe_reset_num_of_uses(Recipe recipe);
+
 void save_recipe(Recipe recipe, FILE *f);
 
 Recipe restore_recipe(FILE *f);
