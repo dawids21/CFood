@@ -117,7 +117,7 @@ bool modify_ingredient(IngredientService service, int id, char *new_name, int ne
     return success;
 }
 
-bool change_amount_of_ingredient(IngredientService service, int id, int new_amount) {
+bool reduce_amount_of_ingredient(IngredientService service, int id, int to_reduce) {
 
     if (service == NULL) {
         return false;
@@ -131,7 +131,13 @@ bool change_amount_of_ingredient(IngredientService service, int id, int new_amou
 
     ArrayItem ingredients[get_num_of_ingredients(service)];
     get_all_items(service->ingredients, ingredients);
-    return modify_amount(ingredients[index].ingredient_item, new_amount);
+    Ingredient ingredient = ingredients[index].ingredient_item;
+    int current_amount;
+    get_amount(ingredient, &current_amount);
+    if (current_amount < to_reduce) {
+        return false;
+    }
+    return modify_amount(ingredient, current_amount - to_reduce);
 }
 
 void save_ingredient_service(IngredientService service) {

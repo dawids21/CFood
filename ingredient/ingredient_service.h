@@ -35,7 +35,7 @@ bool remove_ingredient(IngredientService service, int id);
 
 bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type);
 
-bool change_amount_of_ingredient(IngredientService service, int id, int new_amount);
+bool reduce_amount_of_ingredient(IngredientService service, int id, int to_reduce);
 
 void save_ingredient_service(IngredientService service);
 
