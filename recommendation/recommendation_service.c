@@ -31,3 +31,16 @@ void get_available_recipes(RecommendationService service, int *result, int resul
         }
     }
 }
+
+int get_number_of_available_recipes(RecommendationService service) {
+    int num_of_recipes = get_num_of_recipes(service->recipe_service);
+    RecipeReadModel recipes[num_of_recipes];
+    get_all_recipes(service->recipe_service, recipes);
+    int result = 0;
+    for (int i = 0; i < num_of_recipes; ++i) {
+        if (recipes[i].is_possible) {
+            result++;
+        }
+    }
+    return result;
+}
