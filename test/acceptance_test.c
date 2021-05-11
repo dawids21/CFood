@@ -7,17 +7,22 @@
 #include <recipe_service.h>
 #include <recipe.h>
 #include <string.h>
+#include <recommendation_service.h>
 
 static IngredientService ingredient_service;
 
 static RecipeService recipe_service;
 
+static RecommendationService recommendation_service;
+
 void setUp() {
     ingredient_service = new_ingredient_service("");
     recipe_service = new_recipe_service("", ingredient_service);
+    recommendation_service = new_recommendation_service(recipe_service, ingredient_service);
 }
 
 void tearDown() {
+    delete_recommendation_service(recommendation_service);
     delete_recipe_service(recipe_service);
     delete_ingredient_service(ingredient_service);
 }
@@ -80,12 +85,14 @@ void standard_acceptance_test(void) {
     TEST_ASSERT_FALSE(recipes[1].is_possible);
 
     // when I open recommendations for meal
+    int num_of_available_recipes = get_number_of_available_recipes(recommendation_service);
+    int recipes_id[num_of_available_recipes];
+    get_available_recipes(recommendation_service, recipes_id, num_of_available_recipes);
+    TEST_ASSERT_EQUAL(1, num_of_available_recipes);
+    TEST_ASSERT_EQUAL(0, recipes_id[0]);
     // then I can see the recipe for standard breakfast
 
     // when I click the option to prepare standard breakfast
-    // then I can see the recipe
-
-    // when I click the meal is ready and ask for the list of ingredients
     // then on the list of ingredients I see 1 bread and 1 cheese, 750 ml of water.
 
     TEST_FAIL_MESSAGE("Standard acceptance test not implemented yet");
