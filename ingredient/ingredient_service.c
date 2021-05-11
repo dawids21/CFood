@@ -117,6 +117,29 @@ bool modify_ingredient(IngredientService service, int id, char *new_name, int ne
     return success;
 }
 
+bool reduce_amount_of_ingredient(IngredientService service, int id, int to_reduce) {
+
+    if (service == NULL) {
+        return false;
+    }
+
+    int index = find_index_by_id(service, id);
+
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem ingredients[get_num_of_ingredients(service)];
+    get_all_items(service->ingredients, ingredients);
+    Ingredient ingredient = ingredients[index].ingredient_item;
+    int current_amount;
+    get_amount(ingredient, &current_amount);
+    if (current_amount < to_reduce) {
+        return false;
+    }
+    return modify_amount(ingredient, current_amount - to_reduce);
+}
+
 void save_ingredient_service(IngredientService service) {
     if (strlen(service->filename) == 0) {
         return;

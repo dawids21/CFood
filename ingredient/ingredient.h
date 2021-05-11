@@ -30,6 +30,8 @@ bool get_type(Ingredient ingredient, IngredientType *result);
 
 bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientType new_type);
 
+bool modify_amount(Ingredient ingredient, int new_amount);
+
 void save_ingredient(Ingredient ingredient, FILE *f);
 
 Ingredient restore_ingredient(FILE *f);

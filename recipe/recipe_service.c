@@ -155,6 +155,34 @@ void print_detailed_info_about_recipe(RecipeService service, int id) {
     recipe_print_steps(recipe);
 }
 
+bool remove_ingredients_from_recipe(RecipeService service, int id) {
+    if (service == NULL) {
+        return false;
+    }
+
+    int index = find_index_by_id(service, id);
+
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem recipeItem;
+    get(service->recipes, index, &recipeItem);
+    Recipe recipe = recipeItem.recipe_item;
+
+    int num_of_ingredients;
+    recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
+    RecipeIngredient ingredients[num_of_ingredients];
+    recipe_get_ingredients(recipe, ingredients, num_of_ingredients);
+
+    for (int i = 0; i < num_of_ingredients; ++i) {
+        RecipeIngredient ingredient = ingredients[i];
+        reduce_amount_of_ingredient(service->ingredientService, ingredient->id, ingredient->amount);
+    }
+
+    return true;
+}
+
 void save_recipe_service(RecipeService service) {
     if (strlen(service->filename) == 0) {
         return;
