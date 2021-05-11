@@ -5,7 +5,7 @@
 #include "recommendation_service_controller.h"
 #include "input.h"
 
-static void get_recommendations(RecommendationService service);
+static void get_recommendations(RecommendationService service, RecipeService recipe_service);
 
 static void try_something_new(RecommendationService service);
 
@@ -20,11 +20,11 @@ void recommendation_service_display_main_menu() {
     printf("Choose option: ");
 }
 
-void recommendation_service_handle_option(char option, RecommendationService service) {
+void recommendation_service_handle_option(char option, RecommendationService service, RecipeService recipe_service) {
 
     switch (option) {
         case '1':
-            get_recommendations(service);
+            get_recommendations(service, recipe_service);
             break;
         case '2':
             try_something_new(service);
@@ -35,7 +35,7 @@ void recommendation_service_handle_option(char option, RecommendationService ser
     printf("\n");
 }
 
-static void get_recommendations(RecommendationService service) {
+static void get_recommendations(RecommendationService service, RecipeService recipe_service) {
     int num_of_available_recipes = get_number_of_available_recipes(service);
     if (num_of_available_recipes <= 0) {
         printf("No available recipes");
@@ -46,9 +46,10 @@ static void get_recommendations(RecommendationService service) {
     int current = 0;
     int run = 1;
     while (run) {
+        print_detailed_info_about_recipe(recipe_service, id_recipes[current]);
+        print_recommendation_menu();
         char option;
         input_char(&option);
-        print_recommendation_menu();
         switch (option) {
             case '1':
                 //TODO
@@ -75,7 +76,7 @@ static void print_recommendation_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
     printf("1. Prepare meal (not implemented yet)\n");
-    printf("2. Next (not implemented yet)\n");
+    printf("2. Next \n");
     printf("3. Return\n");
     printf("Choose option: ");
 }
