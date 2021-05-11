@@ -19,4 +19,4 @@ unset(DEV CACHE)
 
 add_executable(cfood main.c ingredient_service_controller.c recipe_service_controller.c input.c ingredient_service_controller.h recipe_service_controller.h input.h)
 
-target_link_libraries(cfood lib_ingredient lib_recipe)
+target_link_libraries(cfood lib_ingredient lib_recipe lib_recommendation)
