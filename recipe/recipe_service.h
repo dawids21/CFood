@@ -17,6 +17,7 @@ typedef struct {
     int id;
     char name[MAX_RECIPE_NAME_LEN];
     bool is_possible;
+    int num_of_uses;
 } RecipeReadModel;
 
 RecipeService new_recipe_service(char *filename, IngredientService ingredientService);

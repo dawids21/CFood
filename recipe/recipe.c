@@ -13,6 +13,7 @@ struct Recipe {
     int num_of_steps;
     RecipeIngredient *ingredients;
     int num_of_ingredients;
+    int num_of_uses;
 };
 
 Recipe
@@ -40,6 +41,8 @@ create_new_recipe(int id, char *name, char *steps[], int num_of_steps, RecipeIng
     }
 
     recipe->num_of_ingredients = num_of_ingredients;
+
+    recipe->num_of_uses = 0;
 
     return recipe;
 }
@@ -89,7 +92,7 @@ bool recipe_get_ingredients(Recipe recipe, RecipeIngredient *result, int result_
 }
 
 bool recipe_get_num_of_ingredients(Recipe recipe, int *result) {
-    if (recipe == NULL || result == false) {
+    if (recipe == NULL || result == NULL) {
         return false;
     }
     *result = recipe->num_of_ingredients;
@@ -100,6 +103,22 @@ void recipe_print_steps(Recipe recipe) {
     for (int i = 0; i < recipe->num_of_steps; ++i) {
         printf("%d. %s\n", i + 1, recipe->steps[i]);
     }
+}
+
+bool recipe_get_num_of_uses(Recipe recipe, int *result) {
+    if (recipe == NULL || result == NULL) {
+        return false;
+    }
+    *result = recipe->num_of_uses;
+    return true;
+}
+
+void recipe_increase_num_of_uses(Recipe recipe) {
+    recipe->num_of_uses++;
+}
+
+void recipe_reset_num_of_uses(Recipe recipe) {
+    recipe->num_of_uses = 0;
 }
 
 void save_recipe(Recipe recipe, FILE *f) {
@@ -121,6 +140,8 @@ void save_recipe(Recipe recipe, FILE *f) {
     for (int i = 0; i < recipe->num_of_ingredients; ++i) {
         fwrite(recipe->ingredients[i], sizeof(struct RecipeIngredient), 1, f);
     }
+
+    fwrite(&recipe->num_of_uses, sizeof(int), 1, f);
 }
 
 Recipe restore_recipe(FILE *f) {
@@ -152,6 +173,9 @@ Recipe restore_recipe(FILE *f) {
     }
 
     Recipe recipe = create_new_recipe(id, name, steps, num_of_steps, ingredients, num_of_ingredients);
+
+    fread(&recipe->num_of_uses, sizeof(int), 1, f);
+
     for (int i = 0; i < num_of_steps; ++i) {
         free(steps[i]);
     }

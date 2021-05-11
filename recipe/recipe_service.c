@@ -69,6 +69,7 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result) {
         recipe_get_id(current, &(result[i].id));
         recipe_get_name(current, result[i].name, MAX_RECIPE_NAME_LEN);
         result[i].is_possible = check_if_recipe_is_possible(service, current);
+        recipe_get_num_of_uses(current, &(result[i].num_of_uses));
     }
 }
 
@@ -136,8 +137,12 @@ void print_detailed_info_about_recipe(RecipeService service, int id) {
         get_ingredient_by_id(service->ingredientService, recipe_ingredients[i]->id, &ingredients[i]);
     }
 
+    int num_of_uses;
+    recipe_get_num_of_uses(recipe, &num_of_uses);
+
     printf("Name: %s\n", name);
-    printf("Ingredients\n");
+    printf("Number of usage: %d\n", num_of_uses);
+    printf("\nIngredients\n");
     for (int i = 0; i < num_of_ingredients; ++i) {
         IngredientReadModel ingredient = ingredients[i];
         if (ingredient.type == SOLID) {
@@ -146,6 +151,7 @@ void print_detailed_info_about_recipe(RecipeService service, int id) {
             printf("%d ml %s\n", recipe_ingredients[i]->amount, ingredient.name);
         }
     }
+    printf("\nSteps\n");
     recipe_print_steps(recipe);
 }
 

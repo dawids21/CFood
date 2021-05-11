@@ -55,11 +55,12 @@ static void list_recipes(RecipeService service) {
     }
     RecipeReadModel recipes[num_of_recipes];
     get_all_recipes(service, recipes);
-    printf("ID | Name | Is possible?\n");
-    printf("------------------\n");
+    printf("ID | Name | Is possible? | Number of uses\n");
+    printf("-----------------------------------------\n");
     for (int i = 0; i < num_of_recipes; i++) {
         RecipeReadModel current = recipes[i];
-        printf("%d | %s | %s\n", current.id, current.name, current.is_possible ? "YES" : "NO");
+        printf("%d | %s | %s | %d\n", current.id, current.name, current.is_possible ? "YES" : "NO",
+               current.num_of_uses);
     }
 }
 
