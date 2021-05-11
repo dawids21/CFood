@@ -74,6 +74,15 @@ bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientTyp
     return true;
 }
 
+bool modify_amount(Ingredient ingredient, int new_amount) {
+    if (ingredient == NULL || new_amount < 0) {
+        return false;
+    }
+
+    ingredient->amount = new_amount;
+    return true;
+}
+
 void save_ingredient(Ingredient ingredient, FILE *f) {
     fwrite(&ingredient->id, sizeof(int), 1, f);
     size_t name_len = strlen(ingredient->name) + 1;
