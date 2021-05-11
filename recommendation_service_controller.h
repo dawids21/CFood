@@ -5,4 +5,10 @@
 #ifndef CFOOD_RECOMMENDATION_SERVICE_CONTROLLER_H
 #define CFOOD_RECOMMENDATION_SERVICE_CONTROLLER_H
 
+#include <recommendation_service.h>
+
+void recommendation_service_display_main_menu();
+
+void recommendation_service_handle_option(char option, RecommendationService service);
+
 #endif //CFOOD_RECOMMENDATION_SERVICE_CONTROLLER_H

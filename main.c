@@ -7,6 +7,7 @@
 #include "ingredient_service_controller.h"
 #include "input.h"
 #include "recipe_service_controller.h"
+#include "recommendation_service_controller.h"
 
 static void manage_ingredients_handler(IngredientService ingredient_service, RecipeService recipe_service);
 
@@ -97,6 +98,15 @@ static void manage_recipe_handler(RecipeService recipe_service, IngredientServic
 
 static void recommendation_handler(RecommendationService recommendation_service) {
     while (true) {
-        break;
+        recommendation_service_display_main_menu();
+        char option;
+        input_char(&option);
+        if (option >= '1' && option <= '2') {
+            recipe_service_handle_option(option, recommendation_service);
+        } else if (option == '3') {
+            break;
+        } else {
+            printf("Unknown option\n");
+        }
     }
 }
