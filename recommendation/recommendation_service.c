@@ -44,3 +44,28 @@ int get_number_of_available_recipes(RecommendationService service) {
     }
     return result;
 }
+
+void get_unused_available_recipes(RecommendationService service, int *result, int result_len) {
+    int num_of_recipes = get_num_of_recipes(service->recipe_service);
+    RecipeReadModel recipes[num_of_recipes];
+    get_all_recipes(service->recipe_service, recipes);
+    int result_index = 0;
+    for (int i = 0; i < result_len && i < num_of_recipes; ++i) {
+        if (recipes[i].is_possible && recipes[i].num_of_uses == 0) {
+            result[result_index++] = recipes[i].id;
+        }
+    }
+}
+
+int get_number_of_unused_available_recipes(RecommendationService service) {
+    int num_of_recipes = get_num_of_recipes(service->recipe_service);
+    RecipeReadModel recipes[num_of_recipes];
+    get_all_recipes(service->recipe_service, recipes);
+    int result = 0;
+    for (int i = 0; i < num_of_recipes; ++i) {
+        if (recipes[i].is_possible && recipes[i].num_of_uses == 0) {
+            result++;
+        }
+    }
+    return result;
+}
