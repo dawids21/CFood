@@ -16,7 +16,7 @@ RecommendationService new_recommendation_service(RecipeService recipe_service, I
     return service;
 }
 
-void delete_recommendation_service(RecipeService service) {
+void delete_recommendation_service(RecommendationService service) {
     free(service);
 }
 

@@ -58,11 +58,14 @@ int main() {
         }
     }
 
+    delete_recommendation_service(recommendation_service);
+
     save_recipe_service(recipe_service);
     delete_recipe_service(recipe_service);
 
     save_ingredient_service(ingredient_service);
     delete_ingredient_service(ingredient_service);
+
     return 0;
 }
 
