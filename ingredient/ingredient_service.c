@@ -117,6 +117,23 @@ bool modify_ingredient(IngredientService service, int id, char *new_name, int ne
     return success;
 }
 
+bool change_amount_of_ingredient(IngredientService service, int id, int new_amount) {
+
+    if (service == NULL) {
+        return false;
+    }
+
+    int index = find_index_by_id(service, id);
+
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem ingredients[get_num_of_ingredients(service)];
+    get_all_items(service->ingredients, ingredients);
+    return modify_amount(ingredients[index].ingredient_item, new_amount);
+}
+
 void save_ingredient_service(IngredientService service) {
     if (strlen(service->filename) == 0) {
         return;
