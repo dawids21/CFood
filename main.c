@@ -9,6 +9,8 @@
 #include "recipe_service_controller.h"
 #include "recommendation_service_controller.h"
 
+static void main_console();
+
 static void manage_ingredients_handler(IngredientService ingredient_service, RecipeService recipe_service);
 
 static void manage_recipe_handler(RecipeService recipe_service, IngredientService ingredient_service);
@@ -19,6 +21,13 @@ static void recommendation_handler(RecommendationService recommendation_service,
 #define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
 
 int main() {
+    main_console();
+
+    return 0;
+}
+
+static void main_console() {
+
     IngredientService ingredient_service;
     if (access(INGREDIENT_SERVICE_FILENAME, F_OK) == 0) {
         ingredient_service = restore_ingredient_service(INGREDIENT_SERVICE_FILENAME);
@@ -65,8 +74,6 @@ int main() {
 
     save_ingredient_service(ingredient_service);
     delete_ingredient_service(ingredient_service);
-
-    return 0;
 }
 
 static void manage_ingredients_handler(IngredientService ingredient_service, RecipeService recipe_service) {
