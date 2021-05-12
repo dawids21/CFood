@@ -67,10 +67,8 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result) {
     get_all_items(service->recipes, recipes);
     for (int i = 0; i < num_of_recipes; ++i) {
         Recipe current = recipes[i].recipe_item;
-        recipe_get_id(current, &(result[i].id));
-        recipe_get_name(current, result[i].name, MAX_RECIPE_NAME_LEN);
+        recipe_create_read_model(current, &result[i]);
         result[i].is_possible = check_if_recipe_is_possible(service, current);
-        recipe_get_num_of_uses(current, &(result[i].num_of_uses));
     }
 }
 
