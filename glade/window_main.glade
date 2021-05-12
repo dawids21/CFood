@@ -161,6 +161,7 @@
                                   <object class="GtkListBox" id="list_get_recommendations_ingredients">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
+                                    <property name="halign">center</property>
                                     <child type="placeholder">
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
@@ -206,6 +207,7 @@
                                   <object class="GtkListBox" id="list_get_recommendations_steps">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
+                                    <property name="halign">center</property>
                                     <child type="placeholder">
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
@@ -346,6 +348,7 @@
                                   <object class="GtkListBox" id="list_try_something_new_ingredients">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
+                                    <property name="halign">center</property>
                                     <child type="placeholder">
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
@@ -391,6 +394,7 @@
                                   <object class="GtkListBox" id="list_try_something_new_steps">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
+                                    <property name="halign">center</property>
                                     <child type="placeholder">
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
