@@ -129,6 +129,15 @@ typedef struct {
     IngredientService ingredient_service;
     RecipeService recipe_service;
     RecommendationService recommendation_service;
+    GtkStack *stack_main;
+    GtkStack *stack_recommendations;
+    GtkLabel *lbl_get_recommendations_recipe_name;
+    GtkLabel *lbl_get_recommendations_num_of_uses;
+    GtkListBox *list_get_recommendations_ingredients;
+    GtkListBox *list_get_recommendations_steps;
+    GtkLabel *lbl_try_something_new_recipe_name;
+    GtkListBox *list_try_something_new_ingredients;
+    GtkListBox *list_try_something_new_steps;
 } App;
 
 static void main_gtk(int argc, char *argv[]) {
@@ -158,6 +167,23 @@ static void main_gtk(int argc, char *argv[]) {
     window = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
     gtk_builder_connect_signals(builder, app);
 
+    app->stack_main = GTK_STACK(gtk_builder_get_object(builder, "stack_main"));
+    app->stack_recommendations = GTK_STACK(gtk_builder_get_object(builder, "stack_recommendations"));
+    app->lbl_get_recommendations_recipe_name = GTK_LABEL(
+            gtk_builder_get_object(builder, "lbl_get_recommendations_recipe_name"));
+    app->lbl_get_recommendations_num_of_uses = GTK_LABEL(
+            gtk_builder_get_object(builder, "lbl_get_recommendations_num_of_uses"));
+    app->list_get_recommendations_ingredients = GTK_LIST_BOX(
+            gtk_builder_get_object(builder, "list_get_recommendations_ingredients"));
+    app->list_get_recommendations_steps = GTK_LIST_BOX(
+            gtk_builder_get_object(builder, "list_get_recommendations_steps"));
+    app->lbl_try_something_new_recipe_name = GTK_LABEL(
+            gtk_builder_get_object(builder, "lbl_try_something_new_recipe_name"));
+    app->list_try_something_new_ingredients = GTK_LIST_BOX(
+            gtk_builder_get_object(builder, "list_try_something_new_ingredients"));
+    app->list_try_something_new_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_try_something_new_steps"));
+
+
     g_object_unref(builder);
 
     gtk_widget_show(window);
@@ -177,32 +203,30 @@ void on_window_main_destroy(GtkWidget *widget, App *app) {
     gtk_main_quit();
 }
 
-void on_btn_try_something_new_next_clicked() {
+void on_btn_try_something_new_next_clicked(GtkButton *button, App *app) {
 
 }
 
-void on_btn_try_something_new_prepare_clicked() {
+void on_btn_try_something_new_prepare_clicked(GtkButton *button, App *app) {
 
 }
 
-
-void on_btn_get_recommendations_next_clicked() {
-
-}
-
-void on_btn_get_recommendations_prepare_clicked() {
+void on_btn_get_recommendations_next_clicked(GtkButton *button, App *app) {
 
 }
 
-void on_btn_main_stack_recipes_clicked(GtkButton *button, GtkStack *main_stack) {
+void on_btn_get_recommendations_prepare_clicked(GtkButton *button, App *app) {
 
 }
 
-void on_btn_main_stack_ingredients_clicked(GtkButton *button, GtkStack *main_stack) {
+void on_btn_main_stack_recipes_clicked(GtkButton *button, App *app) {
 
 }
 
-void on_btn_main_stack_recommendations_clicked(GtkButton *button, GtkStack *main_stack) {
-    printf("OK");
-    gtk_stack_set_visible_child_name(main_stack, "recommendation_stack");
+void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
+
+}
+
+void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_main, "recommendation_stack");
 }
