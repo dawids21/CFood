@@ -125,8 +125,29 @@ static void recommendation_handler(RecommendationService recommendation_service,
     }
 }
 
+typedef struct {
+    IngredientService ingredient_service;
+    RecipeService recipe_service;
+    RecommendationService recommendation_service;
+} App;
 
 static void main_gtk(int argc, char *argv[]) {
+
+    App *app = g_slice_new(App);
+    if (access(INGREDIENT_SERVICE_FILENAME, F_OK) == 0) {
+        app->ingredient_service = restore_ingredient_service(INGREDIENT_SERVICE_FILENAME);
+    } else {
+        app->ingredient_service = new_ingredient_service(INGREDIENT_SERVICE_FILENAME);
+    }
+
+    if (access(RECIPE_SERVICE_FILENAME, F_OK) == 0) {
+        app->recipe_service = restore_recipe_service(RECIPE_SERVICE_FILENAME, app->ingredient_service);
+    } else {
+        app->recipe_service = new_recipe_service(RECIPE_SERVICE_FILENAME, app->ingredient_service);
+    }
+
+    app->recommendation_service = new_recommendation_service(app->recipe_service, app->ingredient_service);
+
     GtkBuilder *builder;
     GtkWidget *window;
 
@@ -135,15 +156,24 @@ static void main_gtk(int argc, char *argv[]) {
     builder = gtk_builder_new_from_file("window_main.glade");
 
     window = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
-    gtk_builder_connect_signals(builder, NULL);
+    gtk_builder_connect_signals(builder, app);
 
     g_object_unref(builder);
 
     gtk_widget_show(window);
     gtk_main();
+
+    g_slice_free(App, app);
 }
 
-void on_window_main_destroy() {
+void on_window_main_destroy(GtkWidget *widget, App *app) {
+    delete_recommendation_service(app->recommendation_service);
+
+    save_recipe_service(app->recipe_service);
+    delete_recipe_service(app->recipe_service);
+
+    save_ingredient_service(app->ingredient_service);
+    delete_ingredient_service(app->ingredient_service);
     gtk_main_quit();
 }
 
