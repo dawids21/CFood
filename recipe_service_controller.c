@@ -60,7 +60,8 @@ static void list_recipes(RecipeService service) {
     printf("-----------------------------------------\n");
     for (int i = 0; i < num_of_recipes; i++) {
         RecipeReadModel current = recipes[i];
-        printf("%d | %s | %s | %d\n", current.id, current.name, current.is_possible ? "YES" : "NO",
+        printf("%d | %s | %s | %d\n", current.id, current.name,
+               check_if_recipe_is_possible(service, current.id) ? "YES" : "NO",
                current.num_of_uses);
     }
 }

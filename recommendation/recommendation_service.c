@@ -27,7 +27,7 @@ void get_available_recipes(RecommendationService service, int *result, int resul
     get_all_recipes(service->recipe_service, recipes);
     int result_index = 0;
     for (int i = 0; i < result_len && i < num_of_recipes; ++i) {
-        if (recipes[i].is_possible) {
+        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id)) {
             result[result_index++] = recipes[i].id;
         }
     }
@@ -39,7 +39,7 @@ int get_number_of_available_recipes(RecommendationService service) {
     get_all_recipes(service->recipe_service, recipes);
     int result = 0;
     for (int i = 0; i < num_of_recipes; ++i) {
-        if (recipes[i].is_possible) {
+        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id)) {
             result++;
         }
     }
@@ -52,7 +52,7 @@ void get_unused_available_recipes(RecommendationService service, int *result, in
     get_all_recipes(service->recipe_service, recipes);
     int result_index = 0;
     for (int i = 0; i < result_len && i < num_of_recipes; ++i) {
-        if (recipes[i].is_possible && recipes[i].num_of_uses == 0) {
+        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id) && recipes[i].num_of_uses == 0) {
             result[result_index++] = recipes[i].id;
         }
     }
@@ -64,7 +64,7 @@ int get_number_of_unused_available_recipes(RecommendationService service) {
     get_all_recipes(service->recipe_service, recipes);
     int result = 0;
     for (int i = 0; i < num_of_recipes; ++i) {
-        if (recipes[i].is_possible && recipes[i].num_of_uses == 0) {
+        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id) && recipes[i].num_of_uses == 0) {
             result++;
         }
     }

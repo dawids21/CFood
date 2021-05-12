@@ -23,7 +23,6 @@ typedef struct {
     RecipeIngredient *ingredients;
     int num_of_ingredients;
     int num_of_uses;
-    bool is_possible;
 } RecipeReadModel;
 
 Recipe
