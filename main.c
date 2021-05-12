@@ -1,3 +1,4 @@
+#include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <ingredient_service.h>
@@ -17,11 +18,14 @@ static void manage_recipe_handler(RecipeService recipe_service, IngredientServic
 
 static void recommendation_handler(RecommendationService recommendation_service, RecipeService recipe_service);
 
+static void main_gtk(int argc, char *argv[]);
+
 #define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
 #define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
 
-int main() {
-    main_console();
+int main(int argc, char *argv[]) {
+//    main_console();
+    main_gtk(argc, argv);
 
     return 0;
 }
@@ -119,4 +123,56 @@ static void recommendation_handler(RecommendationService recommendation_service,
             printf("Unknown option\n");
         }
     }
+}
+
+
+static void main_gtk(int argc, char *argv[]) {
+    GtkBuilder *builder;
+    GtkWidget *window;
+
+    gtk_init(&argc, &argv);
+
+    builder = gtk_builder_new_from_file("window_main.glade");
+
+    window = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
+    gtk_builder_connect_signals(builder, NULL);
+
+    g_object_unref(builder);
+
+    gtk_widget_show(window);
+    gtk_main();
+}
+
+void on_window_main_destroy() {
+    gtk_main_quit();
+}
+
+void on_btn_try_something_new_next_clicked() {
+
+}
+
+void on_btn_try_something_new_prepare_clicked() {
+
+}
+
+
+void on_btn_get_recommendations_next_clicked() {
+
+}
+
+void on_btn_get_recommendations_prepare_clicked() {
+
+}
+
+void on_btn_main_stack_recipes_clicked(GtkButton *button, GtkStack *main_stack) {
+
+}
+
+void on_btn_main_stack_ingredients_clicked(GtkButton *button, GtkStack *main_stack) {
+
+}
+
+void on_btn_main_stack_recommendations_clicked(GtkButton *button, GtkStack *main_stack) {
+    printf("OK");
+    gtk_stack_set_visible_child_name(main_stack, "recommendation_stack");
 }
