@@ -15,6 +15,17 @@ typedef struct RecipeIngredient {
     int amount;
 } *RecipeIngredient;
 
+typedef struct {
+    int id;
+    char *name;
+    char **steps;
+    int num_of_steps;
+    RecipeIngredient *ingredients;
+    int num_of_ingredients;
+    int num_of_uses;
+    bool is_possible;
+} RecipeReadModel;
+
 Recipe
 create_new_recipe(int id, char *name, char *steps[], int num_of_steps, RecipeIngredient *ingredients,
                   int num_of_ingredients);
@@ -36,6 +47,8 @@ bool recipe_get_num_of_uses(Recipe recipe, int *result);
 void recipe_increase_num_of_uses(Recipe recipe);
 
 void recipe_reset_num_of_uses(Recipe recipe);
+
+void recipe_create_read_model(Recipe recipe, RecipeReadModel *result);
 
 void save_recipe(Recipe recipe, FILE *f);
 

@@ -121,6 +121,16 @@ void recipe_reset_num_of_uses(Recipe recipe) {
     recipe->num_of_uses = 0;
 }
 
+void recipe_create_read_model(Recipe recipe, RecipeReadModel *result) {
+    result->id = recipe->id;
+    result->name = recipe->name;
+    result->num_of_ingredients = recipe->num_of_ingredients;
+    result->num_of_steps = recipe->num_of_steps;
+    result->num_of_uses = recipe->num_of_uses;
+    result->ingredients = recipe->ingredients;
+    result->steps = recipe->steps;
+}
+
 void save_recipe(Recipe recipe, FILE *f) {
     fwrite(&recipe->id, sizeof(int), 1, f);
 

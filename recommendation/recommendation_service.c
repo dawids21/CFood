@@ -3,6 +3,7 @@
 //
 
 #include "recommendation_service.h"
+#include "recipe.h"
 
 struct RecommendationService {
     RecipeService recipe_service;

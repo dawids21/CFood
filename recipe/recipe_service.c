@@ -5,6 +5,7 @@
 #include <array.h>
 #include <string.h>
 #include "recipe_service.h"
+#include "recipe.h"
 
 struct RecipeService {
     int id_recipes;

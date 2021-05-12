@@ -5,6 +5,7 @@
 #include "recipe_service_controller.h"
 #include "input.h"
 #include "ingredient_service_controller.h"
+#include "recipe.h"
 #include <stdlib.h>
 #include <ingredient_service.h>
 
