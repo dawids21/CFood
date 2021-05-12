@@ -230,3 +230,11 @@ void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
 void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *app) {
     gtk_stack_set_visible_child_name(app->stack_main, "recommendation_stack");
 }
+
+void on_btn_stack_recommendations_get_recommendations_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recommendations, "get_recommendations");
+}
+
+void on_btn_stack_recommendations_try_something_new_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recommendations, "try_something_new");
+}
