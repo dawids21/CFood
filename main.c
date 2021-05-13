@@ -9,6 +9,7 @@
 #include "input.h"
 #include "recipe_service_controller.h"
 #include "recommendation_service_controller.h"
+#include "app.h"
 
 static void main_console();
 
@@ -125,21 +126,6 @@ static void recommendation_handler(RecommendationService recommendation_service,
     }
 }
 
-typedef struct {
-    IngredientService ingredient_service;
-    RecipeService recipe_service;
-    RecommendationService recommendation_service;
-    GtkStack *stack_main;
-    GtkStack *stack_recommendations;
-    GtkLabel *lbl_get_recommendations_recipe_name;
-    GtkLabel *lbl_get_recommendations_num_of_uses;
-    GtkListBox *list_get_recommendations_ingredients;
-    GtkListBox *list_get_recommendations_steps;
-    GtkLabel *lbl_try_something_new_recipe_name;
-    GtkListBox *list_try_something_new_ingredients;
-    GtkListBox *list_try_something_new_steps;
-} App;
-
 static void main_gtk(int argc, char *argv[]) {
 
     App *app = g_slice_new(App);
@@ -183,6 +169,7 @@ static void main_gtk(int argc, char *argv[]) {
             gtk_builder_get_object(builder, "list_try_something_new_ingredients"));
     app->list_try_something_new_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_try_something_new_steps"));
 
+    app->current_recommendation_index = 0;
 
     g_object_unref(builder);
 
@@ -232,9 +219,13 @@ void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *app) {
 }
 
 void on_btn_stack_recommendations_get_recommendations_clicked(GtkButton *button, App *app) {
+    app->current_recommendation_index = 0;
+    recommendation_service_display_recipe_get_recommendations(app->current_recommendation_index, app);
     gtk_stack_set_visible_child_name(app->stack_recommendations, "get_recommendations");
 }
 
 void on_btn_stack_recommendations_try_something_new_clicked(GtkButton *button, App *app) {
+    app->current_recommendation_index = 0;
+    recommendation_service_display_recipe_try_something_new(app->current_recommendation_index, app);
     gtk_stack_set_visible_child_name(app->stack_recommendations, "try_something_new");
 }
