@@ -191,7 +191,8 @@ void on_window_main_destroy(GtkWidget *widget, App *app) {
 }
 
 void on_btn_try_something_new_next_clicked(GtkButton *button, App *app) {
-
+    app->current_recommendation_index++;
+    recommendation_service_display_recipe_try_something_new(app->current_recommendation_index, app);
 }
 
 void on_btn_try_something_new_prepare_clicked(GtkButton *button, App *app) {
@@ -199,6 +200,8 @@ void on_btn_try_something_new_prepare_clicked(GtkButton *button, App *app) {
 }
 
 void on_btn_get_recommendations_next_clicked(GtkButton *button, App *app) {
+    app->current_recommendation_index++;
+    recommendation_service_display_recipe_get_recommendations(app->current_recommendation_index, app);
 
 }
 
