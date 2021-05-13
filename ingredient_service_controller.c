@@ -16,6 +16,22 @@ static void modify_existing_ingredient(IngredientService service);
 
 static void delete_existing_ingredient(IngredientService service, RecipeService recipe_service);
 
+// callbacks
+static void on_btn_modify_ingredient_add_clicked(GtkButton *button, App *app);
+
+static void on_btn_modify_ingredient_cancel_clicked(GtkButton *button, App *app);
+
+static void on_btn_add_ingredient_add_clicked(GtkButton *button, App *app);
+
+static void on_btn_add_ingredient_cancel_clicked(GtkButton *button, App *app);
+
+static void on_btn_ingredients_list_delete_clicked(GtkButton *button, App *app);
+
+static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app);
+
+static void on_btn_ingredients_list_add_clicked(GtkButton *button, App *app);
+
+
 void ingredient_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
@@ -46,6 +62,23 @@ void ingredient_service_handle_option(char option, IngredientService service, Re
             break;
     }
     printf("\n");
+}
+
+void ingredient_service_register_callbacks(GtkBuilder *builder) {
+    gtk_builder_add_callback_symbol(builder, "on_btn_modify_ingredient_add_clicked",
+                                    G_CALLBACK(on_btn_modify_ingredient_add_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_modify_ingredient_cancel_clicked",
+                                    G_CALLBACK(on_btn_modify_ingredient_cancel_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_ingredient_add_clicked",
+                                    G_CALLBACK(on_btn_add_ingredient_add_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_ingredient_cancel_clicked",
+                                    G_CALLBACK(on_btn_add_ingredient_cancel_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_ingredients_list_delete_clicked",
+                                    G_CALLBACK(on_btn_ingredients_list_delete_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_ingredients_list_modify_clicked",
+                                    G_CALLBACK(on_btn_ingredients_list_modify_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_ingredients_list_add_clicked",
+                                    G_CALLBACK(on_btn_ingredients_list_add_clicked));
 }
 
 static void list_ingredients(IngredientService service) {
@@ -144,4 +177,32 @@ static void delete_existing_ingredient(IngredientService service, RecipeService 
     } else {
         printf("Problem with deleting ingredient\n");
     }
+}
+
+static void on_btn_modify_ingredient_add_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_modify_ingredient_cancel_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_add_ingredient_add_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_add_ingredient_cancel_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_ingredients_list_delete_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_ingredients_list_add_clicked(GtkButton *button, App *app) {
+
 }

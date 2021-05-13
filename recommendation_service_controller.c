@@ -13,6 +13,20 @@ static void print_recommendation_menu();
 
 static void remove_widget_from_list(GtkWidget *widget, gpointer list);
 
+// callbacks
+static void on_btn_try_something_new_next_clicked(GtkButton *button, App *app);
+
+static void on_btn_try_something_new_prepare_clicked(GtkButton *button, App *app);
+
+static void on_btn_get_recommendations_next_clicked(GtkButton *button, App *app);
+
+static void on_btn_get_recommendations_prepare_clicked(GtkButton *button, App *app);
+
+static void on_btn_stack_recommendations_get_recommendations_clicked(GtkButton *button, App *app);
+
+static void on_btn_stack_recommendations_try_something_new_clicked(GtkButton *button, App *app);
+
+
 void recommendation_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
@@ -186,6 +200,22 @@ void recommendation_service_display_recipe_try_something_new(int index, App *app
     gtk_widget_show_all(GTK_WIDGET(app->list_try_something_new_steps));
 }
 
+void recommendation_service_register_callbacks(GtkBuilder *builder) {
+
+    gtk_builder_add_callback_symbol(builder, "on_btn_try_something_new_next_clicked",
+                                    G_CALLBACK(on_btn_try_something_new_next_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_try_something_new_prepare_clicked",
+                                    G_CALLBACK(on_btn_try_something_new_prepare_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_get_recommendations_next_clicked",
+                                    G_CALLBACK(on_btn_get_recommendations_next_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_get_recommendations_prepare_clicked",
+                                    G_CALLBACK(on_btn_get_recommendations_prepare_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_stack_recommendations_get_recommendations_clicked",
+                                    G_CALLBACK(on_btn_stack_recommendations_get_recommendations_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_stack_recommendations_try_something_new_clicked",
+                                    G_CALLBACK(on_btn_stack_recommendations_try_something_new_clicked));
+}
+
 static void get_recommendations(RecommendationService service, RecipeService recipe_service) {
     int num_of_available_recipes = get_number_of_available_recipes(service);
     if (num_of_available_recipes <= 0) {
@@ -263,4 +293,35 @@ static void print_recommendation_menu() {
 
 static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
     gtk_container_remove(GTK_CONTAINER(list), widget);
+}
+
+static void on_btn_try_something_new_next_clicked(GtkButton *button, App *app) {
+    app->current_recommendation_index++;
+    recommendation_service_display_recipe_try_something_new(app->current_recommendation_index, app);
+}
+
+static void on_btn_try_something_new_prepare_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_get_recommendations_next_clicked(GtkButton *button, App *app) {
+    app->current_recommendation_index++;
+    recommendation_service_display_recipe_get_recommendations(app->current_recommendation_index, app);
+
+}
+
+static void on_btn_get_recommendations_prepare_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_stack_recommendations_get_recommendations_clicked(GtkButton *button, App *app) {
+    app->current_recommendation_index = 0;
+    recommendation_service_display_recipe_get_recommendations(app->current_recommendation_index, app);
+    gtk_stack_set_visible_child_name(app->stack_recommendations, "get_recommendations");
+}
+
+static void on_btn_stack_recommendations_try_something_new_clicked(GtkButton *button, App *app) {
+    app->current_recommendation_index = 0;
+    recommendation_service_display_recipe_try_something_new(app->current_recommendation_index, app);
+    gtk_stack_set_visible_child_name(app->stack_recommendations, "try_something_new");
 }

@@ -35,6 +35,3 @@ add_definitions(${GTK3_CFLAGS_OTHER})
 target_link_libraries(cfood ${GTK3_LIBRARIES})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/glade/window_main.glade ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-
-set(CMAKE_EXE_LINKER_FLAGS "-rdynamic")
-

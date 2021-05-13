@@ -126,6 +126,29 @@ static void recommendation_handler(RecommendationService recommendation_service,
     }
 }
 
+static void on_window_main_destroy(GtkWidget *widget, App *app) {
+    delete_recommendation_service(app->recommendation_service);
+
+    save_recipe_service(app->recipe_service);
+    delete_recipe_service(app->recipe_service);
+
+    save_ingredient_service(app->ingredient_service);
+    delete_ingredient_service(app->ingredient_service);
+    gtk_main_quit();
+}
+
+static void on_btn_main_stack_recipes_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
+
+}
+
+static void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_main, "recommendation_stack");
+}
+
 static void main_gtk(int argc, char *argv[]) {
 
     App *app = g_slice_new(App);
@@ -151,7 +174,6 @@ static void main_gtk(int argc, char *argv[]) {
     builder = gtk_builder_new_from_file("window_main.glade");
 
     window = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
-    gtk_builder_connect_signals(builder, app);
 
     app->stack_main = GTK_STACK(gtk_builder_get_object(builder, "stack_main"));
     app->stack_recommendations = GTK_STACK(gtk_builder_get_object(builder, "stack_recommendations"));
@@ -171,64 +193,23 @@ static void main_gtk(int argc, char *argv[]) {
 
     app->current_recommendation_index = 0;
 
+    gtk_builder_add_callback_symbol(builder, "on_window_main_destroy", G_CALLBACK(on_window_main_destroy));
+    gtk_builder_add_callback_symbol(builder, "on_btn_main_stack_recipes_clicked",
+                                    G_CALLBACK(on_btn_main_stack_recipes_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_main_stack_ingredients_clicked",
+                                    G_CALLBACK(on_btn_main_stack_ingredients_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_main_stack_recommendations_clicked",
+                                    G_CALLBACK(on_btn_main_stack_recommendations_clicked));
+
+    ingredient_service_register_callbacks(builder);
+    recommendation_service_register_callbacks(builder);
+
+    gtk_builder_connect_signals(builder, app);
+
     g_object_unref(builder);
 
     gtk_widget_show(window);
     gtk_main();
 
     g_slice_free(App, app);
-}
-
-void on_window_main_destroy(GtkWidget *widget, App *app) {
-    delete_recommendation_service(app->recommendation_service);
-
-    save_recipe_service(app->recipe_service);
-    delete_recipe_service(app->recipe_service);
-
-    save_ingredient_service(app->ingredient_service);
-    delete_ingredient_service(app->ingredient_service);
-    gtk_main_quit();
-}
-
-void on_btn_try_something_new_next_clicked(GtkButton *button, App *app) {
-    app->current_recommendation_index++;
-    recommendation_service_display_recipe_try_something_new(app->current_recommendation_index, app);
-}
-
-void on_btn_try_something_new_prepare_clicked(GtkButton *button, App *app) {
-
-}
-
-void on_btn_get_recommendations_next_clicked(GtkButton *button, App *app) {
-    app->current_recommendation_index++;
-    recommendation_service_display_recipe_get_recommendations(app->current_recommendation_index, app);
-
-}
-
-void on_btn_get_recommendations_prepare_clicked(GtkButton *button, App *app) {
-
-}
-
-void on_btn_main_stack_recipes_clicked(GtkButton *button, App *app) {
-
-}
-
-void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
-
-}
-
-void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *app) {
-    gtk_stack_set_visible_child_name(app->stack_main, "recommendation_stack");
-}
-
-void on_btn_stack_recommendations_get_recommendations_clicked(GtkButton *button, App *app) {
-    app->current_recommendation_index = 0;
-    recommendation_service_display_recipe_get_recommendations(app->current_recommendation_index, app);
-    gtk_stack_set_visible_child_name(app->stack_recommendations, "get_recommendations");
-}
-
-void on_btn_stack_recommendations_try_something_new_clicked(GtkButton *button, App *app) {
-    app->current_recommendation_index = 0;
-    recommendation_service_display_recipe_try_something_new(app->current_recommendation_index, app);
-    gtk_stack_set_visible_child_name(app->stack_recommendations, "try_something_new");
 }
