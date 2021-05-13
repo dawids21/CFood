@@ -69,6 +69,24 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result) {
     }
 }
 
+bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result) {
+    if (service == NULL) {
+        return false;
+    }
+    int index = find_index_by_id(service, id);
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem item;
+    get(service->recipes, index, &item);
+    Recipe recipe = item.recipe_item;
+
+    recipe_create_read_model(recipe, result);
+
+    return true;
+}
+
 bool remove_recipe(RecipeService service, int id) {
     if (service == NULL) {
         return false;

@@ -24,6 +24,8 @@ bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_ste
 
 void get_all_recipes(RecipeService service, RecipeReadModel *result);
 
+bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result);
+
 bool remove_recipe(RecipeService service, int id);
 
 bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id);
