@@ -149,34 +149,6 @@ static void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *ap
     gtk_stack_set_visible_child_name(app->stack_main, "recommendation_stack");
 }
 
-static void on_btn_modify_ingredient_add_clicked(GtkButton *button, App *app) {
-
-}
-
-static void on_btn_modify_ingredient_cancel_clicked(GtkButton *button, App *app) {
-
-}
-
-static void on_btn_add_ingredient_add_clicked(GtkButton *button, App *app) {
-
-}
-
-static void on_btn_add_ingredient_cancel_clicked(GtkButton *button, App *app) {
-
-}
-
-static void on_btn_ingredients_list_delete_clicked(GtkButton *button, App *app) {
-
-}
-
-static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app) {
-
-}
-
-static void on_btn_ingredients_list_add_clicked(GtkButton *button, App *app) {
-
-}
-
 static void main_gtk(int argc, char *argv[]) {
 
     App *app = g_slice_new(App);
@@ -228,21 +200,8 @@ static void main_gtk(int argc, char *argv[]) {
                                     G_CALLBACK(on_btn_main_stack_ingredients_clicked));
     gtk_builder_add_callback_symbol(builder, "on_btn_main_stack_recommendations_clicked",
                                     G_CALLBACK(on_btn_main_stack_recommendations_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_modify_ingredient_add_clicked",
-                                    G_CALLBACK(on_btn_modify_ingredient_add_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_modify_ingredient_cancel_clicked",
-                                    G_CALLBACK(on_btn_modify_ingredient_cancel_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_add_ingredient_add_clicked",
-                                    G_CALLBACK(on_btn_add_ingredient_add_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_add_ingredient_cancel_clicked",
-                                    G_CALLBACK(on_btn_add_ingredient_cancel_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_ingredients_list_delete_clicked",
-                                    G_CALLBACK(on_btn_ingredients_list_delete_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_ingredients_list_modify_clicked",
-                                    G_CALLBACK(on_btn_ingredients_list_modify_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_ingredients_list_add_clicked",
-                                    G_CALLBACK(on_btn_ingredients_list_add_clicked));
 
+    ingredient_service_register_callbacks(builder);
     recommendation_service_register_callbacks(builder);
 
     gtk_builder_connect_signals(builder, app);
