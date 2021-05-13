@@ -13,13 +13,6 @@ typedef struct RecipeService *RecipeService;
 
 #define MAX_RECIPE_NAME_LEN 100
 
-typedef struct {
-    int id;
-    char name[MAX_RECIPE_NAME_LEN];
-    bool is_possible;
-    int num_of_uses;
-} RecipeReadModel;
-
 RecipeService new_recipe_service(char *filename, IngredientService ingredientService);
 
 void delete_recipe_service(RecipeService service);
@@ -31,6 +24,8 @@ bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_ste
 
 void get_all_recipes(RecipeService service, RecipeReadModel *result);
 
+bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result);
+
 bool remove_recipe(RecipeService service, int id);
 
 bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id);
@@ -38,6 +33,8 @@ bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id);
 void print_detailed_info_about_recipe(RecipeService service, int id);
 
 bool remove_ingredients_from_recipe(RecipeService service, int id);
+
+bool check_if_recipe_is_possible(RecipeService service, int id);
 
 void save_recipe_service(RecipeService service);
 

@@ -18,8 +18,23 @@ endif (DEV)
 unset(DEV CACHE)
 
 set(SOURCE_FILES main.c input.c ingredient_service_controller.c recipe_service_controller.c recommendation_service_controller.c)
-set(HEADER_FILES input.h ingredient_service_controller.h recipe_service_controller.h recommendation_service_controller.h)
+set(HEADER_FILES app.h input.h ingredient_service_controller.h recipe_service_controller.h recommendation_service_controller.h)
 
 add_executable(cfood ${SOURCE_FILES} ${HEADER_FILES})
 
 target_link_libraries(cfood lib_ingredient lib_recipe lib_recommendation)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+
+add_definitions(${GTK3_CFLAGS_OTHER})
+
+target_link_libraries(cfood ${GTK3_LIBRARIES})
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/glade/window_main.glade ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+set(CMAKE_EXE_LINKER_FLAGS "-rdynamic")
+

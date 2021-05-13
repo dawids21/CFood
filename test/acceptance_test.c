@@ -79,10 +79,10 @@ void standard_acceptance_test(void) {
     get_all_recipes(recipe_service, recipes);
     TEST_ASSERT_EQUAL(0, recipes[0].id);
     TEST_ASSERT_EQUAL_STRING("Standard breakfast", recipes[0].name);
-    TEST_ASSERT_TRUE(recipes[0].is_possible);
+    TEST_ASSERT_FALSE(check_if_recipe_is_possible(recipe_service, recipes[0].id));
     TEST_ASSERT_EQUAL(1, recipes[1].id);
     TEST_ASSERT_EQUAL_STRING("Premium breakfast", recipes[1].name);
-    TEST_ASSERT_FALSE(recipes[1].is_possible);
+    TEST_ASSERT_FALSE(check_if_recipe_is_possible(recipe_service, recipes[1].id));
 
     // when I open recommendations for meal
     int num_of_available_recipes = get_number_of_available_recipes(recommendation_service);

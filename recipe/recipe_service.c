@@ -5,6 +5,7 @@
 #include <array.h>
 #include <string.h>
 #include "recipe_service.h"
+#include "recipe.h"
 
 struct RecipeService {
     int id_recipes;
@@ -12,8 +13,6 @@ struct RecipeService {
     char *filename;
     IngredientService ingredientService;
 };
-
-static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe);
 
 static int find_index_by_id(RecipeService service, int id);
 
@@ -66,11 +65,26 @@ void get_all_recipes(RecipeService service, RecipeReadModel *result) {
     get_all_items(service->recipes, recipes);
     for (int i = 0; i < num_of_recipes; ++i) {
         Recipe current = recipes[i].recipe_item;
-        recipe_get_id(current, &(result[i].id));
-        recipe_get_name(current, result[i].name, MAX_RECIPE_NAME_LEN);
-        result[i].is_possible = check_if_recipe_is_possible(service, current);
-        recipe_get_num_of_uses(current, &(result[i].num_of_uses));
+        recipe_create_read_model(current, &result[i]);
     }
+}
+
+bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result) {
+    if (service == NULL) {
+        return false;
+    }
+    int index = find_index_by_id(service, id);
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem item;
+    get(service->recipes, index, &item);
+    Recipe recipe = item.recipe_item;
+
+    recipe_create_read_model(recipe, result);
+
+    return true;
 }
 
 bool remove_recipe(RecipeService service, int id) {
@@ -183,6 +197,34 @@ bool remove_ingredients_from_recipe(RecipeService service, int id) {
     return true;
 }
 
+bool check_if_recipe_is_possible(RecipeService service, int id) {
+
+    int index = find_index_by_id(service, id);
+
+    if (index == -1) {
+        return false;
+    }
+
+    ArrayItem recipeItem;
+    get(service->recipes, index, &recipeItem);
+    Recipe recipe = recipeItem.recipe_item;
+
+    int num_of_ingredients;
+    recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
+    RecipeIngredient ingredients[num_of_ingredients];
+    recipe_get_ingredients(recipe, ingredients, num_of_ingredients);
+
+    for (int i = 0; i < num_of_ingredients; ++i) {
+        RecipeIngredient recipe_ingredient = ingredients[i];
+        IngredientReadModel ingredient;
+        get_ingredient_by_id(service->ingredientService, recipe_ingredient->id, &ingredient);
+        if (ingredient.amount < recipe_ingredient->amount) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void save_recipe_service(RecipeService service) {
     if (strlen(service->filename) == 0) {
         return;
@@ -217,23 +259,6 @@ RecipeService restore_recipe_service(char *filename, IngredientService ingredien
 
     fclose(f);
     return service;
-}
-
-static bool check_if_recipe_is_possible(RecipeService service, Recipe recipe) {
-    int num_of_ingredients;
-    recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
-    RecipeIngredient ingredients[num_of_ingredients];
-    recipe_get_ingredients(recipe, ingredients, num_of_ingredients);
-
-    for (int i = 0; i < num_of_ingredients; ++i) {
-        RecipeIngredient recipe_ingredient = ingredients[i];
-        IngredientReadModel ingredient;
-        get_ingredient_by_id(service->ingredientService, recipe_ingredient->id, &ingredient);
-        if (ingredient.amount < recipe_ingredient->amount) {
-            return false;
-        }
-    }
-    return true;
 }
 
 static int find_index_by_id(RecipeService service, int id) {
