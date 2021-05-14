@@ -15,4 +15,6 @@ void ingredient_service_handle_option(char option, IngredientService service, Re
 
 void ingredient_service_register_callbacks(GtkBuilder *builder);
 
+void ingredient_service_populate_tree(App *app);
+
 #endif //CFOOD_INGREDIENT_SERVICE_CONTROLLER_H

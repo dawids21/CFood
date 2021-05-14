@@ -142,6 +142,7 @@ static void on_btn_main_stack_recipes_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
+    ingredient_service_populate_tree(app);
     gtk_stack_set_visible_child_name(app->stack_main, "ingredients");
 }
 

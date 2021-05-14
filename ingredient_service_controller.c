@@ -77,6 +77,10 @@ void ingredient_service_register_callbacks(GtkBuilder *builder) {
                                     G_CALLBACK(on_btn_ingredients_list_add_clicked));
 }
 
+void ingredient_service_populate_tree(App *app) {
+
+}
+
 static void list_ingredients(IngredientService service) {
     int num_of_ingredients = get_num_of_ingredients(service);
     if (num_of_ingredients == 0) {
