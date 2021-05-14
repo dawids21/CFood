@@ -191,6 +191,22 @@ static void main_gtk(int argc, char *argv[]) {
             gtk_builder_get_object(builder, "list_try_something_new_ingredients"));
     app->list_try_something_new_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_try_something_new_steps"));
 
+    app->stack_ingredients = GTK_STACK(gtk_builder_get_object(builder, "stack_ingredients"));
+    app->btn_ingredients_list_add = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_add"));
+    app->btn_ingredients_list_modify = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_modify"));
+    app->btn_ingredients_list_delete = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_delete"));
+    app->entry_ingredient_form_name = GTK_ENTRY(gtk_builder_get_object(builder, "entry_ingredient_form_name"));
+    app->entry_ingredient_form_amount = GTK_SPIN_BUTTON(
+            gtk_builder_get_object(builder, "entry_ingredient_form_amount"));
+    app->entry_ingredient_form_type_solid = GTK_RADIO_BUTTON(
+            gtk_builder_get_object(builder, "entry_ingredient_form_type_solid"));
+    app->entry_ingredient_form_type_liquid = GTK_RADIO_BUTTON(
+            gtk_builder_get_object(builder, "entry_ingredient_form_type_liquid"));
+    app->btn_ingredient_form_cancel = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_cancel"));
+    app->stack_ingredient_form_button = GTK_STACK(gtk_builder_get_object(builder, "stack_ingredient_form_button"));
+    app->btn_ingredient_form_add = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_add"));
+    app->btn_ingredient_form_modify = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_modify"));
+
     app->current_recommendation_index = 0;
 
     gtk_builder_add_callback_symbol(builder, "on_window_main_destroy", G_CALLBACK(on_window_main_destroy));
