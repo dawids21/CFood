@@ -184,7 +184,7 @@ static void on_btn_ingredient_form_add_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_ingredient_form_cancel_clicked(GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_list");
 }
 
 static void on_btn_ingredients_list_delete_clicked(GtkButton *button, App *app) {
@@ -192,9 +192,11 @@ static void on_btn_ingredients_list_delete_clicked(GtkButton *button, App *app) 
 }
 
 static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_ingredient_form_button, "modify");
+    gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_form");
 }
 
 static void on_btn_ingredients_list_add_clicked(GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_ingredient_form_button, "add");
+    gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_form");
 }
