@@ -970,7 +970,7 @@
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_btn_modify_ingredient_add_clicked" swapped="no"/>
+                            <signal name="clicked" handler="on_btn_modify_ingredient_modify_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">True</property>
