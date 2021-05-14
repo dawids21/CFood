@@ -193,6 +193,7 @@ static void main_gtk(int argc, char *argv[]) {
     app->list_try_something_new_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_try_something_new_steps"));
 
     app->stack_ingredients = GTK_STACK(gtk_builder_get_object(builder, "stack_ingredients"));
+    app->tree_store_ingredients = GTK_TREE_STORE(gtk_builder_get_object(builder, "tree_store_ingredients"));
     app->btn_ingredients_list_add = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_add"));
     app->btn_ingredients_list_modify = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_modify"));
     app->btn_ingredients_list_delete = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_delete"));

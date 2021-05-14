@@ -26,6 +26,7 @@ typedef struct {
     GtkListBox *list_try_something_new_steps;
 
     GtkStack *stack_ingredients;
+    GtkTreeStore *tree_store_ingredients;
     GtkButton *btn_ingredients_list_add;
     GtkButton *btn_ingredients_list_modify;
     GtkButton *btn_ingredients_list_delete;
