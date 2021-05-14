@@ -552,7 +552,7 @@
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkTreeView">
+                      <object class="GtkTreeView" id="tree_view_ingredients">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="model">tree_store_ingredients</property>
