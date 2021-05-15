@@ -7,9 +7,9 @@
       <!-- column-name ID -->
       <column type="gint"/>
       <!-- column-name Name -->
-      <column type="gchar"/>
+      <column type="gchararray"/>
       <!-- column-name Amount -->
-      <column type="gint"/>
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkWindow" id="window_main">
@@ -558,6 +558,28 @@
                         <property name="model">tree_store_ingredients</property>
                         <child internal-child="selection">
                           <object class="GtkTreeSelection"/>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn">
+                            <property name="title" translatable="yes">Name</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="crnd_ingredient_list_name"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn">
+                            <property name="title" translatable="yes">Amount</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="crnd_ingredient_list_amount"/>
+                              <attributes>
+                                <attribute name="text">2</attribute>
+                              </attributes>
+                            </child>
+                          </object>
                         </child>
                       </object>
                       <packing>

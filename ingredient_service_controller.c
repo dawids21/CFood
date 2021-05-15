@@ -77,8 +77,28 @@ void ingredient_service_register_callbacks(GtkBuilder *builder) {
                                     G_CALLBACK(on_btn_ingredients_list_add_clicked));
 }
 
-void ingredient_service_populate_tree(App *app) {
-
+void ingredient_service_init_tree(App *app) {
+    GtkTreeStore *store = app->tree_store_ingredients;
+    GtkTreeIter iter;
+    int num_of_ingredients = get_num_of_ingredients(app->ingredient_service);
+    IngredientReadModel to_list[num_of_ingredients];
+    get_all_ingredients(app->ingredient_service, to_list);
+    for (int i = 0; i < num_of_ingredients; i++) {
+        gtk_tree_store_append(store, &iter, NULL);
+        IngredientReadModel current = to_list[i];
+        gchar *amount;
+        if (current.type == SOLID) {
+            amount = g_strdup_printf("%d", current.amount);
+        } else {
+            amount = g_strdup_printf("%d ml", current.amount);
+        }
+        gtk_tree_store_set(store, &iter,
+                           0, current.id,
+                           1, current.name,
+                           2, amount,
+                           -1);
+        g_free(amount);
+    }
 }
 
 static void list_ingredients(IngredientService service) {

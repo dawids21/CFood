@@ -142,7 +142,6 @@ static void on_btn_main_stack_recipes_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
-    ingredient_service_populate_tree(app);
     gtk_stack_set_visible_child_name(app->stack_main, "ingredients");
 }
 
@@ -194,6 +193,7 @@ static void main_gtk(int argc, char *argv[]) {
 
     app->stack_ingredients = GTK_STACK(gtk_builder_get_object(builder, "stack_ingredients"));
     app->tree_store_ingredients = GTK_TREE_STORE(gtk_builder_get_object(builder, "tree_store_ingredients"));
+    app->tree_view_ingredients = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tree_view_ingredients"));
     app->btn_ingredients_list_add = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_add"));
     app->btn_ingredients_list_modify = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_modify"));
     app->btn_ingredients_list_delete = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_delete"));
@@ -221,6 +221,7 @@ static void main_gtk(int argc, char *argv[]) {
 
     ingredient_service_register_callbacks(builder);
     recommendation_service_register_callbacks(builder);
+    ingredient_service_init_tree(app);
 
     gtk_builder_connect_signals(builder, app);
 
