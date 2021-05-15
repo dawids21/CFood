@@ -136,8 +136,8 @@ static void add_new_ingredient(IngredientService service) {
     input_char(&type_letter);
     IngredientType type = type_letter == 'L' || type_letter == 'l' ? LIQUID : SOLID;
 
-    bool success = add_ingredient(service, name, amount, type);
-    if (success) {
+    int id = add_ingredient(service, name, amount, type);
+    if (id != -1) {
         printf("Ingredient added\n");
     } else {
         printf("Problem with adding ingredient\n");
