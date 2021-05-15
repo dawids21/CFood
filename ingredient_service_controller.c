@@ -18,6 +18,8 @@ static void delete_existing_ingredient(IngredientService service, RecipeService 
 
 static void add_to_tree_store(GtkTreeStore *store, int id, char name[100], int amount, IngredientType type);
 
+static void set_ingredient_in_form(App *app, int id);
+
 // callbacks
 static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app);
 
@@ -205,6 +207,18 @@ static void add_to_tree_store(GtkTreeStore *store, int id, char name[100], int a
     g_free(amount_text);
 }
 
+static void set_ingredient_in_form(App *app, int id) {
+    IngredientReadModel ingredient;
+    get_ingredient_by_id(app->ingredient_service, id, &ingredient);
+    gtk_entry_set_text(app->entry_ingredient_form_name, ingredient.name);
+    gtk_spin_button_set_value(app->entry_ingredient_form_amount, ingredient.amount);
+    if (ingredient.type == SOLID) {
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid), true);
+    } else {
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_liquid), true);
+    }
+}
+
 static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app) {
 
 }
@@ -235,6 +249,16 @@ static void on_btn_ingredients_list_delete_clicked(GtkButton *button, App *app) 
 }
 
 static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_ingredients);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+        gint id;
+        gtk_tree_model_get(model, &iter, 0, &id, -1);
+        set_ingredient_in_form(app, id);
+    } else {
+        return;
+    }
     gtk_stack_set_visible_child_name(app->stack_ingredient_form_button, "modify");
     gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_form");
 }
