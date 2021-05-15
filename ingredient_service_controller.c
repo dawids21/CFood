@@ -16,6 +16,8 @@ static void modify_existing_ingredient(IngredientService service);
 
 static void delete_existing_ingredient(IngredientService service, RecipeService recipe_service);
 
+static void add_to_tree_store(GtkTreeStore *store, int id, char name[100], int amount, IngredientType type);
+
 // callbacks
 static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app);
 
@@ -84,20 +86,8 @@ void ingredient_service_init_tree(App *app) {
     IngredientReadModel to_list[num_of_ingredients];
     get_all_ingredients(app->ingredient_service, to_list);
     for (int i = 0; i < num_of_ingredients; i++) {
-        gtk_tree_store_append(store, &iter, NULL);
         IngredientReadModel current = to_list[i];
-        gchar *amount;
-        if (current.type == SOLID) {
-            amount = g_strdup_printf("%d", current.amount);
-        } else {
-            amount = g_strdup_printf("%d ml", current.amount);
-        }
-        gtk_tree_store_set(store, &iter,
-                           0, current.id,
-                           1, current.name,
-                           2, amount,
-                           -1);
-        g_free(amount);
+        add_to_tree_store(store, current.id, current.name, current.amount, current.type);
     }
 }
 
@@ -197,6 +187,23 @@ static void delete_existing_ingredient(IngredientService service, RecipeService 
     } else {
         printf("Problem with deleting ingredient\n");
     }
+}
+
+static void add_to_tree_store(GtkTreeStore *store, int id, char name[100], int amount, IngredientType type) {
+    GtkTreeIter iter;
+    gtk_tree_store_append(store, &iter, NULL);
+    gchar *amount_text;
+    if (type == SOLID) {
+        amount_text = g_strdup_printf("%d", amount);
+    } else {
+        amount_text = g_strdup_printf("%d ml", amount);
+    }
+    gtk_tree_store_set(store, &iter,
+                       0, id,
+                       1, name,
+                       2, amount_text,
+                       -1);
+    g_free(amount_text);
 }
 
 static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app) {
