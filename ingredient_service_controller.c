@@ -31,7 +31,6 @@ static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app);
 
 static void on_btn_ingredients_list_add_clicked(GtkButton *button, App *app);
 
-
 void ingredient_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
@@ -211,7 +210,20 @@ static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_ingredient_form_add_clicked(GtkButton *button, App *app) {
-
+    const gchar *name = gtk_entry_get_text(app->entry_ingredient_form_name);
+    gint amount = gtk_spin_button_get_value_as_int(app->entry_ingredient_form_amount);
+    IngredientType type;
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid))) {
+        type = SOLID;
+    } else {
+        type = LIQUID;
+    }
+    int id = add_ingredient(app->ingredient_service, name, amount, type);
+    add_to_tree_store(app->tree_store_ingredients, id, name, amount, type);
+    gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_list");
+    gtk_entry_set_text(app->entry_ingredient_form_name, "");
+    gtk_spin_button_set_value(app->entry_ingredient_form_amount, 0);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid), true);
 }
 
 static void on_btn_ingredient_form_cancel_clicked(GtkButton *button, App *app) {
