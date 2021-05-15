@@ -220,7 +220,30 @@ static void set_ingredient_in_form(App *app, int id) {
 }
 
 static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app) {
-
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_ingredients);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gtk_tree_selection_get_selected(selection, &model, &iter);
+    gint id;
+    gtk_tree_model_get(model, &iter, 0, &id, -1);
+    const gchar *name = gtk_entry_get_text(app->entry_ingredient_form_name);
+    gint amount = gtk_spin_button_get_value_as_int(app->entry_ingredient_form_amount);
+    IngredientType type;
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid))) {
+        type = SOLID;
+    } else {
+        type = LIQUID;
+    }
+    modify_ingredient(app->ingredient_service, id, name, amount, type);
+    gchar *amount_text;
+    if (type == SOLID) {
+        amount_text = g_strdup_printf("%d", amount);
+    } else {
+        amount_text = g_strdup_printf("%d ml", amount);
+    }
+    gtk_tree_store_set(app->tree_store_ingredients, &iter, 1, name, 2, amount_text, -1);
+    g_free(amount_text);
+    gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_list");
 }
 
 static void on_btn_ingredient_form_add_clicked(GtkButton *button, App *app) {
