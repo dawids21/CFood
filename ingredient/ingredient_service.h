@@ -25,7 +25,7 @@ void delete_ingredient_service(IngredientService service);
 
 int get_num_of_ingredients(IngredientService service);
 
-bool add_ingredient(IngredientService service, char *name, int amount, IngredientType type);
+int add_ingredient(IngredientService service, char *name, int amount, IngredientType type);
 
 void get_all_ingredients(IngredientService service, IngredientReadModel *result);
 

@@ -2,14 +2,54 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkMessageDialog" id="dialog_delete_ingredient">
+    <property name="can-focus">False</property>
+    <property name="type">popup</property>
+    <property name="window-position">center</property>
+    <property name="type-hint">dialog</property>
+    <property name="message-type">question</property>
+    <property name="buttons">ok-cancel</property>
+    <property name="text" translatable="yes">Recipes asociated with this ingredient will also be removed!</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can-focus">False</property>
+            <property name="halign">center</property>
+            <property name="homogeneous">True</property>
+            <property name="layout-style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAdjustment" id="entry_adj_ingredient_form_amount">
+    <property name="upper">10000</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
   <object class="GtkTreeStore" id="tree_store_ingredients">
     <columns>
       <!-- column-name ID -->
       <column type="gint"/>
       <!-- column-name Name -->
-      <column type="gchar"/>
+      <column type="gchararray"/>
       <!-- column-name Amount -->
-      <column type="gint"/>
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkWindow" id="window_main">
@@ -552,12 +592,34 @@
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkTreeView">
+                      <object class="GtkTreeView" id="tree_view_ingredients">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="model">tree_store_ingredients</property>
                         <child internal-child="selection">
                           <object class="GtkTreeSelection"/>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn">
+                            <property name="title" translatable="yes">Name</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="crnd_ingredient_list_name"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn">
+                            <property name="title" translatable="yes">Amount</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="crnd_ingredient_list_amount"/>
+                              <attributes>
+                                <attribute name="text">2</attribute>
+                              </attributes>
+                            </child>
+                          </object>
                         </child>
                       </object>
                       <packing>
@@ -623,8 +685,8 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="name">page0</property>
-                    <property name="title" translatable="yes">page0</property>
+                    <property name="name">ingredient_list</property>
+                    <property name="title" translatable="yes">Ingredient list</property>
                   </packing>
                 </child>
                 <child>
@@ -653,7 +715,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry_add_ingredient_name">
+                          <object class="GtkEntry" id="entry_ingredient_form_name">
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                           </object>
@@ -688,9 +750,11 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="entry_add_ingredient_amount">
+                          <object class="GtkSpinButton" id="entry_ingredient_form_amount">
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
+                            <property name="input-purpose">number</property>
+                            <property name="adjustment">entry_adj_ingredient_form_amount</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -723,7 +787,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkRadioButton" id="entry_add_ingredient_type_solid">
+                          <object class="GtkRadioButton" id="entry_ingredient_form_type_solid">
                             <property name="label" translatable="yes">Solid</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
@@ -738,14 +802,14 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkRadioButton">
+                          <object class="GtkRadioButton" id="entry_ingredient_form_type_liquid">
                             <property name="label" translatable="yes">Liquid</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
                             <property name="active">True</property>
                             <property name="draw-indicator">True</property>
-                            <property name="group">entry_add_ingredient_type_solid</property>
+                            <property name="group">entry_ingredient_form_type_solid</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -769,12 +833,12 @@
                         <property name="spacing">10</property>
                         <property name="layout-style">center</property>
                         <child>
-                          <object class="GtkButton" id="btn_add_ingredient_cancel">
+                          <object class="GtkButton" id="btn_ingredient_form_cancel">
                             <property name="label" translatable="yes">Cancel</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_btn_add_ingredient_cancel_clicked" swapped="no"/>
+                            <signal name="clicked" handler="on_btn_ingredient_form_cancel_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -783,17 +847,41 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="btn_add_ingredient_add">
-                            <property name="label" translatable="yes">Add</property>
+                          <object class="GtkStack" id="stack_ingredient_form_button">
                             <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_btn_add_ingredient_add_clicked" swapped="no"/>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkButton" id="btn_ingredient_form_add">
+                                <property name="label" translatable="yes">Add</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_btn_ingredient_form_add_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="name">add</property>
+                                <property name="title" translatable="yes">Add</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="btn_ingredient_form_modify">
+                                <property name="label" translatable="yes">Modify</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_btn_ingredient_form_modify_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="name">modify</property>
+                                <property name="title" translatable="yes">Modify</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">True</property>
                             <property name="fill">True</property>
-                            <property name="position">1</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                       </object>
@@ -805,191 +893,9 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="name">add_ingredient</property>
-                    <property name="title" translatable="yes">Add ingredient</property>
+                    <property name="name">ingredient_form</property>
+                    <property name="title" translatable="yes">Ingredient form</property>
                     <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">20</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="margin-top">30</property>
-                        <property name="spacing">20</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Name:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="entry_modify_ingredient_name">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="spacing">20</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Amount:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="entry_modify_ingredient_amount">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="spacing">20</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Type:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkRadioButton" id="entry_modify_ingredient_type_solid">
-                            <property name="label" translatable="yes">Solid</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
-                            <property name="active">True</property>
-                            <property name="draw-indicator">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkRadioButton">
-                            <property name="label" translatable="yes">Liquid</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
-                            <property name="draw-indicator">True</property>
-                            <property name="group">entry_add_ingredient_type_solid</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButtonBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="valign">center</property>
-                        <property name="margin-top">40</property>
-                        <property name="spacing">10</property>
-                        <property name="layout-style">center</property>
-                        <child>
-                          <object class="GtkButton" id="btn_modify_ingredient_cancel">
-                            <property name="label" translatable="yes">Cancel</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_btn_modify_ingredient_cancel_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btn_modify_ingredient_add">
-                            <property name="label" translatable="yes">Modify</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_btn_modify_ingredient_add_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">3</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="name">page2</property>
-                    <property name="title" translatable="yes">page2</property>
-                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>

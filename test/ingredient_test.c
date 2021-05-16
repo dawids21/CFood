@@ -25,23 +25,23 @@ void return_num_of_ingredients() {
 
 void should_add_item_to_array() {
 
-    bool success = add_ingredient(service, "Bread", 5, SOLID);
+    int id = add_ingredient(service, "Bread", 5, SOLID);
 
-    TEST_ASSERT_TRUE(success);
+    TEST_ASSERT_NOT_EQUAL(-1, id);
     TEST_ASSERT_EQUAL(1, get_num_of_ingredients(service));
 }
 
 void return_false_when_name_not_given() {
-    bool success = add_ingredient(service, "", 5, SOLID);
+    int id = add_ingredient(service, "", 5, SOLID);
 
-    TEST_ASSERT_FALSE(success);
+    TEST_ASSERT_EQUAL(-1, id);
     TEST_ASSERT_EQUAL(0, get_num_of_ingredients(service));
 }
 
 void return_false_when_amount_is_negative() {
-    bool success = add_ingredient(service, "Bread", -1, SOLID);
+    int id = add_ingredient(service, "Bread", -1, SOLID);
 
-    TEST_ASSERT_FALSE(success);
+    TEST_ASSERT_EQUAL(-1, id);
     TEST_ASSERT_EQUAL(0, get_num_of_ingredients(service));
 }
 
@@ -137,9 +137,9 @@ void save_ingredient_service_should_save_data_in_a_file() {
 
 void add_ingredient_fail_if_ingredient_with_the_same_name_already_exists() {
     add_ingredient(service, "Bread", 5, SOLID);
-    bool success = add_ingredient(service, "Bread", 2, SOLID);
+    int id = add_ingredient(service, "Bread", 2, SOLID);
 
-    TEST_ASSERT_FALSE(success);
+    TEST_ASSERT_EQUAL(-1, id);
     TEST_ASSERT_EQUAL(1, get_num_of_ingredients(service));
 }
 

@@ -45,14 +45,15 @@ int get_num_of_ingredients(IngredientService service) {
     return get_size(service->ingredients);
 }
 
-bool add_ingredient(IngredientService service, char *name, int amount, IngredientType type) {
+int add_ingredient(IngredientService service, char *name, int amount, IngredientType type) {
     if (strlen(name) == 0 || amount < 0 || is_ingredient_with_name(service, name)) {
-        return false;
+        return -1;
     }
 
-    ArrayItem to_add = {.ingredient_item = create_new_ingredient(service->id_ingredients++, name, amount, type)};
+    int id = service->id_ingredients++;
+    ArrayItem to_add = {.ingredient_item = create_new_ingredient(id, name, amount, type)};
     append(service->ingredients, to_add);
-    return true;
+    return id;
 }
 
 void get_all_ingredients(IngredientService service, IngredientReadModel *result) {
