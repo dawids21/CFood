@@ -82,7 +82,6 @@ void ingredient_service_register_callbacks(GtkBuilder *builder) {
 
 void ingredient_service_init_tree(App *app) {
     GtkTreeStore *store = app->tree_store_ingredients;
-    GtkTreeIter iter;
     int num_of_ingredients = get_num_of_ingredients(app->ingredient_service);
     IngredientReadModel to_list[num_of_ingredients];
     get_all_ingredients(app->ingredient_service, to_list);
@@ -226,7 +225,7 @@ static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app) {
     gtk_tree_selection_get_selected(selection, &model, &iter);
     gint id;
     gtk_tree_model_get(model, &iter, 0, &id, -1);
-    const gchar *name = gtk_entry_get_text(app->entry_ingredient_form_name);
+    gchar *name = (gchar *) gtk_entry_get_text(app->entry_ingredient_form_name);
     gint amount = gtk_spin_button_get_value_as_int(app->entry_ingredient_form_amount);
     IngredientType type;
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid))) {
@@ -250,7 +249,7 @@ static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_ingredient_form_add_clicked(GtkButton *button, App *app) {
-    const gchar *name = gtk_entry_get_text(app->entry_ingredient_form_name);
+    gchar *name = (gchar *) gtk_entry_get_text(app->entry_ingredient_form_name);
     gint amount = gtk_spin_button_get_value_as_int(app->entry_ingredient_form_amount);
     IngredientType type;
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid))) {
