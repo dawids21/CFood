@@ -40,6 +40,8 @@ typedef struct {
     GtkButton *btn_ingredient_form_add;
     GtkButton *btn_ingredient_form_modify;
 
+    GtkMessageDialog *dialog_delete_ingredient;
+
     int current_recommendation_index;
 } App;
 

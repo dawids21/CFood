@@ -209,6 +209,8 @@ static void main_gtk(int argc, char *argv[]) {
     app->btn_ingredient_form_add = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_add"));
     app->btn_ingredient_form_modify = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_modify"));
 
+    app->dialog_delete_ingredient = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_ingredient"));
+
     app->current_recommendation_index = 0;
 
     gtk_builder_add_callback_symbol(builder, "on_window_main_destroy", G_CALLBACK(on_window_main_destroy));
