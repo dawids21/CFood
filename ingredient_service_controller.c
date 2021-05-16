@@ -244,6 +244,9 @@ static void on_btn_ingredient_form_modify_clicked(GtkButton *button, App *app) {
     gtk_tree_store_set(app->tree_store_ingredients, &iter, 1, name, 2, amount_text, -1);
     g_free(amount_text);
     gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_list");
+    gtk_entry_set_text(app->entry_ingredient_form_name, "");
+    gtk_spin_button_set_value(app->entry_ingredient_form_amount, 0);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid), true);
 }
 
 static void on_btn_ingredient_form_add_clicked(GtkButton *button, App *app) {
@@ -290,6 +293,9 @@ static void on_btn_ingredients_list_delete_clicked(GtkButton *button, App *app) 
 }
 
 static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app) {
+    gtk_entry_set_text(app->entry_ingredient_form_name, "");
+    gtk_spin_button_set_value(app->entry_ingredient_form_amount, 0);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid), true);
     GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_ingredients);
     GtkTreeModel *model;
     GtkTreeIter iter;
@@ -305,6 +311,9 @@ static void on_btn_ingredients_list_modify_clicked(GtkButton *button, App *app) 
 }
 
 static void on_btn_ingredients_list_add_clicked(GtkButton *button, App *app) {
+    gtk_entry_set_text(app->entry_ingredient_form_name, "");
+    gtk_spin_button_set_value(app->entry_ingredient_form_amount, 0);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid), true);
     gtk_stack_set_visible_child_name(app->stack_ingredient_form_button, "add");
     gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_form");
 }
