@@ -46,6 +46,7 @@ typedef struct {
     GtkListBox *list_recipe_details_steps;
 
     GtkMessageDialog *dialog_delete_ingredient;
+    GtkMessageDialog *dialog_delete_recipe;
 
     int current_recommendation_index;
 } App;

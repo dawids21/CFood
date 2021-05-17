@@ -273,7 +273,25 @@ static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_recipes_list_delete_clicked(GtkButton *button, App *app) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_recipes);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gint id;
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter)) {
+        return;
+    }
 
+    gtk_tree_model_get(model, &iter, 0, &id, -1);
+    int response = gtk_dialog_run(GTK_DIALOG(app->dialog_delete_recipe));
+    gtk_widget_hide(GTK_WIDGET(app->dialog_delete_recipe));
+
+    if (response != GTK_RESPONSE_OK) {
+        return;
+    }
+
+    remove_recipe(app->recipe_service, id);
+
+    gtk_list_store_remove(app->list_store_recipes, &iter);
 }
 
 static void on_btn_recipes_list_add_clicked(GtkButton *button, App *app) {
