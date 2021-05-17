@@ -1582,8 +1582,8 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="name">page2</property>
-                    <property name="title" translatable="yes">page2</property>
+                    <property name="name">recipe_details</property>
+                    <property name="title" translatable="yes">Recipe details</property>
                     <property name="position">2</property>
                   </packing>
                 </child>

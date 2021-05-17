@@ -21,39 +21,39 @@ static void add_to_list_store(GtkListStore *store, int id, char *name, bool poss
 
 // callbacks
 
-static void on_btn_recipe_details_prepare_clicked(GtkButton button, App *app);
+static void on_btn_recipe_details_prepare_clicked(GtkButton *button, App *app);
 
-static void on_btn_recipe_details_return_clicked(GtkButton button, App *app);
+static void on_btn_recipe_details_return_clicked(GtkButton *button, App *app);
 
-static void on_btn_add_recipe_add_clicked(GtkButton button, App *app);
+static void on_btn_add_recipe_add_clicked(GtkButton *button, App *app);
 
-static void on_btn_add_recipe_cancel_clicked(GtkButton button, App *app);
+static void on_btn_add_recipe_cancel_clicked(GtkButton *button, App *app);
 
-static void on_btn_add_recipe_remove_step_clicked(GtkButton button, App *app);
+static void on_btn_add_recipe_remove_step_clicked(GtkButton *button, App *app);
 
-static void on_btn_add_recipe_add_step_clicked(GtkButton button, App *app);
+static void on_btn_add_recipe_add_step_clicked(GtkButton *button, App *app);
 
 static void on_crnd_add_recipe_step_description_edited(GtkCellRendererText *renderer,
                                                        char *path,
                                                        char *new_text,
                                                        App *app);
 
-static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton button, App *app);
+static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton *button, App *app);
 
-static void on_btn_add_recipe_add_ingredient_clicked(GtkButton button, App *app);
+static void on_btn_add_recipe_add_ingredient_clicked(GtkButton *button, App *app);
 
 static void on_crnd_add_recipe_ingredient_amount_edited(GtkCellRendererText *renderer,
                                                         char *path,
                                                         char *new_text,
                                                         App *app);
 
-static void on_btn_recipes_list_prepare_clicked(GtkButton button, App *app);
+static void on_btn_recipes_list_prepare_clicked(GtkButton *button, App *app);
 
-static void on_btn_recipes_list_details_clicked(GtkButton button, App *app);
+static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app);
 
-static void on_btn_recipes_list_delete_clicked(GtkButton button, App *app);
+static void on_btn_recipes_list_delete_clicked(GtkButton *button, App *app);
 
-static void on_btn_recipes_list_add_clicked(GtkButton button, App *app);
+static void on_btn_recipes_list_add_clicked(GtkButton *button, App *app);
 
 void recipe_service_display_main_menu() {
     printf("***** CFood *****\n");
@@ -218,27 +218,27 @@ void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, i
                        -1);
 }
 
-static void on_btn_recipe_details_prepare_clicked(GtkButton button, App *app) {
+static void on_btn_recipe_details_prepare_clicked(GtkButton *button, App *app) {
 
 }
 
-static void on_btn_recipe_details_return_clicked(GtkButton button, App *app) {
+static void on_btn_recipe_details_return_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
+}
+
+static void on_btn_add_recipe_add_clicked(GtkButton *button, App *app) {
 
 }
 
-static void on_btn_add_recipe_add_clicked(GtkButton button, App *app) {
+static void on_btn_add_recipe_cancel_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
+}
+
+static void on_btn_add_recipe_remove_step_clicked(GtkButton *button, App *app) {
 
 }
 
-static void on_btn_add_recipe_cancel_clicked(GtkButton button, App *app) {
-
-}
-
-static void on_btn_add_recipe_remove_step_clicked(GtkButton button, App *app) {
-
-}
-
-static void on_btn_add_recipe_add_step_clicked(GtkButton button, App *app) {
+static void on_btn_add_recipe_add_step_clicked(GtkButton *button, App *app) {
 
 }
 
@@ -249,11 +249,11 @@ static void on_crnd_add_recipe_step_description_edited(GtkCellRendererText *rend
 
 }
 
-static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton button, App *app) {
+static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton *button, App *app) {
 
 }
 
-static void on_btn_add_recipe_add_ingredient_clicked(GtkButton button, App *app) {
+static void on_btn_add_recipe_add_ingredient_clicked(GtkButton *button, App *app) {
 
 }
 
@@ -264,18 +264,18 @@ static void on_crnd_add_recipe_ingredient_amount_edited(GtkCellRendererText *ren
 
 }
 
-static void on_btn_recipes_list_prepare_clicked(GtkButton button, App *app) {
+static void on_btn_recipes_list_prepare_clicked(GtkButton *button, App *app) {
 
 }
 
-static void on_btn_recipes_list_details_clicked(GtkButton button, App *app) {
+static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recipes, "recipe_details");
+}
+
+static void on_btn_recipes_list_delete_clicked(GtkButton *button, App *app) {
 
 }
 
-static void on_btn_recipes_list_delete_clicked(GtkButton button, App *app) {
-
-}
-
-static void on_btn_recipes_list_add_clicked(GtkButton button, App *app) {
-
+static void on_btn_recipes_list_add_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recipes, "add_recipe");
 }
