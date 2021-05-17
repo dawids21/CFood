@@ -440,10 +440,11 @@ static void on_crnd_add_recipe_ingredient_name_edited(GtkCellRendererText *rende
                 break;
             }
         }
+        return;
     }
 
     GtkTreePath *tree_path = gtk_tree_path_new_from_string(path);
-    gtk_tree_model_get_iter(GTK_TREE_MODEL (app->list_store_add_recipe_ingredients),
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(app->list_store_add_recipe_ingredients),
                             &iter,
                             tree_path);
     gtk_tree_path_free(tree_path);
