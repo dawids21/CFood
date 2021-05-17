@@ -17,6 +17,42 @@ static void add_new_recipe(RecipeService service, IngredientService ingredient_s
 
 static void delete_existing_recipe(RecipeService service);
 
+// callbacks
+
+static void on_btn_recipe_details_prepare_clicked(GtkButton button, App *app);
+
+static void on_btn_recipe_details_return_clicked(GtkButton button, App *app);
+
+static void on_btn_add_recipe_add_clicked(GtkButton button, App *app);
+
+static void on_btn_add_recipe_cancel_clicked(GtkButton button, App *app);
+
+static void on_btn_add_recipe_remove_step_clicked(GtkButton button, App *app);
+
+static void on_btn_add_recipe_add_step_clicked(GtkButton button, App *app);
+
+static void on_crnd_add_recipe_step_description_edited(GtkCellRendererText *renderer,
+                                                       char *path,
+                                                       char *new_text,
+                                                       App *app);
+
+static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton button, App *app);
+
+static void on_btn_add_recipe_add_ingredient_clicked(GtkButton button, App *app);
+
+static void on_crnd_add_recipe_ingredient_amount_edited(GtkCellRendererText *renderer,
+                                                        char *path,
+                                                        char *new_text,
+                                                        App *app);
+
+static void on_btn_recipes_list_prepare_clicked(GtkButton button, App *app);
+
+static void on_btn_recipes_list_details_clicked(GtkButton button, App *app);
+
+static void on_btn_recipes_list_delete_clicked(GtkButton button, App *app);
+
+static void on_btn_recipes_list_add_clicked(GtkButton button, App *app);
+
 void recipe_service_display_main_menu() {
     printf("***** CFood *****\n");
     printf("-----------------\n");
@@ -46,6 +82,37 @@ void recipe_service_handle_option(char option, RecipeService service, Ingredient
             break;
     }
     printf("\n");
+}
+
+void recipe_service_register_callbacks(GtkBuilder *builder) {
+    gtk_builder_add_callback_symbol(builder, "on_btn_recipe_details_prepare_clicked", G_CALLBACK(
+            on_btn_recipe_details_prepare_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_recipe_details_return_clicked", G_CALLBACK(
+            on_btn_recipe_details_return_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_recipe_add_clicked", G_CALLBACK(
+            on_btn_add_recipe_add_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_recipe_cancel_clicked", G_CALLBACK(
+            on_btn_add_recipe_cancel_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_recipe_remove_step_clicked", G_CALLBACK(
+            on_btn_add_recipe_remove_step_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_recipe_add_step_clicked", G_CALLBACK(
+            on_btn_add_recipe_add_step_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_crnd_add_recipe_step_description_edited", G_CALLBACK(
+            on_crnd_add_recipe_step_description_edited));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_recipe_remove_ingredient_clicked", G_CALLBACK(
+            on_btn_add_recipe_remove_ingredient_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_add_recipe_add_ingredient_clicked", G_CALLBACK(
+            on_btn_add_recipe_add_ingredient_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_crnd_add_recipe_ingredient_amount_edited", G_CALLBACK(
+            on_crnd_add_recipe_ingredient_amount_edited));
+    gtk_builder_add_callback_symbol(builder, "on_btn_recipes_list_prepare_clicked", G_CALLBACK(
+            on_btn_recipes_list_prepare_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_recipes_list_details_clicked", G_CALLBACK(
+            on_btn_recipes_list_details_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_recipes_list_delete_clicked", G_CALLBACK(
+            on_btn_recipes_list_delete_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_recipes_list_add_clicked", G_CALLBACK(
+            on_btn_recipes_list_add_clicked));
 }
 
 static void list_recipes(RecipeService service) {
@@ -124,4 +191,66 @@ static void delete_existing_recipe(RecipeService service) {
     } else {
         printf("Problem with deleting recipe\n");
     }
+}
+
+static void on_btn_recipe_details_prepare_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_recipe_details_return_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_add_recipe_add_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_add_recipe_cancel_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_add_recipe_remove_step_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_add_recipe_add_step_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_crnd_add_recipe_step_description_edited(GtkCellRendererText *renderer,
+                                                       char *path,
+                                                       char *new_text,
+                                                       App *app) {
+
+}
+
+static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_add_recipe_add_ingredient_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_crnd_add_recipe_ingredient_amount_edited(GtkCellRendererText *renderer,
+                                                        char *path,
+                                                        char *new_text,
+                                                        App *app) {
+
+}
+
+static void on_btn_recipes_list_prepare_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_recipes_list_details_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_recipes_list_delete_clicked(GtkButton button, App *app) {
+
+}
+
+static void on_btn_recipes_list_add_clicked(GtkButton button, App *app) {
+
 }

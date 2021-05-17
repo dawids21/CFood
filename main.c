@@ -138,7 +138,7 @@ static void on_window_main_destroy(GtkWidget *widget, App *app) {
 }
 
 static void on_btn_main_stack_recipes_clicked(GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_main, "recipes");
 }
 
 static void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
@@ -223,6 +223,7 @@ static void main_gtk(int argc, char *argv[]) {
 
     ingredient_service_register_callbacks(builder);
     recommendation_service_register_callbacks(builder);
+    recipe_service_register_callbacks(builder);
     ingredient_service_init_tree(app);
 
     gtk_builder_connect_signals(builder, app);
