@@ -356,5 +356,8 @@ static void on_btn_recipes_list_delete_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_recipes_list_add_clicked(GtkButton *button, App *app) {
+    gtk_entry_set_text(app->entry_add_recipe_name, "");
+    gtk_list_store_clear(app->list_store_add_recipe_ingredients);
+    gtk_list_store_clear(app->list_store_add_recipe_steps);
     gtk_stack_set_visible_child_name(app->stack_recipes, "add_recipe");
 }

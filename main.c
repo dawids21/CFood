@@ -207,6 +207,9 @@ static void main_gtk(int argc, char *argv[]) {
     app->stack_recipes = GTK_STACK(gtk_builder_get_object(builder, "stack_recipes"));
     app->tree_view_recipes = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tree_view_recipes"));
     app->list_store_recipes = GTK_LIST_STORE(gtk_builder_get_object(builder, "list_store_recipes"));
+    app->tree_view_add_recipe_ingredients = GTK_TREE_VIEW(
+            gtk_builder_get_object(builder, "tree_view_add_recipe_ingredients"));
+    app->tree_view_add_recipe_steps = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tree_view_add_recipe_steps"));
     app->list_store_add_recipe_ingredients = GTK_LIST_STORE(
             gtk_builder_get_object(builder, "list_store_add_recipe_ingredients"));
     app->list_store_add_recipe_steps = GTK_LIST_STORE(gtk_builder_get_object(builder, "list_store_add_recipe_steps"));

@@ -79,8 +79,6 @@
       <column type="gchararray"/>
       <!-- column-name amount -->
       <column type="gint"/>
-      <!-- column-name to_show -->
-      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkListStore" id="list_store_add_recipe_steps">
@@ -89,8 +87,6 @@
       <column type="gint"/>
       <!-- column-name description -->
       <column type="gchararray"/>
-      <!-- column-name to_show -->
-      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkListStore" id="list_store_recipes">
@@ -1188,9 +1184,6 @@
                                         <property name="model">tree_store_ingredients</property>
                                         <property name="text-column">1</property>
                                       </object>
-                                      <attributes>
-                                        <attribute name="visible">2</attribute>
-                                      </attributes>
                                     </child>
                                   </object>
                                 </child>
@@ -1203,7 +1196,6 @@
                                         <signal name="edited" handler="on_crnd_add_recipe_ingredient_amount_edited" swapped="no"/>
                                       </object>
                                       <attributes>
-                                        <attribute name="visible">2</attribute>
                                         <attribute name="text">1</attribute>
                                       </attributes>
                                     </child>
@@ -1297,7 +1289,6 @@
                                     <child>
                                       <object class="GtkCellRendererText" id="crnd_add_recipe_step_number"/>
                                       <attributes>
-                                        <attribute name="visible">2</attribute>
                                         <attribute name="text">0</attribute>
                                       </attributes>
                                     </child>
@@ -1312,7 +1303,6 @@
                                         <signal name="edited" handler="on_crnd_add_recipe_step_description_edited" swapped="no"/>
                                       </object>
                                       <attributes>
-                                        <attribute name="visible">2</attribute>
                                         <attribute name="text">1</attribute>
                                       </attributes>
                                     </child>

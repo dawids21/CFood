@@ -37,6 +37,8 @@ typedef struct {
     GtkStack *stack_recipes;
     GtkTreeView *tree_view_recipes;
     GtkListStore *list_store_recipes;
+    GtkTreeView *tree_view_add_recipe_ingredients;
+    GtkTreeView *tree_view_add_recipe_steps;
     GtkListStore *list_store_add_recipe_ingredients;
     GtkListStore *list_store_add_recipe_steps;
     GtkEntry *entry_add_recipe_name;
