@@ -28,17 +28,22 @@ typedef struct {
     GtkStack *stack_ingredients;
     GtkTreeView *tree_view_ingredients;
     GtkTreeStore *tree_store_ingredients;
-    GtkButton *btn_ingredients_list_add;
-    GtkButton *btn_ingredients_list_modify;
-    GtkButton *btn_ingredients_list_delete;
     GtkEntry *entry_ingredient_form_name;
     GtkSpinButton *entry_ingredient_form_amount;
     GtkRadioButton *entry_ingredient_form_type_solid;
     GtkRadioButton *entry_ingredient_form_type_liquid;
-    GtkButton *btn_ingredient_form_cancel;
     GtkStack *stack_ingredient_form_button;
-    GtkButton *btn_ingredient_form_add;
-    GtkButton *btn_ingredient_form_modify;
+
+    GtkStack *stack_recipes;
+    GtkTreeView *tree_view_recipes;
+    GtkListStore *list_store_recipes;
+    GtkListStore *list_store_add_recipe_ingredients;
+    GtkListStore *list_store_add_recipe_steps;
+    GtkEntry *entry_add_recipe_name;
+    GtkLabel *lbl_recipe_details_name;
+    GtkLabel *lbl_recipe_details_num_of_uses;
+    GtkListBox *list_recipe_details_ingredients;
+    GtkListBox *list_recipe_details_steps;
 
     GtkMessageDialog *dialog_delete_ingredient;
 
