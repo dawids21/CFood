@@ -37,6 +37,8 @@ typedef struct {
     GtkStack *stack_recipes;
     GtkTreeView *tree_view_recipes;
     GtkListStore *list_store_recipes;
+    GtkTreeView *tree_view_add_recipe_ingredients;
+    GtkTreeView *tree_view_add_recipe_steps;
     GtkListStore *list_store_add_recipe_ingredients;
     GtkListStore *list_store_add_recipe_steps;
     GtkEntry *entry_add_recipe_name;
@@ -46,6 +48,7 @@ typedef struct {
     GtkListBox *list_recipe_details_steps;
 
     GtkMessageDialog *dialog_delete_ingredient;
+    GtkMessageDialog *dialog_delete_recipe;
 
     int current_recommendation_index;
 } App;

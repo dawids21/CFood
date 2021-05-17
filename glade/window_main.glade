@@ -4,8 +4,7 @@
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkMessageDialog" id="dialog_delete_ingredient">
     <property name="can-focus">False</property>
-    <property name="type">popup</property>
-    <property name="window-position">center</property>
+    <property name="window-position">center-on-parent</property>
     <property name="type-hint">dialog</property>
     <property name="message-type">question</property>
     <property name="buttons">ok-cancel</property>
@@ -13,6 +12,10 @@
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can-focus">False</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
@@ -21,12 +24,6 @@
             <property name="halign">center</property>
             <property name="homogeneous">True</property>
             <property name="layout-style">end</property>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -36,6 +33,45 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkMessageDialog" id="dialog_delete_recipe">
+    <property name="can-focus">False</property>
+    <property name="window-position">center-on-parent</property>
+    <property name="type-hint">dialog</property>
+    <property name="message-type">question</property>
+    <property name="buttons">ok-cancel</property>
+    <property name="text" translatable="yes">Are you sure?</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can-focus">False</property>
+            <property name="halign">center</property>
+            <property name="layout-style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
+  <object class="GtkAdjustment" id="entry_adj_add_recipe_ingredient_amount">
+    <property name="upper">10000</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="entry_adj_ingredient_form_amount">
     <property name="upper">10000</property>
@@ -48,8 +84,8 @@
       <column type="gchararray"/>
       <!-- column-name amount -->
       <column type="gint"/>
-      <!-- column-name to_show -->
-      <column type="gboolean"/>
+      <!-- column-name id -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkListStore" id="list_store_add_recipe_steps">
@@ -58,8 +94,6 @@
       <column type="gint"/>
       <!-- column-name description -->
       <column type="gchararray"/>
-      <!-- column-name to_show -->
-      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkListStore" id="list_store_recipes">
@@ -1140,7 +1174,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkTreeView">
+                              <object class="GtkTreeView" id="tree_view_add_recipe_ingredients">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="model">list_store_add_recipe_ingredients</property>
@@ -1156,9 +1190,10 @@
                                         <property name="editable">True</property>
                                         <property name="model">tree_store_ingredients</property>
                                         <property name="text-column">1</property>
+                                        <signal name="edited" handler="on_crnd_add_recipe_ingredient_name_edited" swapped="no"/>
                                       </object>
                                       <attributes>
-                                        <attribute name="visible">2</attribute>
+                                        <attribute name="text">0</attribute>
                                       </attributes>
                                     </child>
                                   </object>
@@ -1167,12 +1202,12 @@
                                   <object class="GtkTreeViewColumn">
                                     <property name="title" translatable="yes">Amount</property>
                                     <child>
-                                      <object class="GtkCellRendererText" id="crnd_add_recipe_ingredient_amount">
+                                      <object class="GtkCellRendererSpin" id="crnd_add_recipe_ingredient_amount">
                                         <property name="editable">True</property>
+                                        <property name="adjustment">entry_adj_add_recipe_ingredient_amount</property>
                                         <signal name="edited" handler="on_crnd_add_recipe_ingredient_amount_edited" swapped="no"/>
                                       </object>
                                       <attributes>
-                                        <attribute name="visible">2</attribute>
                                         <attribute name="text">1</attribute>
                                       </attributes>
                                     </child>
@@ -1253,7 +1288,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkTreeView">
+                              <object class="GtkTreeView" id="tree_view_add_recipe_steps">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="model">list_store_add_recipe_steps</property>
@@ -1266,7 +1301,6 @@
                                     <child>
                                       <object class="GtkCellRendererText" id="crnd_add_recipe_step_number"/>
                                       <attributes>
-                                        <attribute name="visible">2</attribute>
                                         <attribute name="text">0</attribute>
                                       </attributes>
                                     </child>
@@ -1281,7 +1315,6 @@
                                         <signal name="edited" handler="on_crnd_add_recipe_step_description_edited" swapped="no"/>
                                       </object>
                                       <attributes>
-                                        <attribute name="visible">2</attribute>
                                         <attribute name="text">1</attribute>
                                       </attributes>
                                     </child>

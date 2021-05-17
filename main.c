@@ -146,6 +146,7 @@ static void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recommendations, "page0");
     gtk_stack_set_visible_child_name(app->stack_main, "recommendation_stack");
 }
 
@@ -203,11 +204,12 @@ static void main_gtk(int argc, char *argv[]) {
             gtk_builder_get_object(builder, "entry_ingredient_form_type_liquid"));
     app->stack_ingredient_form_button = GTK_STACK(gtk_builder_get_object(builder, "stack_ingredient_form_button"));
 
-    app->dialog_delete_ingredient = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_ingredient"));
-
     app->stack_recipes = GTK_STACK(gtk_builder_get_object(builder, "stack_recipes"));
     app->tree_view_recipes = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tree_view_recipes"));
     app->list_store_recipes = GTK_LIST_STORE(gtk_builder_get_object(builder, "list_store_recipes"));
+    app->tree_view_add_recipe_ingredients = GTK_TREE_VIEW(
+            gtk_builder_get_object(builder, "tree_view_add_recipe_ingredients"));
+    app->tree_view_add_recipe_steps = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tree_view_add_recipe_steps"));
     app->list_store_add_recipe_ingredients = GTK_LIST_STORE(
             gtk_builder_get_object(builder, "list_store_add_recipe_ingredients"));
     app->list_store_add_recipe_steps = GTK_LIST_STORE(gtk_builder_get_object(builder, "list_store_add_recipe_steps"));
@@ -217,6 +219,9 @@ static void main_gtk(int argc, char *argv[]) {
     app->list_recipe_details_ingredients = GTK_LIST_BOX(
             gtk_builder_get_object(builder, "list_recipe_details_ingredients"));
     app->list_recipe_details_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_recipe_details_steps"));
+
+    app->dialog_delete_ingredient = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_ingredient"));
+    app->dialog_delete_recipe = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_recipe"));
 
     app->current_recommendation_index = 0;
 
