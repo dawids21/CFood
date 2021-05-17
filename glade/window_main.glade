@@ -51,13 +51,6 @@
       <!-- column-name to_show -->
       <column type="gboolean"/>
     </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">New</col>
-        <col id="1">0</col>
-        <col id="2">True</col>
-      </row>
-    </data>
   </object>
   <object class="GtkListStore" id="list_store_add_recipe_steps">
     <columns>
@@ -68,13 +61,6 @@
       <!-- column-name to_show -->
       <column type="gboolean"/>
     </columns>
-    <data>
-      <row>
-        <col id="0">0</col>
-        <col id="1" translatable="yes"/>
-        <col id="2">True</col>
-      </row>
-    </data>
   </object>
   <object class="GtkListStore" id="list_store_recipes">
     <columns>
@@ -1088,7 +1074,9 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="margin-top">10</property>
                     <property name="orientation">vertical</property>
+                    <property name="spacing">10</property>
                     <child>
                       <object class="GtkBox">
                         <property name="visible">True</property>
@@ -1129,11 +1117,16 @@
                       <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="vexpand">True</property>
+                        <property name="spacing">30</property>
                         <child>
                           <object class="GtkBox">
+                            <property name="width-request">400</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="orientation">vertical</property>
+                            <property name="spacing">10</property>
                             <child>
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
@@ -1156,12 +1149,16 @@
                                 </child>
                                 <child>
                                   <object class="GtkTreeViewColumn">
+                                    <property name="min-width">100</property>
                                     <property name="title" translatable="yes">Name</property>
                                     <child>
-                                      <object class="GtkCellRendererCombo" id="crnd_add_recipe_ingredient_name"/>
+                                      <object class="GtkCellRendererCombo" id="crnd_add_recipe_ingredient_name">
+                                        <property name="editable">True</property>
+                                        <property name="model">tree_store_ingredients</property>
+                                        <property name="text-column">1</property>
+                                      </object>
                                       <attributes>
                                         <attribute name="visible">2</attribute>
-                                        <attribute name="model">0</attribute>
                                       </attributes>
                                     </child>
                                   </object>
@@ -1192,6 +1189,7 @@
                               <object class="GtkButtonBox">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="spacing">10</property>
                                 <property name="layout-style">start</property>
                                 <child>
                                   <object class="GtkButton" id="btn_add_recipe_add_ingredient">
@@ -1237,9 +1235,11 @@
                         </child>
                         <child>
                           <object class="GtkBox">
+                            <property name="width-request">400</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="orientation">vertical</property>
+                            <property name="spacing">10</property>
                             <child>
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
@@ -1298,6 +1298,7 @@
                               <object class="GtkButtonBox">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="spacing">10</property>
                                 <property name="layout-style">start</property>
                                 <child>
                                   <object class="GtkButton" id="btn_add_recipe_add_step">
