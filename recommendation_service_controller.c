@@ -55,7 +55,12 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
 
     int num_of_recipes = get_number_of_available_recipes(app->recommendation_service);
     if (num_of_recipes <= 0) {
-        //TODO
+        gtk_label_set_text(app->lbl_get_recommendations_recipe_name, "No recipes");
+        gtk_label_set_text(app->lbl_get_recommendations_num_of_uses, "Number of uses: 0");
+        gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_ingredients), remove_widget_from_list,
+                              app->list_try_something_new_ingredients);
+        gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_steps), remove_widget_from_list,
+                              app->list_try_something_new_steps);
         return;
     }
     if (index >= num_of_recipes) {
@@ -75,14 +80,6 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
 
     gtk_container_foreach(GTK_CONTAINER(app->list_get_recommendations_ingredients), remove_widget_from_list,
                           app->list_get_recommendations_ingredients);
-
-    if (recipe.num_of_ingredients > 0) {
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_get_recommendations_ingredients), NULL);
-    } else {
-        GtkWidget *lbl_placeholder = gtk_label_new("No ingredients");
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_get_recommendations_ingredients),
-                                     lbl_placeholder);
-    }
 
     for (int i = 0; i < recipe.num_of_ingredients; ++i) {
         IngredientReadModel ingredient;
@@ -106,14 +103,6 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
     gtk_container_foreach(GTK_CONTAINER(app->list_get_recommendations_steps), remove_widget_from_list,
                           app->list_get_recommendations_steps);
 
-    if (recipe.num_of_steps > 0) {
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_get_recommendations_steps), NULL);
-    } else {
-        GtkWidget *lbl_placeholder = gtk_label_new("No steps");
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_get_recommendations_steps),
-                                     lbl_placeholder);
-    }
-
     for (int i = 0; i < recipe.num_of_steps; ++i) {
         GtkWidget *list_box_row = gtk_list_box_row_new();
         gchar *step;
@@ -131,7 +120,12 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
 void recommendation_service_display_recipe_try_something_new(int index, App *app) {
     int num_of_recipes = get_number_of_unused_available_recipes(app->recommendation_service);
     if (num_of_recipes <= 0) {
-        //TODO
+        gtk_label_set_text(app->lbl_get_recommendations_recipe_name, "No recipes");
+        gtk_label_set_text(app->lbl_get_recommendations_num_of_uses, "Number of uses: 0");
+        gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_ingredients), remove_widget_from_list,
+                              app->list_try_something_new_ingredients);
+        gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_steps), remove_widget_from_list,
+                              app->list_try_something_new_steps);
         return;
     }
     if (index >= num_of_recipes) {
@@ -147,14 +141,6 @@ void recommendation_service_display_recipe_try_something_new(int index, App *app
 
     gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_ingredients), remove_widget_from_list,
                           app->list_try_something_new_ingredients);
-
-    if (recipe.num_of_ingredients > 0) {
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_try_something_new_ingredients), NULL);
-    } else {
-        GtkWidget *lbl_placeholder = gtk_label_new("No ingredients");
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_try_something_new_ingredients),
-                                     lbl_placeholder);
-    }
 
     for (int i = 0; i < recipe.num_of_ingredients; ++i) {
         IngredientReadModel ingredient;
@@ -177,14 +163,6 @@ void recommendation_service_display_recipe_try_something_new(int index, App *app
 
     gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_steps), remove_widget_from_list,
                           app->list_try_something_new_steps);
-
-    if (recipe.num_of_steps > 0) {
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_try_something_new_steps), NULL);
-    } else {
-        GtkWidget *lbl_placeholder = gtk_label_new("No steps");
-        gtk_list_box_set_placeholder(GTK_LIST_BOX(app->list_try_something_new_steps),
-                                     lbl_placeholder);
-    }
 
     for (int i = 0; i < recipe.num_of_steps; ++i) {
         GtkWidget *list_box_row = gtk_list_box_row_new();

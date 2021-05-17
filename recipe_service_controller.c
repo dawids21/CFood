@@ -19,6 +19,8 @@ static void delete_existing_recipe(RecipeService service);
 
 static void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses);
 
+static void remove_widget_from_list(GtkWidget *widget, gpointer list);
+
 // callbacks
 
 static void on_btn_recipe_details_prepare_clicked(GtkButton *button, App *app);
@@ -218,6 +220,10 @@ void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, i
                        -1);
 }
 
+static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
+    gtk_container_remove(GTK_CONTAINER(list), widget);
+}
+
 static void on_btn_recipe_details_prepare_clicked(GtkButton *button, App *app) {
 
 }
@@ -269,6 +275,61 @@ static void on_btn_recipes_list_prepare_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_recipes);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gint id;
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter)) {
+        return;
+    }
+    gtk_tree_model_get(model, &iter, 0, &id, -1);
+
+    RecipeReadModel recipe;
+    get_recipe_by_id(app->recipe_service, id, &recipe);
+
+    gtk_label_set_text(app->lbl_recipe_details_name, recipe.name);
+
+    gchar *num_of_uses = g_strdup_printf("Number of uses: %d", recipe.num_of_uses);
+    gtk_label_set_text(app->lbl_recipe_details_num_of_uses, num_of_uses);
+    g_free(num_of_uses);
+
+    gtk_container_foreach(GTK_CONTAINER(app->list_recipe_details_ingredients), remove_widget_from_list,
+                          app->list_recipe_details_ingredients);
+
+    for (int i = 0; i < recipe.num_of_ingredients; ++i) {
+        IngredientReadModel ingredient;
+        get_ingredient_by_id(app->ingredient_service, recipe.ingredients[i]->id, &ingredient);
+        GtkWidget *list_box_row = gtk_list_box_row_new();
+        gchar *ingredient_text;
+        if (ingredient.type == SOLID) {
+            ingredient_text = g_strdup_printf("%d %s", ingredient.amount, ingredient.name);
+        } else {
+            ingredient_text = g_strdup_printf("%d ml %s", ingredient.amount, ingredient.name);
+        }
+        GtkWidget *lbl_ingredient = gtk_label_new(ingredient_text);
+        gtk_label_set_xalign(GTK_LABEL(lbl_ingredient), 0);
+        g_free(ingredient_text);
+        gtk_container_add(GTK_CONTAINER(list_box_row), lbl_ingredient);
+        gtk_list_box_insert(GTK_LIST_BOX(app->list_recipe_details_ingredients), list_box_row, -1);
+    }
+
+    gtk_widget_show_all(GTK_WIDGET(app->list_recipe_details_ingredients));
+
+    gtk_container_foreach(GTK_CONTAINER(app->list_recipe_details_steps), remove_widget_from_list,
+                          app->list_recipe_details_steps);
+
+    for (int i = 0; i < recipe.num_of_steps; ++i) {
+        GtkWidget *list_box_row = gtk_list_box_row_new();
+        gchar *step;
+        step = g_strdup_printf("%d. %s", i + 1, recipe.steps[i]);
+        GtkWidget *lbl_step = gtk_label_new(step);
+        gtk_label_set_xalign(GTK_LABEL(lbl_step), 0);
+        g_free(step);
+        gtk_container_add(GTK_CONTAINER(list_box_row), lbl_step);
+        gtk_list_box_insert(GTK_LIST_BOX(app->list_recipe_details_steps), list_box_row, -1);
+    }
+
+    gtk_widget_show_all(GTK_WIDGET(app->list_recipe_details_steps));
     gtk_stack_set_visible_child_name(app->stack_recipes, "recipe_details");
 }
 

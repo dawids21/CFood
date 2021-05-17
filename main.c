@@ -146,6 +146,7 @@ static void on_btn_main_stack_ingredients_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_main_stack_recommendations_clicked(GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recommendations, "page0");
     gtk_stack_set_visible_child_name(app->stack_main, "recommendation_stack");
 }
 
