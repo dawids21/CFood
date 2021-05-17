@@ -43,16 +43,17 @@ int get_num_of_recipes(RecipeService service) {
     return get_size(service->recipes);
 }
 
-bool add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, RecipeIngredient ingredients[],
-                int num_of_ingredients) {
+int add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, RecipeIngredient ingredients[],
+               int num_of_ingredients) {
     if (strlen(name) == 0 || num_of_steps <= 0 || num_of_ingredients <= 0) {
-        return false;
+        return -1;
     }
 
+    int id = service->id_recipes;
     ArrayItem to_add = {.recipe_item = create_new_recipe(service->id_recipes++, name, steps, num_of_steps, ingredients,
                                                          num_of_ingredients)};
     append(service->recipes, to_add);
-    return true;
+    return id;
 }
 
 void get_all_recipes(RecipeService service, RecipeReadModel *result) {
