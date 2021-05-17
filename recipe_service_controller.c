@@ -484,9 +484,9 @@ static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app) {
         GtkWidget *list_box_row = gtk_list_box_row_new();
         gchar *ingredient_text;
         if (ingredient.type == SOLID) {
-            ingredient_text = g_strdup_printf("%d %s", ingredient.amount, ingredient.name);
+            ingredient_text = g_strdup_printf("%d %s", recipe.ingredients[i]->amount, ingredient.name);
         } else {
-            ingredient_text = g_strdup_printf("%d ml %s", ingredient.amount, ingredient.name);
+            ingredient_text = g_strdup_printf("%d ml %s", recipe.ingredients[i]->amount, ingredient.name);
         }
         GtkWidget *lbl_ingredient = gtk_label_new(ingredient_text);
         gtk_label_set_xalign(GTK_LABEL(lbl_ingredient), 0);
