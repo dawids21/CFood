@@ -78,12 +78,14 @@
   </object>
   <object class="GtkListStore" id="list_store_recipes">
     <columns>
+      <!-- column-name id -->
+      <column type="gint"/>
       <!-- column-name name -->
       <column type="gchararray"/>
-      <!-- column-name num_of_uses -->
-      <column type="gint"/>
       <!-- column-name is_possible -->
       <column type="gboolean"/>
+      <!-- column-name num_of_uses -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkTreeStore" id="tree_store_ingredients">
@@ -973,7 +975,7 @@
                             <child>
                               <object class="GtkCellRendererText" id="crnd_recipe_list_name"/>
                               <attributes>
-                                <attribute name="text">0</attribute>
+                                <attribute name="text">1</attribute>
                               </attributes>
                             </child>
                           </object>
@@ -984,7 +986,7 @@
                             <child>
                               <object class="GtkCellRendererText" id="crnd_recipe_list_num_of_uses"/>
                               <attributes>
-                                <attribute name="text">1</attribute>
+                                <attribute name="text">3</attribute>
                               </attributes>
                             </child>
                           </object>
@@ -993,9 +995,9 @@
                           <object class="GtkTreeViewColumn">
                             <property name="title" translatable="yes">Is possible?</property>
                             <child>
-                              <object class="GtkCellRendererText" id="crnd_recipe_list_is_possible"/>
+                              <object class="GtkCellRendererToggle" id="crnd_recipe_list_is_possible"/>
                               <attributes>
-                                <attribute name="text">2</attribute>
+                                <attribute name="active">2</attribute>
                               </attributes>
                             </child>
                           </object>

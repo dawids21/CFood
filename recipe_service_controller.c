@@ -17,6 +17,8 @@ static void add_new_recipe(RecipeService service, IngredientService ingredient_s
 
 static void delete_existing_recipe(RecipeService service);
 
+static void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses);
+
 // callbacks
 
 static void on_btn_recipe_details_prepare_clicked(GtkButton button, App *app);
@@ -115,6 +117,18 @@ void recipe_service_register_callbacks(GtkBuilder *builder) {
             on_btn_recipes_list_add_clicked));
 }
 
+void recipe_service_init_list_store(App *app) {
+    GtkListStore *store = app->list_store_recipes;
+    int num_of_recipes = get_num_of_recipes(app->recipe_service);
+    RecipeReadModel to_list[num_of_recipes];
+    get_all_recipes(app->recipe_service, to_list);
+    for (int i = 0; i < num_of_recipes; i++) {
+        RecipeReadModel current = to_list[i];
+        add_to_list_store(store, current.id, current.name, check_if_recipe_is_possible(app->recipe_service, current.id),
+                          current.num_of_uses);
+    }
+}
+
 static void list_recipes(RecipeService service) {
     int num_of_recipes = get_num_of_recipes(service);
     if (num_of_recipes == 0) {
@@ -191,6 +205,17 @@ static void delete_existing_recipe(RecipeService service) {
     } else {
         printf("Problem with deleting recipe\n");
     }
+}
+
+void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses) {
+    GtkTreeIter iter;
+    gtk_list_store_append(store, &iter);
+    gtk_list_store_set(store, &iter,
+                       0, id,
+                       1, name,
+                       2, possible,
+                       3, num_of_uses,
+                       -1);
 }
 
 static void on_btn_recipe_details_prepare_clicked(GtkButton button, App *app) {

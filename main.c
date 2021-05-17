@@ -232,6 +232,7 @@ static void main_gtk(int argc, char *argv[]) {
     recommendation_service_register_callbacks(builder);
     recipe_service_register_callbacks(builder);
     ingredient_service_init_tree(app);
+    recipe_service_init_list_store(app);
 
     gtk_builder_connect_signals(builder, app);
 
