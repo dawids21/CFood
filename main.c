@@ -194,9 +194,6 @@ static void main_gtk(int argc, char *argv[]) {
     app->stack_ingredients = GTK_STACK(gtk_builder_get_object(builder, "stack_ingredients"));
     app->tree_store_ingredients = GTK_TREE_STORE(gtk_builder_get_object(builder, "tree_store_ingredients"));
     app->tree_view_ingredients = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tree_view_ingredients"));
-    app->btn_ingredients_list_add = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_add"));
-    app->btn_ingredients_list_modify = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_modify"));
-    app->btn_ingredients_list_delete = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredients_list_delete"));
     app->entry_ingredient_form_name = GTK_ENTRY(gtk_builder_get_object(builder, "entry_ingredient_form_name"));
     app->entry_ingredient_form_amount = GTK_SPIN_BUTTON(
             gtk_builder_get_object(builder, "entry_ingredient_form_amount"));
@@ -204,12 +201,22 @@ static void main_gtk(int argc, char *argv[]) {
             gtk_builder_get_object(builder, "entry_ingredient_form_type_solid"));
     app->entry_ingredient_form_type_liquid = GTK_RADIO_BUTTON(
             gtk_builder_get_object(builder, "entry_ingredient_form_type_liquid"));
-    app->btn_ingredient_form_cancel = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_cancel"));
     app->stack_ingredient_form_button = GTK_STACK(gtk_builder_get_object(builder, "stack_ingredient_form_button"));
-    app->btn_ingredient_form_add = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_add"));
-    app->btn_ingredient_form_modify = GTK_BUTTON(gtk_builder_get_object(builder, "btn_ingredient_form_modify"));
 
     app->dialog_delete_ingredient = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_ingredient"));
+
+    app->stack_recipes = GTK_STACK(gtk_builder_get_object(builder, "stack_recipes"));
+    app->tree_view_recipes = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tree_view_recipes"));
+    app->list_store_recipes = GTK_LIST_STORE(gtk_builder_get_object(builder, "list_store_recipes"));
+    app->list_store_add_recipe_ingredients = GTK_LIST_STORE(
+            gtk_builder_get_object(builder, "list_store_add_recipe_ingredients"));
+    app->list_store_add_recipe_steps = GTK_LIST_STORE(gtk_builder_get_object(builder, "list_store_add_recipe_steps"));
+    app->entry_add_recipe_name = GTK_ENTRY(gtk_builder_get_object(builder, "entry_add_recipe_name"));
+    app->lbl_recipe_details_name = GTK_LABEL(gtk_builder_get_object(builder, "lbl_recipe_details_name"));
+    app->lbl_recipe_details_num_of_uses = GTK_LABEL(gtk_builder_get_object(builder, "lbl_recipe_details_num_of_uses"));
+    app->list_recipe_details_ingredients = GTK_LIST_BOX(
+            gtk_builder_get_object(builder, "list_recipe_details_ingredients"));
+    app->list_recipe_details_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_recipe_details_steps"));
 
     app->current_recommendation_index = 0;
 
