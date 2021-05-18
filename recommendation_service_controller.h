@@ -10,10 +10,6 @@
 #include <gtk/gtk.h>
 #include "app.h"
 
-void recommendation_service_display_main_menu();
-
-void recommendation_service_handle_option(char option, RecommendationService service, RecipeService recipe_service);
-
 void recommendation_service_display_recipe_get_recommendations(int index, App *app);
 
 void recommendation_service_display_recipe_try_something_new(int index, App *app);

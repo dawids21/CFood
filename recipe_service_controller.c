@@ -3,19 +3,9 @@
 //
 
 #include "recipe_service_controller.h"
-#include "input.h"
-#include "ingredient_service_controller.h"
 #include "recipe.h"
 #include <stdlib.h>
 #include <ingredient_service.h>
-
-static void list_recipes(RecipeService service);
-
-static void print_info_about_recipe(RecipeService service);
-
-static void add_new_recipe(RecipeService service, IngredientService ingredient_service);
-
-static void delete_existing_recipe(RecipeService service);
 
 static void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses);
 
@@ -23,75 +13,44 @@ static void remove_widget_from_list(GtkWidget *widget, gpointer list);
 
 // callbacks
 
-static void on_btn_recipe_details_prepare_clicked(GtkButton *button, App *app);
+static void on_btn_recipe_details_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
 static void on_btn_recipe_details_return_clicked(GtkButton *button, App *app);
 
-static void on_btn_add_recipe_add_clicked(GtkButton *button, App *app);
+static void on_btn_add_recipe_add_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_add_recipe_cancel_clicked(GtkButton *button, App *app);
+static void on_btn_add_recipe_cancel_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_add_recipe_remove_step_clicked(GtkButton *button, App *app);
+static void on_btn_add_recipe_remove_step_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_add_recipe_add_step_clicked(GtkButton *button, App *app);
+static void on_btn_add_recipe_add_step_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_crnd_add_recipe_step_description_edited(GtkCellRendererText *renderer,
+static void on_crnd_add_recipe_step_description_edited(__attribute__((unused)) GtkCellRendererText *renderer,
                                                        char *path,
                                                        char *new_text,
                                                        App *app);
 
-static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton *button, App *app);
+static void on_btn_add_recipe_remove_ingredient_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_add_recipe_add_ingredient_clicked(GtkButton *button, App *app);
+static void on_btn_add_recipe_add_ingredient_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_crnd_add_recipe_ingredient_amount_edited(GtkCellRendererText *renderer,
+static void on_crnd_add_recipe_ingredient_amount_edited(__attribute__((unused)) GtkCellRendererText *renderer,
                                                         char *path,
                                                         char *new_text,
                                                         App *app);
 
-static void on_crnd_add_recipe_ingredient_name_edited(GtkCellRendererText *renderer,
+static void on_crnd_add_recipe_ingredient_name_edited(__attribute__((unused)) GtkCellRendererText *renderer,
                                                       char *path,
                                                       char *new_text,
                                                       App *app);
 
-static void on_btn_recipes_list_prepare_clicked(GtkButton *button, App *app);
+static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app);
+static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_recipes_list_delete_clicked(GtkButton *button, App *app);
+static void on_btn_recipes_list_delete_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_recipes_list_add_clicked(GtkButton *button, App *app);
-
-void recipe_service_display_main_menu() {
-    printf("***** CFood *****\n");
-    printf("-----------------\n");
-    printf("1. List all recipes\n");
-    printf("2. Detailed information about recipe\n");
-    printf("3. Add new recipe\n");
-    printf("4. Delete existing recipe\n");
-    printf("5. Return\n");
-    printf("Choose option: ");
-}
-
-void recipe_service_handle_option(char option, RecipeService service, IngredientService ingredient_service) {
-    switch (option) {
-        case '1':
-            list_recipes(service);
-            break;
-        case '2':
-            print_info_about_recipe(service);
-            break;
-        case '3':
-            add_new_recipe(service, ingredient_service);
-            break;
-        case '4':
-            delete_existing_recipe(service);
-            break;
-        default:
-            break;
-    }
-    printf("\n");
-}
+static void on_btn_recipes_list_add_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
 void recipe_service_register_callbacks(GtkBuilder *builder) {
     gtk_builder_add_callback_symbol(builder, "on_btn_recipe_details_prepare_clicked", G_CALLBACK(
@@ -138,84 +97,6 @@ void recipe_service_init_list_store(App *app) {
     }
 }
 
-static void list_recipes(RecipeService service) {
-    int num_of_recipes = get_num_of_recipes(service);
-    if (num_of_recipes == 0) {
-        printf("No recipes\n");
-        return;
-    }
-    RecipeReadModel recipes[num_of_recipes];
-    get_all_recipes(service, recipes);
-    printf("ID | Name | Is possible? | Number of uses\n");
-    printf("-----------------------------------------\n");
-    for (int i = 0; i < num_of_recipes; i++) {
-        RecipeReadModel current = recipes[i];
-        printf("%d | %s | %s | %d\n", current.id, current.name,
-               check_if_recipe_is_possible(service, current.id) ? "YES" : "NO",
-               current.num_of_uses);
-    }
-}
-
-static void print_info_about_recipe(RecipeService service) {
-    list_recipes(service);
-    printf("Choose ID: ");
-    int id;
-    input_integer(&id);
-    print_detailed_info_about_recipe(service, id);
-}
-
-static void add_new_recipe(RecipeService service, IngredientService ingredient_service) {
-    char name[100];
-    printf("Name: ");
-    input_string(name, 100);
-
-    int num_of_steps;
-    printf("Num of steps: ");
-    input_integer(&num_of_steps);
-
-    char *steps[num_of_steps];
-    for (int i = 0; i < num_of_steps; ++i) {
-        steps[i] = malloc(sizeof(char) * 200);
-        printf("Step %d: ", i);
-        input_string(steps[i], 200);
-    }
-
-    ingredient_service_handle_option('1', ingredient_service, service);
-    int num_of_ingredients;
-    printf("Num of ingredients: ");
-    input_integer(&num_of_ingredients);
-
-    RecipeIngredient ingredients[num_of_ingredients];
-    for (int i = 0; i < num_of_ingredients; ++i) {
-        ingredients[i] = malloc(sizeof(struct RecipeIngredient));
-        printf("Ingredient %d id: ", i);
-        input_integer(&ingredients[i]->id);
-        printf("Ingredient %d amount: ", i);
-        input_integer(&ingredients[i]->amount);
-    }
-
-    int id = add_recipe(service, name, steps, num_of_steps, ingredients, num_of_ingredients);
-    if (id != -1) {
-        printf("Recipe added\n");
-    } else {
-        printf("Problem with adding recipe\n");
-    }
-}
-
-static void delete_existing_recipe(RecipeService service) {
-    list_recipes(service);
-    printf("Choose ID to delete: ");
-    int id;
-    input_integer(&id);
-
-    bool success = remove_recipe(service, id);
-    if (success) {
-        printf("Recipe deleted\n");
-    } else {
-        printf("Problem with deleting recipe\n");
-    }
-}
-
 void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses) {
     GtkTreeIter iter;
     gtk_list_store_append(store, &iter);
@@ -231,15 +112,15 @@ static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
     gtk_container_remove(GTK_CONTAINER(list), widget);
 }
 
-static void on_btn_recipe_details_prepare_clicked(GtkButton *button, App *app) {
+static void on_btn_recipe_details_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
 
 }
 
-static void on_btn_recipe_details_return_clicked(GtkButton *button, App *app) {
+static void on_btn_recipe_details_return_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
 }
 
-static void on_btn_add_recipe_add_clicked(GtkButton *button, App *app) {
+static void on_btn_add_recipe_add_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     GtkTreeIter iter;
 
     gchar *name = (gchar *) gtk_entry_get_text(app->entry_add_recipe_name);
@@ -310,11 +191,11 @@ static void on_btn_add_recipe_add_clicked(GtkButton *button, App *app) {
     gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
 }
 
-static void on_btn_add_recipe_cancel_clicked(GtkButton *button, App *app) {
+static void on_btn_add_recipe_cancel_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
 }
 
-static void on_btn_add_recipe_remove_step_clicked(GtkButton *button, App *app) {
+static void on_btn_add_recipe_remove_step_clicked(__attribute__((unused)) GtkButton *button, App *app) {
 
     GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_add_recipe_steps);
     GtkTreeModel *model;
@@ -335,7 +216,7 @@ static void on_btn_add_recipe_remove_step_clicked(GtkButton *button, App *app) {
 
 }
 
-static void on_btn_add_recipe_add_step_clicked(GtkButton *button, App *app) {
+static void on_btn_add_recipe_add_step_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     GtkTreeIter iter;
     gtk_list_store_append(app->list_store_add_recipe_steps, &iter);
     gint number_of_rows = gtk_tree_model_iter_n_children(GTK_TREE_MODEL(app->list_store_add_recipe_steps), NULL);
@@ -345,7 +226,7 @@ static void on_btn_add_recipe_add_step_clicked(GtkButton *button, App *app) {
                        -1);
 }
 
-static void on_crnd_add_recipe_step_description_edited(GtkCellRendererText *renderer,
+static void on_crnd_add_recipe_step_description_edited(__attribute__((unused)) GtkCellRendererText *renderer,
                                                        char *path,
                                                        char *new_text,
                                                        App *app) {
@@ -361,7 +242,7 @@ static void on_crnd_add_recipe_step_description_edited(GtkCellRendererText *rend
                        -1);
 }
 
-static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton *button, App *app) {
+static void on_btn_add_recipe_remove_ingredient_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_add_recipe_ingredients);
     GtkTreeModel *model;
     GtkTreeIter iter;
@@ -371,7 +252,7 @@ static void on_btn_add_recipe_remove_ingredient_clicked(GtkButton *button, App *
     gtk_list_store_remove(app->list_store_add_recipe_ingredients, &iter);
 }
 
-static void on_btn_add_recipe_add_ingredient_clicked(GtkButton *button, App *app) {
+static void on_btn_add_recipe_add_ingredient_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     GtkTreeIter iter;
     gtk_list_store_append(app->list_store_add_recipe_ingredients, &iter);
     gtk_list_store_set(app->list_store_add_recipe_ingredients, &iter,
@@ -381,7 +262,7 @@ static void on_btn_add_recipe_add_ingredient_clicked(GtkButton *button, App *app
                        -1);
 }
 
-static void on_crnd_add_recipe_ingredient_amount_edited(GtkCellRendererText *renderer,
+static void on_crnd_add_recipe_ingredient_amount_edited(__attribute__((unused)) GtkCellRendererText *renderer,
                                                         char *path,
                                                         char *new_text,
                                                         App *app) {
@@ -399,7 +280,7 @@ static void on_crnd_add_recipe_ingredient_amount_edited(GtkCellRendererText *ren
 
 }
 
-static void on_crnd_add_recipe_ingredient_name_edited(GtkCellRendererText *renderer,
+static void on_crnd_add_recipe_ingredient_name_edited(__attribute__((unused)) GtkCellRendererText *renderer,
                                                       char *path,
                                                       char *new_text,
                                                       App *app) {
@@ -440,6 +321,9 @@ static void on_crnd_add_recipe_ingredient_name_edited(GtkCellRendererText *rende
                 break;
             }
         }
+    }
+
+    if (id == -1) {
         return;
     }
 
@@ -453,11 +337,11 @@ static void on_crnd_add_recipe_ingredient_name_edited(GtkCellRendererText *rende
                        -1);
 }
 
-static void on_btn_recipes_list_prepare_clicked(GtkButton *button, App *app) {
+static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
 
 }
 
-static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app) {
+static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_recipes);
     GtkTreeModel *model;
     GtkTreeIter iter;
@@ -516,7 +400,7 @@ static void on_btn_recipes_list_details_clicked(GtkButton *button, App *app) {
     gtk_stack_set_visible_child_name(app->stack_recipes, "recipe_details");
 }
 
-static void on_btn_recipes_list_delete_clicked(GtkButton *button, App *app) {
+static void on_btn_recipes_list_delete_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_recipes);
     GtkTreeModel *model;
     GtkTreeIter iter;
@@ -538,7 +422,7 @@ static void on_btn_recipes_list_delete_clicked(GtkButton *button, App *app) {
     gtk_list_store_remove(app->list_store_recipes, &iter);
 }
 
-static void on_btn_recipes_list_add_clicked(GtkButton *button, App *app) {
+static void on_btn_recipes_list_add_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     gtk_entry_set_text(app->entry_add_recipe_name, "");
     gtk_list_store_clear(app->list_store_add_recipe_ingredients);
     gtk_list_store_clear(app->list_store_add_recipe_steps);

@@ -9,10 +9,6 @@
 #include <gtk/gtk.h>
 #include "app.h"
 
-void recipe_service_display_main_menu();
-
-void recipe_service_handle_option(char option, RecipeService service, IngredientService ingredient_service);
-
 void recipe_service_register_callbacks(GtkBuilder *builder);
 
 void recipe_service_init_list_store(App *app);
