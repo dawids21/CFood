@@ -14,12 +14,12 @@ RecommendationService new_recommendation_service(RecipeService recipe_service, I
 
 void delete_recommendation_service(RecommendationService service);
 
-void get_available_recipes(RecommendationService service, int *result, int result_len);
+void recommendation_service_get_available_recipes(RecommendationService service, int *result, int result_len);
 
-int get_number_of_available_recipes(RecommendationService service);
+int recommendation_service_get_number_of_available_recipes(RecommendationService service);
 
-void get_unused_available_recipes(RecommendationService service, int *result, int result_len);
+void recommendation_service_get_unused_available_recipes(RecommendationService service, int *result, int result_len);
 
-int get_number_of_unused_available_recipes(RecommendationService service);
+int recommendation_service_get_number_of_unused_available_recipes(RecommendationService service);
 
 #endif //CFOOD_RECOMMENDATION_SERVICE_H

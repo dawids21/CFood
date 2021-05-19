@@ -23,7 +23,7 @@ static void on_btn_stack_recommendations_try_something_new_clicked(__attribute__
 
 void recommendation_service_display_recipe_get_recommendations(int index, App *app) {
 
-    int num_of_recipes = get_number_of_available_recipes(app->recommendation_service);
+    int num_of_recipes = recommendation_service_get_number_of_available_recipes(app->recommendation_service);
     if (num_of_recipes <= 0) {
         gtk_label_set_text(app->lbl_get_recommendations_recipe_name, "No recipes");
         gtk_label_set_text(app->lbl_get_recommendations_num_of_uses, "Number of uses: 0");
@@ -38,9 +38,9 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
         app->current_recommendation_index = 0;
     }
     int id_recipes[num_of_recipes];
-    get_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
+    recommendation_service_get_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
     RecipeReadModel recipe;
-    get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
+    recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
 
     gtk_label_set_text(app->lbl_get_recommendations_recipe_name, recipe.name);
 
@@ -53,7 +53,7 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
 
     for (int i = 0; i < recipe.num_of_ingredients; ++i) {
         IngredientReadModel ingredient;
-        get_ingredient_by_id(app->ingredient_service, recipe.ingredients[i]->id, &ingredient);
+        ingredient_service_get_ingredient_by_id(app->ingredient_service, recipe.ingredients[i]->id, &ingredient);
         GtkWidget *list_box_row = gtk_list_box_row_new();
         gchar *ingredient_text;
         if (ingredient.type == SOLID) {
@@ -88,7 +88,7 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
 }
 
 void recommendation_service_display_recipe_try_something_new(int index, App *app) {
-    int num_of_recipes = get_number_of_unused_available_recipes(app->recommendation_service);
+    int num_of_recipes = recommendation_service_get_number_of_unused_available_recipes(app->recommendation_service);
     if (num_of_recipes <= 0) {
         gtk_label_set_text(app->lbl_get_recommendations_recipe_name, "No recipes");
         gtk_label_set_text(app->lbl_get_recommendations_num_of_uses, "Number of uses: 0");
@@ -103,9 +103,9 @@ void recommendation_service_display_recipe_try_something_new(int index, App *app
         app->current_recommendation_index = 0;
     }
     int id_recipes[num_of_recipes];
-    get_unused_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
+    recommendation_service_get_unused_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
     RecipeReadModel recipe;
-    get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
+    recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
 
     gtk_label_set_text(app->lbl_try_something_new_recipe_name, recipe.name);
 
@@ -114,7 +114,7 @@ void recommendation_service_display_recipe_try_something_new(int index, App *app
 
     for (int i = 0; i < recipe.num_of_ingredients; ++i) {
         IngredientReadModel ingredient;
-        get_ingredient_by_id(app->ingredient_service, recipe.ingredients[i]->id, &ingredient);
+        ingredient_service_get_ingredient_by_id(app->ingredient_service, recipe.ingredients[i]->id, &ingredient);
         GtkWidget *list_box_row = gtk_list_box_row_new();
         gchar *ingredient_text;
         if (ingredient.type == SOLID) {

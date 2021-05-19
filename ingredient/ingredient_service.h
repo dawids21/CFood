@@ -23,19 +23,20 @@ IngredientService new_ingredient_service(char *filename);
 
 void delete_ingredient_service(IngredientService service);
 
-int get_num_of_ingredients(IngredientService service);
+int ingredient_service_get_num_of_ingredients(IngredientService service);
 
-int add_ingredient(IngredientService service, char *name, int amount, IngredientType type);
+int ingredient_service_add_ingredient(IngredientService service, char *name, int amount, IngredientType type);
 
-void get_all_ingredients(IngredientService service, IngredientReadModel *result);
+void ingredient_service_get_all_ingredients(IngredientService service, IngredientReadModel *result);
 
-bool get_ingredient_by_id(IngredientService service, int id, IngredientReadModel *result);
+bool ingredient_service_get_ingredient_by_id(IngredientService service, int id, IngredientReadModel *result);
 
-bool remove_ingredient(IngredientService service, int id);
+bool ingredient_service_remove_ingredient(IngredientService service, int id);
 
-bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type);
+bool ingredient_service_modify_ingredient(IngredientService service, int id, char *new_name, int new_amount,
+                                          IngredientType new_type);
 
-bool reduce_amount_of_ingredient(IngredientService service, int id, int to_reduce);
+bool ingredient_service_reduce_amount_of_ingredient(IngredientService service, int id, int to_reduce);
 
 void save_ingredient_service(IngredientService service);
 

@@ -11,7 +11,7 @@
 
 typedef struct CookingService *CookingService;
 
-CookingService new_cooking_service(IngredientService ingredient_service, RecipeService recipe_service);
+CookingService new_cooking_service(RecipeService recipe_service);
 
 void delete_cooking_service(CookingService service);
 

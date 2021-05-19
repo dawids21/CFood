@@ -87,12 +87,13 @@ void recipe_service_register_callbacks(GtkBuilder *builder) {
 
 void recipe_service_init_list_store(App *app) {
     GtkListStore *store = app->list_store_recipes;
-    int num_of_recipes = get_num_of_recipes(app->recipe_service);
+    int num_of_recipes = recipe_service_get_num_of_recipes(app->recipe_service);
     RecipeReadModel to_list[num_of_recipes];
-    get_all_recipes(app->recipe_service, to_list);
+    recipe_service_get_all_recipes(app->recipe_service, to_list);
     for (int i = 0; i < num_of_recipes; i++) {
         RecipeReadModel current = to_list[i];
-        add_to_list_store(store, current.id, current.name, check_if_recipe_is_possible(app->recipe_service, current.id),
+        add_to_list_store(store, current.id, current.name,
+                          recipe_service_check_if_recipe_is_possible(app->recipe_service, current.id),
                           current.num_of_uses);
     }
 }
@@ -176,8 +177,8 @@ static void on_btn_add_recipe_add_clicked(__attribute__((unused)) GtkButton *but
         }
     }
 
-    int id = add_recipe(app->recipe_service, name, steps, current_num_of_steps, ingredients,
-                        current_num_of_ingredients);
+    int id = recipe_service_add_recipe(app->recipe_service, name, steps, current_num_of_steps, ingredients,
+                                       current_num_of_ingredients);
     for (int i = 0; i < current_num_of_steps; ++i) {
         g_free(steps[i]);
     }
@@ -187,7 +188,7 @@ static void on_btn_add_recipe_add_clicked(__attribute__((unused)) GtkButton *but
 
     gtk_list_store_append(app->list_store_recipes, &iter);
     gtk_list_store_set(app->list_store_recipes, &iter, 0, id, 1, name, 2,
-                       check_if_recipe_is_possible(app->recipe_service, id), 3, 0, -1);
+                       recipe_service_check_if_recipe_is_possible(app->recipe_service, id), 3, 0, -1);
     gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
 }
 
@@ -352,7 +353,7 @@ static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButto
     gtk_tree_model_get(model, &iter, 0, &id, -1);
 
     RecipeReadModel recipe;
-    get_recipe_by_id(app->recipe_service, id, &recipe);
+    recipe_service_get_recipe_by_id(app->recipe_service, id, &recipe);
 
     gtk_label_set_text(app->lbl_recipe_details_name, recipe.name);
 
@@ -365,7 +366,7 @@ static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButto
 
     for (int i = 0; i < recipe.num_of_ingredients; ++i) {
         IngredientReadModel ingredient;
-        get_ingredient_by_id(app->ingredient_service, recipe.ingredients[i]->id, &ingredient);
+        ingredient_service_get_ingredient_by_id(app->ingredient_service, recipe.ingredients[i]->id, &ingredient);
         GtkWidget *list_box_row = gtk_list_box_row_new();
         gchar *ingredient_text;
         if (ingredient.type == SOLID) {
@@ -417,7 +418,7 @@ static void on_btn_recipes_list_delete_clicked(__attribute__((unused)) GtkButton
         return;
     }
 
-    remove_recipe(app->recipe_service, id);
+    recipe_service_remove_recipe(app->recipe_service, id);
 
     gtk_list_store_remove(app->list_store_recipes, &iter);
 }

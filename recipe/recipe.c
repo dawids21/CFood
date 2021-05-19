@@ -117,10 +117,6 @@ void recipe_increase_num_of_uses(Recipe recipe) {
     recipe->num_of_uses++;
 }
 
-void recipe_reset_num_of_uses(Recipe recipe) {
-    recipe->num_of_uses = 0;
-}
-
 void recipe_create_read_model(Recipe recipe, RecipeReadModel *result) {
     result->id = recipe->id;
     result->name = recipe->name;

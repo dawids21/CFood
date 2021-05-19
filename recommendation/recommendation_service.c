@@ -21,50 +21,52 @@ void delete_recommendation_service(RecommendationService service) {
     free(service);
 }
 
-void get_available_recipes(RecommendationService service, int *result, int result_len) {
-    int num_of_recipes = get_num_of_recipes(service->recipe_service);
+void recommendation_service_get_available_recipes(RecommendationService service, int *result, int result_len) {
+    int num_of_recipes = recipe_service_get_num_of_recipes(service->recipe_service);
     RecipeReadModel recipes[num_of_recipes];
-    get_all_recipes(service->recipe_service, recipes);
+    recipe_service_get_all_recipes(service->recipe_service, recipes);
     int result_index = 0;
     for (int i = 0; result_index < result_len && i < num_of_recipes; ++i) {
-        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id)) {
+        if (recipe_service_check_if_recipe_is_possible(service->recipe_service, recipes[i].id)) {
             result[result_index++] = recipes[i].id;
         }
     }
 }
 
-int get_number_of_available_recipes(RecommendationService service) {
-    int num_of_recipes = get_num_of_recipes(service->recipe_service);
+int recommendation_service_get_number_of_available_recipes(RecommendationService service) {
+    int num_of_recipes = recipe_service_get_num_of_recipes(service->recipe_service);
     RecipeReadModel recipes[num_of_recipes];
-    get_all_recipes(service->recipe_service, recipes);
+    recipe_service_get_all_recipes(service->recipe_service, recipes);
     int result = 0;
     for (int i = 0; i < num_of_recipes; ++i) {
-        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id)) {
+        if (recipe_service_check_if_recipe_is_possible(service->recipe_service, recipes[i].id)) {
             result++;
         }
     }
     return result;
 }
 
-void get_unused_available_recipes(RecommendationService service, int *result, int result_len) {
-    int num_of_recipes = get_num_of_recipes(service->recipe_service);
+void recommendation_service_get_unused_available_recipes(RecommendationService service, int *result, int result_len) {
+    int num_of_recipes = recipe_service_get_num_of_recipes(service->recipe_service);
     RecipeReadModel recipes[num_of_recipes];
-    get_all_recipes(service->recipe_service, recipes);
+    recipe_service_get_all_recipes(service->recipe_service, recipes);
     int result_index = 0;
     for (int i = 0; result_index < result_len && i < num_of_recipes; ++i) {
-        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id) && recipes[i].num_of_uses == 0) {
+        if (recipe_service_check_if_recipe_is_possible(service->recipe_service, recipes[i].id) &&
+            recipes[i].num_of_uses == 0) {
             result[result_index++] = recipes[i].id;
         }
     }
 }
 
-int get_number_of_unused_available_recipes(RecommendationService service) {
-    int num_of_recipes = get_num_of_recipes(service->recipe_service);
+int recommendation_service_get_number_of_unused_available_recipes(RecommendationService service) {
+    int num_of_recipes = recipe_service_get_num_of_recipes(service->recipe_service);
     RecipeReadModel recipes[num_of_recipes];
-    get_all_recipes(service->recipe_service, recipes);
+    recipe_service_get_all_recipes(service->recipe_service, recipes);
     int result = 0;
     for (int i = 0; i < num_of_recipes; ++i) {
-        if (check_if_recipe_is_possible(service->recipe_service, recipes[i].id) && recipes[i].num_of_uses == 0) {
+        if (recipe_service_check_if_recipe_is_possible(service->recipe_service, recipes[i].id) &&
+            recipes[i].num_of_uses == 0) {
             result++;
         }
     }
