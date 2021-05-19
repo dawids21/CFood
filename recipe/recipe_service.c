@@ -226,6 +226,20 @@ bool check_if_recipe_is_possible(RecipeService service, int id) {
     return true;
 }
 
+void recipe_service_add_use(RecipeService service, int id) {
+    int index = find_index_by_id(service, id);
+
+    if (index == -1) {
+        return;
+    }
+
+    ArrayItem recipeItem;
+    get(service->recipes, index, &recipeItem);
+    Recipe recipe = recipeItem.recipe_item;
+
+    recipe_increase_num_of_uses(recipe);
+}
+
 void save_recipe_service(RecipeService service) {
     if (strlen(service->filename) == 0) {
         return;

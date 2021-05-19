@@ -36,6 +36,8 @@ bool remove_ingredients_from_recipe(RecipeService service, int id);
 
 bool check_if_recipe_is_possible(RecipeService service, int id);
 
+void recipe_service_add_use(RecipeService service, int id);
+
 void save_recipe_service(RecipeService service);
 
 RecipeService restore_recipe_service(char *filename, IngredientService ingredient_service);
