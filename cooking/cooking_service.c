@@ -19,6 +19,6 @@ void delete_cooking_service(CookingService service) {
     free(service);
 }
 
-void cooking_service_prepare(CookingService service, int recipe_id) {
-
+bool cooking_service_prepare(CookingService service, int recipe_id) {
+    return false;
 }

@@ -98,8 +98,9 @@ void standard_acceptance_test(void) {
     TEST_ASSERT_EQUAL(0, recipes_id[0]);
 
     // when I click the option to prepare standard breakfast
-    cooking_service_prepare(cooking_service, recipes_id[0]);
+    bool success = cooking_service_prepare(cooking_service, recipes_id[0]);
     // then on the list of ingredients I see 1 bread and 1 cheese, 750 ml of water.
+    TEST_ASSERT_TRUE(success);
     get_all_ingredients(ingredient_service, ingredients);
     TEST_ASSERT_EQUAL_STRING("Bread", ingredients[0].name);
     TEST_ASSERT_EQUAL(1, ingredients[0].amount);
