@@ -114,7 +114,7 @@ static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
 }
 
 static void on_btn_recipe_details_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
 static void on_btn_recipe_details_return_clicked(__attribute__((unused)) GtkButton *button, App *app) {
@@ -339,7 +339,7 @@ static void on_crnd_add_recipe_ingredient_name_edited(__attribute__((unused)) Gt
 }
 
 static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
 static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButton *button, App *app) {

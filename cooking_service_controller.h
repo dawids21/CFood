@@ -5,8 +5,6 @@
 #ifndef CFOOD_RECOMMENDATION_SERVICE_CONTROLLER_H
 #define CFOOD_RECOMMENDATION_SERVICE_CONTROLLER_H
 
-#include <recommendation_service.h>
-#include <recipe_service.h>
 #include <gtk/gtk.h>
 #include "app.h"
 

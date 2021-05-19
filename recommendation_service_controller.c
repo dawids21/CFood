@@ -174,7 +174,7 @@ static void on_btn_try_something_new_next_clicked(__attribute__((unused)) GtkBut
 }
 
 static void on_btn_try_something_new_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
 static void on_btn_get_recommendations_next_clicked(__attribute__((unused)) GtkButton *button, App *app) {
@@ -184,7 +184,7 @@ static void on_btn_get_recommendations_next_clicked(__attribute__((unused)) GtkB
 }
 
 static void on_btn_get_recommendations_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
 static void

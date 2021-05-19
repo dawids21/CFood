@@ -20,5 +20,6 @@ static void on_btn_recipe_prepare_done_clicked(GtkButton *button, App *app) {
 }
 
 static void on_btn_recipe_prepare_cancel_clicked(GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
+    gtk_stack_set_visible_child_name(app->stack_main, "recipes");
 }
