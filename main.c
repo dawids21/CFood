@@ -7,6 +7,7 @@
 #include "recipe_service_controller.h"
 #include "recommendation_service_controller.h"
 #include "app.h"
+#include "cooking_service_controller.h"
 
 #define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
 #define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
@@ -112,6 +113,7 @@ static void main_gtk(int argc, char *argv[]) {
     ingredient_service_register_callbacks(builder);
     recommendation_service_register_callbacks(builder);
     recipe_service_register_callbacks(builder);
+    cooking_service_register_callbacks(builder);
     ingredient_service_init_tree(app);
     recipe_service_init_list_store(app);
 
@@ -126,10 +128,12 @@ static void main_gtk(int argc, char *argv[]) {
 }
 
 static void on_btn_main_stack_recipes_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
     gtk_stack_set_visible_child_name(app->stack_main, "recipes");
 }
 
 static void on_btn_main_stack_ingredients_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_list");
     gtk_stack_set_visible_child_name(app->stack_main, "ingredients");
 }
 
