@@ -9,11 +9,14 @@
 #include <recommendation_service.h>
 #include <recipe_service.h>
 #include <ingredient_service.h>
+#include <cooking_service.h>
 
 typedef struct {
     IngredientService ingredient_service;
     RecipeService recipe_service;
     RecommendationService recommendation_service;
+    CookingService cooking_service;
+
     GtkStack *stack_main;
 
     GtkStack *stack_recommendations;

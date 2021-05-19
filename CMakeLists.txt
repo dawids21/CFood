@@ -23,7 +23,7 @@ set(HEADER_FILES app.h ingredient_service_controller.h recipe_service_controller
 
 add_executable(cfood ${SOURCE_FILES} ${HEADER_FILES})
 
-target_link_libraries(cfood lib_ingredient lib_recipe lib_recommendation)
+target_link_libraries(cfood lib_ingredient lib_recipe lib_recommendation lib_cooking)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)

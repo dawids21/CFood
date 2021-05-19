@@ -43,6 +43,7 @@ static void main_gtk(int argc, char *argv[]) {
     }
 
     app->recommendation_service = new_recommendation_service(app->recipe_service, app->ingredient_service);
+    app->cooking_service = new_cooking_service(app->recipe_service);
 
     GtkBuilder *builder;
     GtkWidget *window;
