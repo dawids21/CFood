@@ -9,6 +9,7 @@ add_subdirectory(lib/array)
 add_subdirectory(ingredient)
 add_subdirectory(recipe)
 add_subdirectory(recommendation)
+add_subdirectory(cooking)
 
 if (DEV)
     include(CTest)
