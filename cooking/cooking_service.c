@@ -18,3 +18,7 @@ CookingService new_cooking_service(RecipeService recipe_service) {
 void delete_cooking_service(CookingService service) {
     free(service);
 }
+
+void cooking_service_prepare(CookingService service, int recipe_id) {
+
+}
