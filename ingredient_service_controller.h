@@ -13,4 +13,6 @@ void ingredient_service_controller_register_callbacks(GtkBuilder *builder);
 
 void ingredient_service_controller_init_tree(App *app);
 
+void ingredient_service_controller_update_ingredient_by_id(App *app, int id);
+
 #endif //CFOOD_INGREDIENT_SERVICE_CONTROLLER_H

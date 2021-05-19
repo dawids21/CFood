@@ -99,6 +99,35 @@ void recipe_service_controller_init_list_store(App *app) {
     }
 }
 
+void recipe_service_controller_update_recipe_by_id(App *app, int id) {
+    GtkTreeIter iter;
+    gboolean success = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(app->list_store_recipes), &iter);
+    gint recipe_id;
+    if (!success) {
+        return;
+    }
+    gtk_tree_model_get(GTK_TREE_MODEL(app->list_store_recipes), &iter, 0, &recipe_id, -1);
+    if (id != recipe_id) {
+        int i = 1;
+        while (gtk_tree_model_iter_next(GTK_TREE_MODEL(app->list_store_recipes), &iter)) {
+            gtk_tree_model_get(GTK_TREE_MODEL(app->list_store_recipes), &iter, 0, &recipe_id, -1);
+            if (id == recipe_id) {
+                break;
+            }
+            i++;
+        }
+    }
+
+    RecipeReadModel recipe;
+    recipe_service_get_recipe_by_id(app->recipe_service, id, &recipe);
+    gtk_list_store_set(app->list_store_recipes, &iter,
+                       0, recipe.id,
+                       1, recipe.name,
+                       2, recipe_service_check_if_recipe_is_possible(app->recipe_service, id),
+                       3, recipe.num_of_uses,
+                       -1);
+}
+
 static void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses) {
     GtkTreeIter iter;
     gtk_list_store_append(store, &iter);

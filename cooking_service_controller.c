@@ -3,14 +3,16 @@
 //
 
 #include "cooking_service_controller.h"
+#include "recipe_service_controller.h"
+#include "ingredient_service_controller.h"
 
 static void remove_widget_from_list(GtkWidget *widget, gpointer list);
 
 // callbacks
 
-static void on_btn_recipe_prepare_done_clicked(GtkButton *button, App *app);
+static void on_btn_recipe_prepare_done_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-static void on_btn_recipe_prepare_cancel_clicked(GtkButton *button, App *app);
+static void on_btn_recipe_prepare_cancel_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
 void cooking_service_controller_register_callbacks(GtkBuilder *builder) {
     gtk_builder_add_callback_symbol(builder, "on_btn_recipe_prepare_done_clicked",
@@ -68,11 +70,27 @@ static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
     gtk_container_remove(GTK_CONTAINER(list), widget);
 }
 
-static void on_btn_recipe_prepare_done_clicked(GtkButton *button, App *app) {
+static void on_btn_recipe_prepare_done_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    bool success = cooking_service_prepare(app->cooking_service, app->recipe_id_to_prepare);
 
+    if (!success) {
+        gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
+        gtk_stack_set_visible_child_name(app->stack_main, "recipes");
+        return;
+    }
+
+    RecipeReadModel recipe;
+    recipe_service_get_recipe_by_id(app->recipe_service, app->recipe_id_to_prepare, &recipe);
+    recipe_service_controller_update_recipe_by_id(app, app->recipe_id_to_prepare);
+    for (int i = 0; i < recipe.num_of_ingredients; ++i) {
+        ingredient_service_controller_update_ingredient_by_id(app, recipe.ingredients[i]->id);
+    }
+
+    gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
+    gtk_stack_set_visible_child_name(app->stack_main, "recipes");
 }
 
-static void on_btn_recipe_prepare_cancel_clicked(GtkButton *button, App *app) {
+static void on_btn_recipe_prepare_cancel_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     gtk_stack_set_visible_child_name(app->stack_recipes, "recipes_list");
     gtk_stack_set_visible_child_name(app->stack_main, "recipes");
 }
