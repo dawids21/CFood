@@ -9,8 +9,8 @@
 #include <gtk/gtk.h>
 #include "app.h"
 
-void ingredient_service_register_callbacks(GtkBuilder *builder);
+void ingredient_service_controller_register_callbacks(GtkBuilder *builder);
 
-void ingredient_service_init_tree(App *app);
+void ingredient_service_controller_init_tree(App *app);
 
 #endif //CFOOD_INGREDIENT_SERVICE_CONTROLLER_H

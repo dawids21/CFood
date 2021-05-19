@@ -110,12 +110,12 @@ static void main_gtk(int argc, char *argv[]) {
     gtk_builder_add_callback_symbol(builder, "on_btn_main_stack_recommendations_clicked",
                                     G_CALLBACK(on_btn_main_stack_recommendations_clicked));
 
-    ingredient_service_register_callbacks(builder);
-    recommendation_service_register_callbacks(builder);
-    recipe_service_register_callbacks(builder);
-    cooking_service_register_callbacks(builder);
-    ingredient_service_init_tree(app);
-    recipe_service_init_list_store(app);
+    ingredient_service_controller_register_callbacks(builder);
+    recommendation_service_controller_register_callbacks(builder);
+    recipe_service_controller_register_callbacks(builder);
+    cooking_service_controller_register_callbacks(builder);
+    ingredient_service_controller_init_tree(app);
+    recipe_service_controller_init_list_store(app);
 
     gtk_builder_connect_signals(builder, app);
 

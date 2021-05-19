@@ -23,7 +23,7 @@ static void on_btn_ingredients_list_modify_clicked(__attribute__((unused)) GtkBu
 
 static void on_btn_ingredients_list_add_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-void ingredient_service_register_callbacks(GtkBuilder *builder) {
+void ingredient_service_controller_register_callbacks(GtkBuilder *builder) {
     gtk_builder_add_callback_symbol(builder, "on_btn_ingredient_form_modify_clicked",
                                     G_CALLBACK(on_btn_ingredient_form_modify_clicked));
     gtk_builder_add_callback_symbol(builder, "on_btn_ingredient_form_add_clicked",
@@ -38,7 +38,7 @@ void ingredient_service_register_callbacks(GtkBuilder *builder) {
                                     G_CALLBACK(on_btn_ingredients_list_add_clicked));
 }
 
-void ingredient_service_init_tree(App *app) {
+void ingredient_service_controller_init_tree(App *app) {
     GtkTreeStore *store = app->tree_store_ingredients;
     int num_of_ingredients = ingredient_service_get_num_of_ingredients(app->ingredient_service);
     IngredientReadModel to_list[num_of_ingredients];

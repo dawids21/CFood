@@ -4,6 +4,10 @@
 
 #include "recommendation_service_controller.h"
 
+static void recommendation_service_display_recipe_get_recommendations(int index, App *app);
+
+static void recommendation_service_display_recipe_try_something_new(int index, App *app);
+
 static void remove_widget_from_list(GtkWidget *widget, gpointer list);
 
 // callbacks
@@ -20,8 +24,23 @@ on_btn_stack_recommendations_get_recommendations_clicked(__attribute__((unused))
 
 static void on_btn_stack_recommendations_try_something_new_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
+void recommendation_service_controller_register_callbacks(GtkBuilder *builder) {
 
-void recommendation_service_display_recipe_get_recommendations(int index, App *app) {
+    gtk_builder_add_callback_symbol(builder, "on_btn_try_something_new_next_clicked",
+                                    G_CALLBACK(on_btn_try_something_new_next_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_try_something_new_prepare_clicked",
+                                    G_CALLBACK(on_btn_try_something_new_prepare_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_get_recommendations_next_clicked",
+                                    G_CALLBACK(on_btn_get_recommendations_next_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_get_recommendations_prepare_clicked",
+                                    G_CALLBACK(on_btn_get_recommendations_prepare_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_stack_recommendations_get_recommendations_clicked",
+                                    G_CALLBACK(on_btn_stack_recommendations_get_recommendations_clicked));
+    gtk_builder_add_callback_symbol(builder, "on_btn_stack_recommendations_try_something_new_clicked",
+                                    G_CALLBACK(on_btn_stack_recommendations_try_something_new_clicked));
+}
+
+static void recommendation_service_display_recipe_get_recommendations(int index, App *app) {
 
     int num_of_recipes = recommendation_service_get_number_of_available_recipes(app->recommendation_service);
     if (num_of_recipes <= 0) {
@@ -87,7 +106,7 @@ void recommendation_service_display_recipe_get_recommendations(int index, App *a
     gtk_widget_show_all(GTK_WIDGET(app->list_get_recommendations_steps));
 }
 
-void recommendation_service_display_recipe_try_something_new(int index, App *app) {
+static void recommendation_service_display_recipe_try_something_new(int index, App *app) {
     int num_of_recipes = recommendation_service_get_number_of_unused_available_recipes(app->recommendation_service);
     if (num_of_recipes <= 0) {
         gtk_label_set_text(app->lbl_get_recommendations_recipe_name, "No recipes");
@@ -146,22 +165,6 @@ void recommendation_service_display_recipe_try_something_new(int index, App *app
     }
 
     gtk_widget_show_all(GTK_WIDGET(app->list_try_something_new_steps));
-}
-
-void recommendation_service_register_callbacks(GtkBuilder *builder) {
-
-    gtk_builder_add_callback_symbol(builder, "on_btn_try_something_new_next_clicked",
-                                    G_CALLBACK(on_btn_try_something_new_next_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_try_something_new_prepare_clicked",
-                                    G_CALLBACK(on_btn_try_something_new_prepare_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_get_recommendations_next_clicked",
-                                    G_CALLBACK(on_btn_get_recommendations_next_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_get_recommendations_prepare_clicked",
-                                    G_CALLBACK(on_btn_get_recommendations_prepare_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_stack_recommendations_get_recommendations_clicked",
-                                    G_CALLBACK(on_btn_stack_recommendations_get_recommendations_clicked));
-    gtk_builder_add_callback_symbol(builder, "on_btn_stack_recommendations_try_something_new_clicked",
-                                    G_CALLBACK(on_btn_stack_recommendations_try_something_new_clicked));
 }
 
 static void remove_widget_from_list(GtkWidget *widget, gpointer list) {

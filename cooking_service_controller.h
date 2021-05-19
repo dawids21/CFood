@@ -8,6 +8,6 @@
 #include <gtk/gtk.h>
 #include "app.h"
 
-void cooking_service_register_callbacks(GtkBuilder *builder);
+void cooking_service_controller_register_callbacks(GtkBuilder *builder);
 
 #endif //CFOOD_RECOMMENDATION_SERVICE_CONTROLLER_H
