@@ -52,7 +52,7 @@ static void on_btn_recipes_list_delete_clicked(__attribute__((unused)) GtkButton
 
 static void on_btn_recipes_list_add_clicked(__attribute__((unused)) GtkButton *button, App *app);
 
-void recipe_service_register_callbacks(GtkBuilder *builder) {
+void recipe_service_controller_register_callbacks(GtkBuilder *builder) {
     gtk_builder_add_callback_symbol(builder, "on_btn_recipe_details_prepare_clicked", G_CALLBACK(
             on_btn_recipe_details_prepare_clicked));
     gtk_builder_add_callback_symbol(builder, "on_btn_recipe_details_return_clicked", G_CALLBACK(
@@ -85,7 +85,7 @@ void recipe_service_register_callbacks(GtkBuilder *builder) {
             on_btn_recipes_list_add_clicked));
 }
 
-void recipe_service_init_list_store(App *app) {
+void recipe_service_controller_init_list_store(App *app) {
     GtkListStore *store = app->list_store_recipes;
     int num_of_recipes = recipe_service_get_num_of_recipes(app->recipe_service);
     RecipeReadModel to_list[num_of_recipes];
@@ -114,7 +114,7 @@ static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
 }
 
 static void on_btn_recipe_details_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
 static void on_btn_recipe_details_return_clicked(__attribute__((unused)) GtkButton *button, App *app) {
@@ -339,7 +339,7 @@ static void on_crnd_add_recipe_ingredient_name_edited(__attribute__((unused)) Gt
 }
 
 static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
-
+    gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
 static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButton *button, App *app) {

@@ -18,8 +18,8 @@ if (DEV)
 endif (DEV)
 unset(DEV CACHE)
 
-set(SOURCE_FILES main.c ingredient_service_controller.c recipe_service_controller.c recommendation_service_controller.c)
-set(HEADER_FILES app.h ingredient_service_controller.h recipe_service_controller.h recommendation_service_controller.h)
+set(SOURCE_FILES main.c ingredient_service_controller.c recipe_service_controller.c recommendation_service_controller.c cooking_service_controller.c)
+set(HEADER_FILES app.h ingredient_service_controller.h recipe_service_controller.h recommendation_service_controller.h cooking_service_controller.h)
 
 add_executable(cfood ${SOURCE_FILES} ${HEADER_FILES})
 
