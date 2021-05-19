@@ -40,9 +40,9 @@ void ingredient_service_register_callbacks(GtkBuilder *builder) {
 
 void ingredient_service_init_tree(App *app) {
     GtkTreeStore *store = app->tree_store_ingredients;
-    int num_of_ingredients = get_num_of_ingredients(app->ingredient_service);
+    int num_of_ingredients = ingredient_service_get_num_of_ingredients(app->ingredient_service);
     IngredientReadModel to_list[num_of_ingredients];
-    get_all_ingredients(app->ingredient_service, to_list);
+    ingredient_service_get_all_ingredients(app->ingredient_service, to_list);
     for (int i = 0; i < num_of_ingredients; i++) {
         IngredientReadModel current = to_list[i];
         add_to_tree_store(store, current.id, current.name, current.amount, current.type);
@@ -68,7 +68,7 @@ static void add_to_tree_store(GtkTreeStore *store, int id, char name[100], int a
 
 static void set_ingredient_in_form(App *app, int id) {
     IngredientReadModel ingredient;
-    get_ingredient_by_id(app->ingredient_service, id, &ingredient);
+    ingredient_service_get_ingredient_by_id(app->ingredient_service, id, &ingredient);
     gtk_entry_set_text(app->entry_ingredient_form_name, ingredient.name);
     gtk_spin_button_set_value(app->entry_ingredient_form_amount, ingredient.amount);
     if (ingredient.type == SOLID) {
@@ -93,7 +93,7 @@ static void on_btn_ingredient_form_modify_clicked(__attribute__((unused)) GtkBut
     } else {
         type = LIQUID;
     }
-    modify_ingredient(app->ingredient_service, id, name, amount, type);
+    ingredient_service_modify_ingredient(app->ingredient_service, id, name, amount, type);
     gchar *amount_text;
     if (type == SOLID) {
         amount_text = g_strdup_printf("%d", amount);
@@ -117,7 +117,7 @@ static void on_btn_ingredient_form_add_clicked(__attribute__((unused)) GtkButton
     } else {
         type = LIQUID;
     }
-    int id = add_ingredient(app->ingredient_service, name, amount, type);
+    int id = ingredient_service_add_ingredient(app->ingredient_service, name, amount, type);
     add_to_tree_store(app->tree_store_ingredients, id, name, amount, type);
     gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_list");
     gtk_entry_set_text(app->entry_ingredient_form_name, "");
@@ -146,7 +146,7 @@ static void on_btn_ingredients_list_delete_clicked(__attribute__((unused)) GtkBu
         return;
     }
 
-    remove_ingredient(app->ingredient_service, id);
+    ingredient_service_remove_ingredient(app->ingredient_service, id);
 
     gtk_tree_store_remove(app->tree_store_ingredients, &iter);
 }

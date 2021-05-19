@@ -23,14 +23,14 @@ Array new_array() {
 
 void delete_array(Array *array, ArrayItem *current_items) {
     if (current_items != NULL) {
-        get_all_items(*array, current_items);
+        array_get_all_items(*array, current_items);
     }
     free((*array)->data);
     free(*array);
     *array = NULL;
 }
 
-void append(Array array, ArrayItem item) {
+void array_append(Array array, ArrayItem item) {
     if (array->size == array->capacity) {
         array->capacity *= 2;
         array->data = realloc(array->data, array->capacity * sizeof(ArrayItem));
@@ -38,17 +38,17 @@ void append(Array array, ArrayItem item) {
     array->data[array->size++] = item;
 }
 
-void get_all_items(Array array, ArrayItem *result) {
+void array_get_all_items(Array array, ArrayItem *result) {
     for (int i = 0; i < array->size; i++) {
         result[i] = array->data[i];
     }
 }
 
-int get_size(Array array) {
+int array_get_size(Array array) {
     return array->size;
 }
 
-bool delete_at_index(Array array, int index, ArrayItem *deleted) {
+bool array_delete_at_index(Array array, int index, ArrayItem *deleted) {
     if (index >= array->size) {
         return false;
     }
@@ -65,7 +65,7 @@ bool delete_at_index(Array array, int index, ArrayItem *deleted) {
     return true;
 }
 
-bool get(Array array, int index, ArrayItem *result) {
+bool array_get(Array array, int index, ArrayItem *result) {
     if (result == NULL || index < 0 || index >= array->size) {
         return false;
     }
@@ -73,14 +73,14 @@ bool get(Array array, int index, ArrayItem *result) {
     return true;
 }
 
-void insert_at(Array array, int index, ArrayItem arrayItem) {
+void array_insert_at(Array array, int index, ArrayItem arrayItem) {
 
     if (index < 0) {
         return;
     }
 
     if (index >= array->size) {
-        append(array, arrayItem);
+        array_append(array, arrayItem);
         return;
     }
 

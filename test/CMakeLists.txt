@@ -13,6 +13,7 @@ target_link_libraries(acceptance_test_run
         lib_ingredient
         lib_recipe
         lib_recommendation
+        lib_cooking
         unity
         )
 

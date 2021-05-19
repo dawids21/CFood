@@ -20,17 +20,17 @@ Ingredient create_new_ingredient(int id, char *name, int amount, IngredientType 
 
 void delete_ingredient(Ingredient *ingredient);
 
-bool get_id(Ingredient ingredient, int *result);
+bool ingredient_get_id(Ingredient ingredient, int *result);
 
-bool get_name(Ingredient ingredient, char *result, int result_len);
+bool ingredient_get_name(Ingredient ingredient, char *result, int result_len);
 
-bool get_amount(Ingredient ingredient, int *result);
+bool ingredient_get_amount(Ingredient ingredient, int *result);
 
-bool get_type(Ingredient ingredient, IngredientType *result);
+bool ingredient_get_type(Ingredient ingredient, IngredientType *result);
 
-bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientType new_type);
+bool ingredient_modify(Ingredient ingredient, char *new_name, int new_amount, IngredientType new_type);
 
-bool modify_amount(Ingredient ingredient, int new_amount);
+bool ingredient_modify_amount(Ingredient ingredient, int new_amount);
 
 void save_ingredient(Ingredient ingredient, FILE *f);
 

@@ -17,24 +17,23 @@ RecipeService new_recipe_service(char *filename, IngredientService ingredientSer
 
 void delete_recipe_service(RecipeService service);
 
-int get_num_of_recipes(RecipeService service);
+int recipe_service_get_num_of_recipes(RecipeService service);
 
-int add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, RecipeIngredient ingredients[],
-               int num_of_ingredients);
+int recipe_service_add_recipe(RecipeService service, char *name, char **steps, int num_of_steps,
+                              RecipeIngredient *ingredients,
+                              int num_of_ingredients);
 
-void get_all_recipes(RecipeService service, RecipeReadModel *result);
+void recipe_service_get_all_recipes(RecipeService service, RecipeReadModel *result);
 
-bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result);
+bool recipe_service_get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result);
 
-bool remove_recipe(RecipeService service, int id);
+bool recipe_service_remove_recipe(RecipeService service, int id);
 
-bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id);
+bool recipe_service_remove_ingredients_from_recipe(RecipeService service, int id);
 
-void print_detailed_info_about_recipe(RecipeService service, int id);
+bool recipe_service_check_if_recipe_is_possible(RecipeService service, int id);
 
-bool remove_ingredients_from_recipe(RecipeService service, int id);
-
-bool check_if_recipe_is_possible(RecipeService service, int id);
+void recipe_service_add_use(RecipeService service, int id);
 
 void save_recipe_service(RecipeService service);
 

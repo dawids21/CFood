@@ -27,7 +27,7 @@ RecipeService new_recipe_service(char *filename, IngredientService ingredientSer
 }
 
 void delete_recipe_service(RecipeService service) {
-    int num_of_recipes = get_num_of_recipes(service);
+    int num_of_recipes = recipe_service_get_num_of_recipes(service);
     ArrayItem deleted[num_of_recipes];
     delete_array(&(service->recipes), deleted);
 
@@ -39,12 +39,13 @@ void delete_recipe_service(RecipeService service) {
     free(service);
 }
 
-int get_num_of_recipes(RecipeService service) {
-    return get_size(service->recipes);
+int recipe_service_get_num_of_recipes(RecipeService service) {
+    return array_get_size(service->recipes);
 }
 
-int add_recipe(RecipeService service, char *name, char *steps[], int num_of_steps, RecipeIngredient ingredients[],
-               int num_of_ingredients) {
+int recipe_service_add_recipe(RecipeService service, char *name, char **steps, int num_of_steps,
+                              RecipeIngredient *ingredients,
+                              int num_of_ingredients) {
     if (strlen(name) == 0 || num_of_steps <= 0 || num_of_ingredients <= 0) {
         return -1;
     }
@@ -52,25 +53,25 @@ int add_recipe(RecipeService service, char *name, char *steps[], int num_of_step
     int id = service->id_recipes;
     ArrayItem to_add = {.recipe_item = create_new_recipe(service->id_recipes++, name, steps, num_of_steps, ingredients,
                                                          num_of_ingredients)};
-    append(service->recipes, to_add);
+    array_append(service->recipes, to_add);
     return id;
 }
 
-void get_all_recipes(RecipeService service, RecipeReadModel *result) {
+void recipe_service_get_all_recipes(RecipeService service, RecipeReadModel *result) {
     if (service == NULL || result == NULL) {
         return;
     }
 
-    int num_of_recipes = get_num_of_recipes(service);
+    int num_of_recipes = recipe_service_get_num_of_recipes(service);
     ArrayItem recipes[num_of_recipes];
-    get_all_items(service->recipes, recipes);
+    array_get_all_items(service->recipes, recipes);
     for (int i = 0; i < num_of_recipes; ++i) {
         Recipe current = recipes[i].recipe_item;
         recipe_create_read_model(current, &result[i]);
     }
 }
 
-bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result) {
+bool recipe_service_get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result) {
     if (service == NULL) {
         return false;
     }
@@ -80,7 +81,7 @@ bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result) {
     }
 
     ArrayItem item;
-    get(service->recipes, index, &item);
+    array_get(service->recipes, index, &item);
     Recipe recipe = item.recipe_item;
 
     recipe_create_read_model(recipe, result);
@@ -88,7 +89,7 @@ bool get_recipe_by_id(RecipeService service, int id, RecipeReadModel *result) {
     return true;
 }
 
-bool remove_recipe(RecipeService service, int id) {
+bool recipe_service_remove_recipe(RecipeService service, int id) {
     if (service == NULL) {
         return false;
     }
@@ -98,79 +99,12 @@ bool remove_recipe(RecipeService service, int id) {
     }
 
     ArrayItem deleted;
-    delete_at_index(service->recipes, index, &deleted);
+    array_delete_at_index(service->recipes, index, &deleted);
     delete_recipe(&deleted.recipe_item);
     return true;
 }
 
-bool remove_recipe_with_ingredient_id(RecipeService service, int ingredient_id) {
-    if (service == NULL) {
-        return false;
-    }
-    int num_of_recipes = get_num_of_recipes(service);
-    ArrayItem recipes[num_of_recipes];
-    get_all_items(service->recipes, recipes);
-
-    for (int i = 0; i < num_of_recipes; ++i) {
-        Recipe recipe = recipes[i].recipe_item;
-        int num_of_ingredients;
-        recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
-        RecipeIngredient ingredients[num_of_ingredients];
-        recipe_get_ingredients(recipe, ingredients, num_of_ingredients);
-        for (int j = 0; j < num_of_ingredients; ++j) {
-            if (ingredients[j]->id == ingredient_id) {
-                int id;
-                recipe_get_id(recipe, &id);
-                remove_recipe(service, id);
-                break;
-            }
-        }
-    }
-    return true;
-}
-
-void print_detailed_info_about_recipe(RecipeService service, int id) {
-    int index = find_index_by_id(service, id);
-    if (index == -1) {
-        printf("Recipe not found\n");
-        return;
-    }
-
-    ArrayItem item;
-    get(service->recipes, index, &item);
-    Recipe recipe = item.recipe_item;
-
-    char name[MAX_RECIPE_NAME_LEN];
-    recipe_get_name(recipe, name, MAX_RECIPE_NAME_LEN);
-
-    int num_of_ingredients;
-    recipe_get_num_of_ingredients(recipe, &num_of_ingredients);
-    RecipeIngredient recipe_ingredients[num_of_ingredients];
-    recipe_get_ingredients(recipe, recipe_ingredients, num_of_ingredients);
-    IngredientReadModel ingredients[num_of_ingredients];
-    for (int i = 0; i < num_of_ingredients; ++i) {
-        get_ingredient_by_id(service->ingredientService, recipe_ingredients[i]->id, &ingredients[i]);
-    }
-
-    int num_of_uses;
-    recipe_get_num_of_uses(recipe, &num_of_uses);
-
-    printf("Name: %s\n", name);
-    printf("Number of usage: %d\n", num_of_uses);
-    printf("\nIngredients\n");
-    for (int i = 0; i < num_of_ingredients; ++i) {
-        IngredientReadModel ingredient = ingredients[i];
-        if (ingredient.type == SOLID) {
-            printf("%d %s\n", recipe_ingredients[i]->amount, ingredient.name);
-        } else {
-            printf("%d ml %s\n", recipe_ingredients[i]->amount, ingredient.name);
-        }
-    }
-    printf("\nSteps\n");
-    recipe_print_steps(recipe);
-}
-
-bool remove_ingredients_from_recipe(RecipeService service, int id) {
+bool recipe_service_remove_ingredients_from_recipe(RecipeService service, int id) {
     if (service == NULL) {
         return false;
     }
@@ -182,7 +116,7 @@ bool remove_ingredients_from_recipe(RecipeService service, int id) {
     }
 
     ArrayItem recipeItem;
-    get(service->recipes, index, &recipeItem);
+    array_get(service->recipes, index, &recipeItem);
     Recipe recipe = recipeItem.recipe_item;
 
     int num_of_ingredients;
@@ -192,13 +126,13 @@ bool remove_ingredients_from_recipe(RecipeService service, int id) {
 
     for (int i = 0; i < num_of_ingredients; ++i) {
         RecipeIngredient ingredient = ingredients[i];
-        reduce_amount_of_ingredient(service->ingredientService, ingredient->id, ingredient->amount);
+        ingredient_service_reduce_amount_of_ingredient(service->ingredientService, ingredient->id, ingredient->amount);
     }
 
     return true;
 }
 
-bool check_if_recipe_is_possible(RecipeService service, int id) {
+bool recipe_service_check_if_recipe_is_possible(RecipeService service, int id) {
 
     int index = find_index_by_id(service, id);
 
@@ -207,7 +141,7 @@ bool check_if_recipe_is_possible(RecipeService service, int id) {
     }
 
     ArrayItem recipeItem;
-    get(service->recipes, index, &recipeItem);
+    array_get(service->recipes, index, &recipeItem);
     Recipe recipe = recipeItem.recipe_item;
 
     int num_of_ingredients;
@@ -218,12 +152,26 @@ bool check_if_recipe_is_possible(RecipeService service, int id) {
     for (int i = 0; i < num_of_ingredients; ++i) {
         RecipeIngredient recipe_ingredient = ingredients[i];
         IngredientReadModel ingredient;
-        get_ingredient_by_id(service->ingredientService, recipe_ingredient->id, &ingredient);
+        ingredient_service_get_ingredient_by_id(service->ingredientService, recipe_ingredient->id, &ingredient);
         if (ingredient.amount < recipe_ingredient->amount) {
             return false;
         }
     }
     return true;
+}
+
+void recipe_service_add_use(RecipeService service, int id) {
+    int index = find_index_by_id(service, id);
+
+    if (index == -1) {
+        return;
+    }
+
+    ArrayItem recipeItem;
+    array_get(service->recipes, index, &recipeItem);
+    Recipe recipe = recipeItem.recipe_item;
+
+    recipe_increase_num_of_uses(recipe);
 }
 
 void save_recipe_service(RecipeService service) {
@@ -233,11 +181,11 @@ void save_recipe_service(RecipeService service) {
 
     FILE *f = fopen(service->filename, "wb");
 
-    const int size = get_size(service->recipes);
+    const int size = array_get_size(service->recipes);
     fwrite(&size, sizeof(int), 1, f);
     fwrite(&service->id_recipes, sizeof(int), 1, f);
     ArrayItem items[size];
-    get_all_items(service->recipes, items);
+    array_get_all_items(service->recipes, items);
 
     for (int i = 0; i < size; i++) {
         save_recipe(items[i].recipe_item, f);
@@ -255,7 +203,7 @@ RecipeService restore_recipe_service(char *filename, IngredientService ingredien
     for (int i = 0; i < size; ++i) {
         Recipe recipe = restore_recipe(f);
         ArrayItem item = {.recipe_item = recipe};
-        append(service->recipes, item);
+        array_append(service->recipes, item);
     }
 
     fclose(f);
@@ -263,9 +211,9 @@ RecipeService restore_recipe_service(char *filename, IngredientService ingredien
 }
 
 static int find_index_by_id(RecipeService service, int id) {
-    int num_of_items = get_num_of_recipes(service);
+    int num_of_items = recipe_service_get_num_of_recipes(service);
     ArrayItem recipes[num_of_items];
-    get_all_items(service->recipes, recipes);
+    array_get_all_items(service->recipes, recipes);
 
     for (int i = 0; i < num_of_items; ++i) {
         int current_id;

@@ -30,7 +30,7 @@ void delete_ingredient(Ingredient *ingredient) {
     *ingredient = NULL;
 }
 
-bool get_id(Ingredient ingredient, int *result) {
+bool ingredient_get_id(Ingredient ingredient, int *result) {
     if (ingredient == NULL) {
         return false;
     }
@@ -38,7 +38,7 @@ bool get_id(Ingredient ingredient, int *result) {
     return true;
 }
 
-bool get_name(Ingredient ingredient, char *result, int result_len) {
+bool ingredient_get_name(Ingredient ingredient, char *result, int result_len) {
     if (ingredient == NULL) {
         return false;
     }
@@ -46,7 +46,7 @@ bool get_name(Ingredient ingredient, char *result, int result_len) {
     return true;
 }
 
-bool get_amount(Ingredient ingredient, int *result) {
+bool ingredient_get_amount(Ingredient ingredient, int *result) {
     if (ingredient == NULL) {
         return false;
     }
@@ -54,7 +54,7 @@ bool get_amount(Ingredient ingredient, int *result) {
     return true;
 }
 
-bool get_type(Ingredient ingredient, IngredientType *result) {
+bool ingredient_get_type(Ingredient ingredient, IngredientType *result) {
     if (ingredient == NULL) {
         return false;
     }
@@ -62,7 +62,7 @@ bool get_type(Ingredient ingredient, IngredientType *result) {
     return true;
 }
 
-bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientType new_type) {
+bool ingredient_modify(Ingredient ingredient, char *new_name, int new_amount, IngredientType new_type) {
     if (ingredient == NULL || strlen(new_name) == 0 || new_amount < 0) {
         return false;
     }
@@ -74,7 +74,7 @@ bool modify(Ingredient ingredient, char *new_name, int new_amount, IngredientTyp
     return true;
 }
 
-bool modify_amount(Ingredient ingredient, int new_amount) {
+bool ingredient_modify_amount(Ingredient ingredient, int new_amount) {
     if (ingredient == NULL || new_amount < 0) {
         return false;
     }

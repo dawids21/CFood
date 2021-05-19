@@ -29,7 +29,7 @@ IngredientService new_ingredient_service(char *filename) {
 }
 
 void delete_ingredient_service(IngredientService service) {
-    int num_of_ingredients = get_num_of_ingredients(service);
+    int num_of_ingredients = ingredient_service_get_num_of_ingredients(service);
     ArrayItem deleted[num_of_ingredients];
     delete_array(&(service->ingredients), deleted);
 
@@ -41,37 +41,37 @@ void delete_ingredient_service(IngredientService service) {
     free(service);
 }
 
-int get_num_of_ingredients(IngredientService service) {
-    return get_size(service->ingredients);
+int ingredient_service_get_num_of_ingredients(IngredientService service) {
+    return array_get_size(service->ingredients);
 }
 
-int add_ingredient(IngredientService service, char *name, int amount, IngredientType type) {
+int ingredient_service_add_ingredient(IngredientService service, char *name, int amount, IngredientType type) {
     if (strlen(name) == 0 || amount < 0 || is_ingredient_with_name(service, name)) {
         return -1;
     }
 
     int id = service->id_ingredients++;
     ArrayItem to_add = {.ingredient_item = create_new_ingredient(id, name, amount, type)};
-    append(service->ingredients, to_add);
+    array_append(service->ingredients, to_add);
     return id;
 }
 
-void get_all_ingredients(IngredientService service, IngredientReadModel *result) {
+void ingredient_service_get_all_ingredients(IngredientService service, IngredientReadModel *result) {
 
     if (service == NULL || result == NULL) {
         return;
     }
 
-    int num_of_ingredients = get_num_of_ingredients(service);
+    int num_of_ingredients = ingredient_service_get_num_of_ingredients(service);
     ArrayItem ingredients[num_of_ingredients];
-    get_all_items(service->ingredients, ingredients);
+    array_get_all_items(service->ingredients, ingredients);
     for (int i = 0; i < num_of_ingredients; ++i) {
         Ingredient current = ingredients[i].ingredient_item;
         convert_ingredient_to_read_model(current, &result[i]);
     }
 }
 
-bool get_ingredient_by_id(IngredientService service, int id, IngredientReadModel *result) {
+bool ingredient_service_get_ingredient_by_id(IngredientService service, int id, IngredientReadModel *result) {
     if (service == NULL || result == NULL) {
         return false;
     }
@@ -80,12 +80,12 @@ bool get_ingredient_by_id(IngredientService service, int id, IngredientReadModel
         return false;
     }
     ArrayItem item;
-    get(service->ingredients, index, &item);
+    array_get(service->ingredients, index, &item);
     convert_ingredient_to_read_model(item.ingredient_item, result);
     return true;
 }
 
-bool remove_ingredient(IngredientService service, int id) {
+bool ingredient_service_remove_ingredient(IngredientService service, int id) {
     if (service == NULL) {
         return false;
     }
@@ -95,12 +95,13 @@ bool remove_ingredient(IngredientService service, int id) {
     }
 
     ArrayItem deleted;
-    delete_at_index(service->ingredients, index, &deleted);
+    array_delete_at_index(service->ingredients, index, &deleted);
     delete_ingredient(&deleted.ingredient_item);
     return true;
 }
 
-bool modify_ingredient(IngredientService service, int id, char *new_name, int new_amount, IngredientType new_type) {
+bool ingredient_service_modify_ingredient(IngredientService service, int id, char *new_name, int new_amount,
+                                          IngredientType new_type) {
 
     if (service == NULL) {
         return false;
@@ -112,13 +113,13 @@ bool modify_ingredient(IngredientService service, int id, char *new_name, int ne
         return false;
     }
 
-    ArrayItem ingredients[get_num_of_ingredients(service)];
-    get_all_items(service->ingredients, ingredients);
-    bool success = modify(ingredients[index].ingredient_item, new_name, new_amount, new_type);
+    ArrayItem ingredients[ingredient_service_get_num_of_ingredients(service)];
+    array_get_all_items(service->ingredients, ingredients);
+    bool success = ingredient_modify(ingredients[index].ingredient_item, new_name, new_amount, new_type);
     return success;
 }
 
-bool reduce_amount_of_ingredient(IngredientService service, int id, int to_reduce) {
+bool ingredient_service_reduce_amount_of_ingredient(IngredientService service, int id, int to_reduce) {
 
     if (service == NULL) {
         return false;
@@ -130,15 +131,15 @@ bool reduce_amount_of_ingredient(IngredientService service, int id, int to_reduc
         return false;
     }
 
-    ArrayItem ingredients[get_num_of_ingredients(service)];
-    get_all_items(service->ingredients, ingredients);
+    ArrayItem ingredients[ingredient_service_get_num_of_ingredients(service)];
+    array_get_all_items(service->ingredients, ingredients);
     Ingredient ingredient = ingredients[index].ingredient_item;
     int current_amount;
-    get_amount(ingredient, &current_amount);
+    ingredient_get_amount(ingredient, &current_amount);
     if (current_amount < to_reduce) {
         return false;
     }
-    return modify_amount(ingredient, current_amount - to_reduce);
+    return ingredient_modify_amount(ingredient, current_amount - to_reduce);
 }
 
 void save_ingredient_service(IngredientService service) {
@@ -148,11 +149,11 @@ void save_ingredient_service(IngredientService service) {
 
     FILE *f = fopen(service->filename, "wb");
 
-    const int size = get_size(service->ingredients);
+    const int size = array_get_size(service->ingredients);
     fwrite(&size, sizeof(int), 1, f);
     fwrite(&service->id_ingredients, sizeof(int), 1, f);
     ArrayItem items[size];
-    get_all_items(service->ingredients, items);
+    array_get_all_items(service->ingredients, items);
 
     for (int i = 0; i < size; i++) {
         save_ingredient(items[i].ingredient_item, f);
@@ -170,7 +171,7 @@ IngredientService restore_ingredient_service(char *filename) {
     for (int i = 0; i < size; ++i) {
         Ingredient ingredient = restore_ingredient(f);
         ArrayItem item = {.ingredient_item = ingredient};
-        append(service->ingredients, item);
+        array_append(service->ingredients, item);
     }
 
     fclose(f);
@@ -178,13 +179,13 @@ IngredientService restore_ingredient_service(char *filename) {
 }
 
 static int find_index_by_id(IngredientService service, int id) {
-    int num_of_items = get_num_of_ingredients(service);
+    int num_of_items = ingredient_service_get_num_of_ingredients(service);
     ArrayItem ingredients[num_of_items];
-    get_all_items(service->ingredients, ingredients);
+    array_get_all_items(service->ingredients, ingredients);
 
     for (int i = 0; i < num_of_items; ++i) {
         int current_id;
-        get_id(ingredients[i].ingredient_item, &current_id);
+        ingredient_get_id(ingredients[i].ingredient_item, &current_id);
         if (current_id == id) {
             return i;
         }
@@ -194,13 +195,13 @@ static int find_index_by_id(IngredientService service, int id) {
 }
 
 static bool is_ingredient_with_name(IngredientService service, char *name) {
-    int size = get_size(service->ingredients);
+    int size = array_get_size(service->ingredients);
     size_t name_len = strlen(name) + 1;
     ArrayItem ingredients[size];
-    get_all_items(service->ingredients, ingredients);
+    array_get_all_items(service->ingredients, ingredients);
     for (int i = 0; i < size; ++i) {
         char ingredient_name[name_len];
-        get_name(ingredients[i].ingredient_item, ingredient_name, (int) name_len);
+        ingredient_get_name(ingredients[i].ingredient_item, ingredient_name, (int) name_len);
         if (strcmp(ingredient_name, name) == 0) {
             return true;
         }
@@ -209,8 +210,8 @@ static bool is_ingredient_with_name(IngredientService service, char *name) {
 }
 
 static void convert_ingredient_to_read_model(Ingredient ingredient, IngredientReadModel *result) {
-    get_id(ingredient, &(result->id));
-    get_name(ingredient, result->name, MAX_INGREDIENT_NAME_LEN);
-    get_amount(ingredient, &(result->amount));
-    get_type(ingredient, &(result->type));
+    ingredient_get_id(ingredient, &(result->id));
+    ingredient_get_name(ingredient, result->name, MAX_INGREDIENT_NAME_LEN);
+    ingredient_get_amount(ingredient, &(result->amount));
+    ingredient_get_type(ingredient, &(result->type));
 }
