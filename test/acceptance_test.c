@@ -22,7 +22,7 @@ void setUp() {
     ingredient_service = new_ingredient_service("");
     recipe_service = new_recipe_service("", ingredient_service);
     recommendation_service = new_recommendation_service(recipe_service, ingredient_service);
-    cooking_service = new_cooking_service(recipe_service);
+    cooking_service = new_cooking_service(ingredient_service, recipe_service);
 }
 
 void tearDown() {
