@@ -699,7 +699,9 @@
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn">
+                            <property name="resizable">True</property>
                             <property name="title" translatable="yes">Name</property>
+                            <property name="expand">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="crnd_ingredient_list_name"/>
                               <attributes>
@@ -710,6 +712,7 @@
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn">
+                            <property name="resizable">True</property>
                             <property name="title" translatable="yes">Amount</property>
                             <child>
                               <object class="GtkCellRendererText" id="crnd_ingredient_list_amount"/>
@@ -1035,7 +1038,9 @@
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn">
+                            <property name="resizable">True</property>
                             <property name="title" translatable="yes">Name</property>
+                            <property name="expand">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="crnd_recipe_list_name"/>
                               <attributes>
@@ -1046,6 +1051,7 @@
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn">
+                            <property name="resizable">True</property>
                             <property name="title" translatable="yes">Number of uses</property>
                             <child>
                               <object class="GtkCellRendererText" id="crnd_recipe_list_num_of_uses"/>
@@ -1057,6 +1063,7 @@
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn">
+                            <property name="resizable">True</property>
                             <property name="title" translatable="yes">Is possible?</property>
                             <child>
                               <object class="GtkCellRendererToggle" id="crnd_recipe_list_is_possible"/>
@@ -1227,8 +1234,9 @@
                                 </child>
                                 <child>
                                   <object class="GtkTreeViewColumn">
-                                    <property name="min-width">100</property>
+                                    <property name="resizable">True</property>
                                     <property name="title" translatable="yes">Name</property>
+                                    <property name="expand">True</property>
                                     <child>
                                       <object class="GtkCellRendererCombo" id="crnd_add_recipe_ingredient_name">
                                         <property name="editable">True</property>
@@ -1244,6 +1252,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkTreeViewColumn">
+                                    <property name="resizable">True</property>
                                     <property name="title" translatable="yes">Amount</property>
                                     <child>
                                       <object class="GtkCellRendererSpin" id="crnd_add_recipe_ingredient_amount">
@@ -1341,6 +1350,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkTreeViewColumn">
+                                    <property name="resizable">True</property>
                                     <property name="title" translatable="yes">#</property>
                                     <child>
                                       <object class="GtkCellRendererText" id="crnd_add_recipe_step_number"/>
@@ -1352,7 +1362,9 @@
                                 </child>
                                 <child>
                                   <object class="GtkTreeViewColumn">
+                                    <property name="resizable">True</property>
                                     <property name="title" translatable="yes">Description</property>
+                                    <property name="expand">True</property>
                                     <child>
                                       <object class="GtkCellRendererText" id="crnd_add_recipe_step_description">
                                         <property name="editable">True</property>
