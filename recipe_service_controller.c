@@ -4,6 +4,7 @@
 
 #include "recipe_service_controller.h"
 #include "recipe.h"
+#include "cooking_service_controller.h"
 #include <stdlib.h>
 #include <ingredient_service.h>
 
@@ -98,7 +99,36 @@ void recipe_service_controller_init_list_store(App *app) {
     }
 }
 
-void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses) {
+void recipe_service_controller_update_recipe_by_id(App *app, int id) {
+    GtkTreeIter iter;
+    gboolean success = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(app->list_store_recipes), &iter);
+    gint recipe_id;
+    if (!success) {
+        return;
+    }
+    gtk_tree_model_get(GTK_TREE_MODEL(app->list_store_recipes), &iter, 0, &recipe_id, -1);
+    if (id != recipe_id) {
+        int i = 1;
+        while (gtk_tree_model_iter_next(GTK_TREE_MODEL(app->list_store_recipes), &iter)) {
+            gtk_tree_model_get(GTK_TREE_MODEL(app->list_store_recipes), &iter, 0, &recipe_id, -1);
+            if (id == recipe_id) {
+                break;
+            }
+            i++;
+        }
+    }
+
+    RecipeReadModel recipe;
+    recipe_service_get_recipe_by_id(app->recipe_service, id, &recipe);
+    gtk_list_store_set(app->list_store_recipes, &iter,
+                       0, recipe.id,
+                       1, recipe.name,
+                       2, recipe_service_check_if_recipe_is_possible(app->recipe_service, id),
+                       3, recipe.num_of_uses,
+                       -1);
+}
+
+static void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses) {
     GtkTreeIter iter;
     gtk_list_store_append(store, &iter);
     gtk_list_store_set(store, &iter,
@@ -114,6 +144,12 @@ static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
 }
 
 static void on_btn_recipe_details_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, app->recipe_id_to_prepare)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
@@ -339,6 +375,23 @@ static void on_crnd_add_recipe_ingredient_name_edited(__attribute__((unused)) Gt
 }
 
 static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_recipes);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gint id;
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter)) {
+        return;
+    }
+    gtk_tree_model_get(model, &iter, 0, &id, -1);
+
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, id)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
+
+    app->recipe_id_to_prepare = id;
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
@@ -351,6 +404,7 @@ static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButto
         return;
     }
     gtk_tree_model_get(model, &iter, 0, &id, -1);
+    app->recipe_id_to_prepare = id;
 
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id, &recipe);

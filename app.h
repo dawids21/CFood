@@ -9,11 +9,14 @@
 #include <recommendation_service.h>
 #include <recipe_service.h>
 #include <ingredient_service.h>
+#include <cooking_service.h>
 
 typedef struct {
     IngredientService ingredient_service;
     RecipeService recipe_service;
     RecommendationService recommendation_service;
+    CookingService cooking_service;
+
     GtkStack *stack_main;
 
     GtkStack *stack_recommendations;
@@ -47,10 +50,16 @@ typedef struct {
     GtkListBox *list_recipe_details_ingredients;
     GtkListBox *list_recipe_details_steps;
 
+    GtkLabel *lbl_recipe_prepare_name;
+    GtkListBox *list_recipe_prepare_ingredients;
+    GtkListBox *list_recipe_prepare_steps;
+
     GtkMessageDialog *dialog_delete_ingredient;
     GtkMessageDialog *dialog_delete_recipe;
+    GtkMessageDialog *dialog_insufficient_ingredients;
 
     int current_recommendation_index;
+    int recipe_id_to_prepare;
 } App;
 
 #endif //CFOOD_APP_H

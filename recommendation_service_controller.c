@@ -3,6 +3,7 @@
 //
 
 #include "recommendation_service_controller.h"
+#include "cooking_service_controller.h"
 
 static void recommendation_service_display_recipe_get_recommendations(int index, App *app);
 
@@ -46,10 +47,11 @@ static void recommendation_service_display_recipe_get_recommendations(int index,
     if (num_of_recipes <= 0) {
         gtk_label_set_text(app->lbl_get_recommendations_recipe_name, "No recipes");
         gtk_label_set_text(app->lbl_get_recommendations_num_of_uses, "Number of uses: 0");
-        gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_ingredients), remove_widget_from_list,
-                              app->list_try_something_new_ingredients);
-        gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_steps), remove_widget_from_list,
-                              app->list_try_something_new_steps);
+        gtk_container_foreach(GTK_CONTAINER(app->list_get_recommendations_ingredients), remove_widget_from_list,
+                              app->list_get_recommendations_ingredients);
+        gtk_container_foreach(GTK_CONTAINER(app->list_get_recommendations_steps), remove_widget_from_list,
+                              app->list_get_recommendations_steps);
+        app->recipe_id_to_prepare = -1;
         return;
     }
     if (index >= num_of_recipes) {
@@ -58,6 +60,7 @@ static void recommendation_service_display_recipe_get_recommendations(int index,
     }
     int id_recipes[num_of_recipes];
     recommendation_service_get_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
+    app->recipe_id_to_prepare = id_recipes[index];
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
 
@@ -109,12 +112,12 @@ static void recommendation_service_display_recipe_get_recommendations(int index,
 static void recommendation_service_display_recipe_try_something_new(int index, App *app) {
     int num_of_recipes = recommendation_service_get_number_of_unused_available_recipes(app->recommendation_service);
     if (num_of_recipes <= 0) {
-        gtk_label_set_text(app->lbl_get_recommendations_recipe_name, "No recipes");
-        gtk_label_set_text(app->lbl_get_recommendations_num_of_uses, "Number of uses: 0");
+        gtk_label_set_text(app->lbl_try_something_new_recipe_name, "No recipes");
         gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_ingredients), remove_widget_from_list,
                               app->list_try_something_new_ingredients);
         gtk_container_foreach(GTK_CONTAINER(app->list_try_something_new_steps), remove_widget_from_list,
                               app->list_try_something_new_steps);
+        app->recipe_id_to_prepare = -1;
         return;
     }
     if (index >= num_of_recipes) {
@@ -123,6 +126,7 @@ static void recommendation_service_display_recipe_try_something_new(int index, A
     }
     int id_recipes[num_of_recipes];
     recommendation_service_get_unused_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
+    app->recipe_id_to_prepare = id_recipes[index];
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
 
@@ -177,6 +181,17 @@ static void on_btn_try_something_new_next_clicked(__attribute__((unused)) GtkBut
 }
 
 static void on_btn_try_something_new_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+
+    if (app->recipe_id_to_prepare == -1) {
+        return;
+    }
+
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, app->recipe_id_to_prepare)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
@@ -187,6 +202,17 @@ static void on_btn_get_recommendations_next_clicked(__attribute__((unused)) GtkB
 }
 
 static void on_btn_get_recommendations_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+
+    if (app->recipe_id_to_prepare == -1) {
+        return;
+    }
+
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, app->recipe_id_to_prepare)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 

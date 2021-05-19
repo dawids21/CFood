@@ -49,6 +49,41 @@ void ingredient_service_controller_init_tree(App *app) {
     }
 }
 
+void ingredient_service_controller_update_ingredient_by_id(App *app, int id) {
+    GtkTreeIter iter;
+    gboolean success = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(app->tree_store_ingredients), &iter);
+    gint ingredient_id;
+    if (!success) {
+        return;
+    }
+    gtk_tree_model_get(GTK_TREE_MODEL(app->tree_store_ingredients), &iter, 0, &ingredient_id, -1);
+    if (id != ingredient_id) {
+        int i = 1;
+        while (gtk_tree_model_iter_next(GTK_TREE_MODEL(app->tree_store_ingredients), &iter)) {
+            gtk_tree_model_get(GTK_TREE_MODEL(app->tree_store_ingredients), &iter, 0, &ingredient_id, -1);
+            if (id == ingredient_id) {
+                break;
+            }
+            i++;
+        }
+    }
+
+    IngredientReadModel ingredient;
+    ingredient_service_get_ingredient_by_id(app->ingredient_service, ingredient_id, &ingredient);
+    gchar *amount_text;
+    if (ingredient.type == SOLID) {
+        amount_text = g_strdup_printf("%d", ingredient.amount);
+    } else {
+        amount_text = g_strdup_printf("%d ml", ingredient.amount);
+    }
+    gtk_tree_store_set(app->tree_store_ingredients, &iter,
+                       0, ingredient.id,
+                       1, ingredient.name,
+                       2, amount_text,
+                       -1);
+    g_free(amount_text);
+}
+
 static void add_to_tree_store(GtkTreeStore *store, int id, char name[100], int amount, IngredientType type) {
     GtkTreeIter iter;
     gtk_tree_store_append(store, &iter, NULL);
@@ -102,6 +137,20 @@ static void on_btn_ingredient_form_modify_clicked(__attribute__((unused)) GtkBut
     }
     gtk_tree_store_set(app->tree_store_ingredients, &iter, 1, name, 2, amount_text, -1);
     g_free(amount_text);
+
+    gboolean success = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(app->list_store_recipes), &iter);
+    if (success) {
+        gint recipe_id;
+        gtk_tree_model_get(GTK_TREE_MODEL(app->list_store_recipes), &iter, 0, &recipe_id, -1);
+        gtk_list_store_set(app->list_store_recipes, &iter, 2,
+                           recipe_service_check_if_recipe_is_possible(app->recipe_service, recipe_id), -1);
+        while (gtk_tree_model_iter_next(GTK_TREE_MODEL(app->list_store_recipes), &iter)) {
+            gtk_tree_model_get(GTK_TREE_MODEL(app->list_store_recipes), &iter, 0, &recipe_id, -1);
+            gtk_list_store_set(app->list_store_recipes, &iter, 2,
+                               recipe_service_check_if_recipe_is_possible(app->recipe_service, recipe_id), -1);
+        }
+    }
+
     gtk_stack_set_visible_child_name(app->stack_ingredients, "ingredient_list");
     gtk_entry_set_text(app->entry_ingredient_form_name, "");
     gtk_spin_button_set_value(app->entry_ingredient_form_amount, 0);
