@@ -104,6 +104,8 @@ static void main_gtk(int argc, char *argv[]) {
 
     app->dialog_delete_ingredient = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_ingredient"));
     app->dialog_delete_recipe = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_recipe"));
+    app->dialog_insufficient_ingredients = GTK_MESSAGE_DIALOG(
+            gtk_builder_get_object(builder, "dialog_insufficient_ingredients"));
 
     app->current_recommendation_index = 0;
     app->recipe_id_to_prepare = -1;

@@ -53,6 +53,7 @@ typedef struct {
 
     GtkMessageDialog *dialog_delete_ingredient;
     GtkMessageDialog *dialog_delete_recipe;
+    GtkMessageDialog *dialog_insufficient_ingredients;
 
     int current_recommendation_index;
     int recipe_id_to_prepare;

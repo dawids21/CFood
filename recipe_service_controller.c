@@ -115,6 +115,12 @@ static void remove_widget_from_list(GtkWidget *widget, gpointer list) {
 }
 
 static void on_btn_recipe_details_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, app->recipe_id_to_prepare)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
@@ -348,6 +354,13 @@ static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButto
         return;
     }
     gtk_tree_model_get(model, &iter, 0, &id, -1);
+
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, id)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
+
     app->recipe_id_to_prepare = id;
     cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");

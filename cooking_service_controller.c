@@ -62,7 +62,6 @@ void cooking_service_controller_display_recipe(App *app) {
     }
 
     gtk_widget_show_all(GTK_WIDGET(app->list_recipe_prepare_steps));
-    gtk_stack_set_visible_child_name(app->stack_recipes, "recipe_details");
 }
 
 static void remove_widget_from_list(GtkWidget *widget, gpointer list) {

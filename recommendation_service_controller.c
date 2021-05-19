@@ -180,6 +180,11 @@ static void on_btn_try_something_new_next_clicked(__attribute__((unused)) GtkBut
 }
 
 static void on_btn_try_something_new_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, app->recipe_id_to_prepare)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
     cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
@@ -191,6 +196,11 @@ static void on_btn_get_recommendations_next_clicked(__attribute__((unused)) GtkB
 }
 
 static void on_btn_get_recommendations_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    if (!recipe_service_check_if_recipe_is_possible(app->recipe_service, app->recipe_id_to_prepare)) {
+        gtk_dialog_run(GTK_DIALOG(app->dialog_insufficient_ingredients));
+        gtk_widget_hide(GTK_WIDGET(app->dialog_insufficient_ingredients));
+        return;
+    }
     cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
