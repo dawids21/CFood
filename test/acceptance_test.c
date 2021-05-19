@@ -8,12 +8,15 @@
 #include <recipe.h>
 #include <string.h>
 #include <recommendation_service.h>
+#include <cooking_service.h>
 
 static IngredientService ingredient_service;
 
 static RecipeService recipe_service;
 
 static RecommendationService recommendation_service;
+
+static CookingService cooking_service;
 
 void setUp() {
     ingredient_service = new_ingredient_service("");
@@ -88,14 +91,26 @@ void standard_acceptance_test(void) {
     int num_of_available_recipes = get_number_of_available_recipes(recommendation_service);
     int recipes_id[num_of_available_recipes];
     get_available_recipes(recommendation_service, recipes_id, num_of_available_recipes);
+    // then I can see the recipe for standard breakfast
     TEST_ASSERT_EQUAL(1, num_of_available_recipes);
     TEST_ASSERT_EQUAL(0, recipes_id[0]);
-    // then I can see the recipe for standard breakfast
 
     // when I click the option to prepare standard breakfast
+    cooking_service_prepare(cooking_service, recipes_id[0]);
     // then on the list of ingredients I see 1 bread and 1 cheese, 750 ml of water.
-
-    TEST_FAIL_MESSAGE("Standard acceptance test not implemented yet");
+    get_all_ingredients(ingredient_service, ingredients);
+    TEST_ASSERT_EQUAL_STRING("Bread", ingredients[0].name);
+    TEST_ASSERT_EQUAL(1, ingredients[0].amount);
+    TEST_ASSERT_EQUAL(SOLID, ingredients[0].type);
+    TEST_ASSERT_EQUAL_STRING("Cheese", ingredients[1].name);
+    TEST_ASSERT_EQUAL(1, ingredients[1].amount);
+    TEST_ASSERT_EQUAL(SOLID, ingredients[1].type);
+    TEST_ASSERT_EQUAL_STRING("Water", ingredients[2].name);
+    TEST_ASSERT_EQUAL(750, ingredients[2].amount);
+    TEST_ASSERT_EQUAL(LIQUID, ingredients[2].type);
+    TEST_ASSERT_EQUAL_STRING("Tomato", ingredients[3].name);
+    TEST_ASSERT_EQUAL(0, ingredients[3].amount);
+    TEST_ASSERT_EQUAL(SOLID, ingredients[3].type);
 }
 
 int main(void) {
