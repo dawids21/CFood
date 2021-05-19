@@ -98,7 +98,7 @@ void recipe_service_controller_init_list_store(App *app) {
     }
 }
 
-void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses) {
+static void add_to_list_store(GtkListStore *store, int id, char *name, bool possible, int num_of_uses) {
     GtkTreeIter iter;
     gtk_list_store_append(store, &iter);
     gtk_list_store_set(store, &iter,
@@ -339,6 +339,15 @@ static void on_crnd_add_recipe_ingredient_name_edited(__attribute__((unused)) Gt
 }
 
 static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(app->tree_view_recipes);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gint id;
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter)) {
+        return;
+    }
+    gtk_tree_model_get(model, &iter, 0, &id, -1);
+    app->recipe_id_to_prepare = id;
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
@@ -351,6 +360,7 @@ static void on_btn_recipes_list_details_clicked(__attribute__((unused)) GtkButto
         return;
     }
     gtk_tree_model_get(model, &iter, 0, &id, -1);
+    app->recipe_id_to_prepare = id;
 
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id, &recipe);

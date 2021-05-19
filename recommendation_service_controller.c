@@ -57,6 +57,7 @@ static void recommendation_service_display_recipe_get_recommendations(int index,
         app->current_recommendation_index = 0;
     }
     int id_recipes[num_of_recipes];
+    app->recipe_id_to_prepare = id_recipes[index];
     recommendation_service_get_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
@@ -122,6 +123,7 @@ static void recommendation_service_display_recipe_try_something_new(int index, A
         app->current_recommendation_index = 0;
     }
     int id_recipes[num_of_recipes];
+    app->recipe_id_to_prepare = id_recipes[index];
     recommendation_service_get_unused_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
