@@ -47,6 +47,10 @@ typedef struct {
     GtkListBox *list_recipe_details_ingredients;
     GtkListBox *list_recipe_details_steps;
 
+    GtkLabel *lbl_recipe_prepare_name;
+    GtkListBox *list_recipe_prepare_ingredients;
+    GtkListBox *list_recipe_prepare_steps;
+
     GtkMessageDialog *dialog_delete_ingredient;
     GtkMessageDialog *dialog_delete_recipe;
 

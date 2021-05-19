@@ -3,6 +3,7 @@
 //
 
 #include "recommendation_service_controller.h"
+#include "cooking_service_controller.h"
 
 static void recommendation_service_display_recipe_get_recommendations(int index, App *app);
 
@@ -57,8 +58,8 @@ static void recommendation_service_display_recipe_get_recommendations(int index,
         app->current_recommendation_index = 0;
     }
     int id_recipes[num_of_recipes];
-    app->recipe_id_to_prepare = id_recipes[index];
     recommendation_service_get_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
+    app->recipe_id_to_prepare = id_recipes[index];
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
 
@@ -123,8 +124,8 @@ static void recommendation_service_display_recipe_try_something_new(int index, A
         app->current_recommendation_index = 0;
     }
     int id_recipes[num_of_recipes];
-    app->recipe_id_to_prepare = id_recipes[index];
     recommendation_service_get_unused_available_recipes(app->recommendation_service, id_recipes, num_of_recipes);
+    app->recipe_id_to_prepare = id_recipes[index];
     RecipeReadModel recipe;
     recipe_service_get_recipe_by_id(app->recipe_service, id_recipes[index], &recipe);
 
@@ -179,6 +180,7 @@ static void on_btn_try_something_new_next_clicked(__attribute__((unused)) GtkBut
 }
 
 static void on_btn_try_something_new_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
@@ -189,6 +191,7 @@ static void on_btn_get_recommendations_next_clicked(__attribute__((unused)) GtkB
 }
 
 static void on_btn_get_recommendations_prepare_clicked(__attribute__((unused)) GtkButton *button, App *app) {
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 

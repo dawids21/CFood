@@ -1,13 +1,13 @@
 #include <gtk/gtk.h>
+#include "ingredient_service_controller.h"
+#include "cooking_service_controller.h"
+#include "recipe_service_controller.h"
+#include "app.h"
+#include "recommendation_service_controller.h"
 #include <ingredient_service.h>
 #include <unistd.h>
 #include <recipe_service.h>
 #include <recommendation_service.h>
-#include "ingredient_service_controller.h"
-#include "recipe_service_controller.h"
-#include "recommendation_service_controller.h"
-#include "app.h"
-#include "cooking_service_controller.h"
 
 #define INGREDIENT_SERVICE_FILENAME "./ingredient_service.bin"
 #define RECIPE_SERVICE_FILENAME "./recipe_service.bin"
@@ -96,6 +96,11 @@ static void main_gtk(int argc, char *argv[]) {
     app->list_recipe_details_ingredients = GTK_LIST_BOX(
             gtk_builder_get_object(builder, "list_recipe_details_ingredients"));
     app->list_recipe_details_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_recipe_details_steps"));
+
+    app->lbl_recipe_prepare_name = GTK_LABEL(gtk_builder_get_object(builder, "lbl_recipe_prepare_name"));
+    app->list_recipe_prepare_ingredients = GTK_LIST_BOX(
+            gtk_builder_get_object(builder, "list_recipe_prepare_ingredients"));
+    app->list_recipe_prepare_steps = GTK_LIST_BOX(gtk_builder_get_object(builder, "list_recipe_prepare_steps"));
 
     app->dialog_delete_ingredient = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_ingredient"));
     app->dialog_delete_recipe = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_recipe"));

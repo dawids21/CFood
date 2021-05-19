@@ -10,4 +10,6 @@
 
 void cooking_service_controller_register_callbacks(GtkBuilder *builder);
 
+void cooking_service_controller_display_recipe(App *app);
+
 #endif //CFOOD_RECOMMENDATION_SERVICE_CONTROLLER_H

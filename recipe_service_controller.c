@@ -4,6 +4,7 @@
 
 #include "recipe_service_controller.h"
 #include "recipe.h"
+#include "cooking_service_controller.h"
 #include <stdlib.h>
 #include <ingredient_service.h>
 
@@ -348,6 +349,7 @@ static void on_btn_recipes_list_prepare_clicked(__attribute__((unused)) GtkButto
     }
     gtk_tree_model_get(model, &iter, 0, &id, -1);
     app->recipe_id_to_prepare = id;
+    cooking_service_controller_display_recipe(app);
     gtk_stack_set_visible_child_name(app->stack_main, "prepare");
 }
 
