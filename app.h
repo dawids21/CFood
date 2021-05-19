@@ -51,6 +51,7 @@ typedef struct {
     GtkMessageDialog *dialog_delete_recipe;
 
     int current_recommendation_index;
+    int recipe_id_to_prepare;
 } App;
 
 #endif //CFOOD_APP_H

@@ -101,6 +101,7 @@ static void main_gtk(int argc, char *argv[]) {
     app->dialog_delete_recipe = GTK_MESSAGE_DIALOG(gtk_builder_get_object(builder, "dialog_delete_recipe"));
 
     app->current_recommendation_index = 0;
+    app->recipe_id_to_prepare = -1;
 
     gtk_builder_add_callback_symbol(builder, "on_window_main_destroy", G_CALLBACK(on_window_main_destroy));
     gtk_builder_add_callback_symbol(builder, "on_btn_main_stack_recipes_clicked",
