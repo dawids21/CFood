@@ -25,5 +25,14 @@ bool cooking_service_prepare(CookingService service, int recipe_id) {
         return false;
     }
 
+    RecipeReadModel recipe;
+    get_recipe_by_id(service->recipe_service, recipe_id, &recipe);
+
+    for (int i = 0; i < recipe.num_of_ingredients; ++i) {
+        RecipeIngredient ingredient = recipe.ingredients[i];
+        reduce_amount_of_ingredient(service->ingredient_service, ingredient->id,
+                                    ingredient->amount);
+    }
+
     return true;
 }
