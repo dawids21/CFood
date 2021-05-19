@@ -34,5 +34,7 @@ bool cooking_service_prepare(CookingService service, int recipe_id) {
                                     ingredient->amount);
     }
 
+    recipe_service_add_use(service->recipe_service, recipe_id);
+
     return true;
 }
