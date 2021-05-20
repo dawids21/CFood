@@ -162,6 +162,10 @@ static void on_btn_add_recipe_add_clicked(__attribute__((unused)) GtkButton *but
 
     gchar *name = (gchar *) gtk_entry_get_text(app->entry_add_recipe_name);
 
+    if (g_str_equal(name, "")) {
+        return;
+    }
+
     gint number_of_steps = gtk_tree_model_iter_n_children(GTK_TREE_MODEL(app->list_store_add_recipe_steps), NULL);
     gchar *steps[number_of_steps];
     int current_num_of_steps = 0;
