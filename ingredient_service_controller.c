@@ -159,6 +159,11 @@ static void on_btn_ingredient_form_modify_clicked(__attribute__((unused)) GtkBut
 
 static void on_btn_ingredient_form_add_clicked(__attribute__((unused)) GtkButton *button, App *app) {
     gchar *name = (gchar *) gtk_entry_get_text(app->entry_ingredient_form_name);
+
+    if (g_str_equal(name, "")) {
+        return;
+    }
+
     gint amount = gtk_spin_button_get_value_as_int(app->entry_ingredient_form_amount);
     IngredientType type;
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(app->entry_ingredient_form_type_solid))) {
