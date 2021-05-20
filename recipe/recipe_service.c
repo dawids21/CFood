@@ -46,7 +46,7 @@ int recipe_service_get_num_of_recipes(RecipeService service) {
 int recipe_service_add_recipe(RecipeService service, char *name, char **steps, int num_of_steps,
                               RecipeIngredient *ingredients,
                               int num_of_ingredients) {
-    if (strlen(name) == 0 || num_of_steps <= 0 || num_of_ingredients <= 0) {
+    if (strlen(name) == 0 || num_of_steps < 0 || num_of_ingredients < 0) {
         return -1;
     }
 
